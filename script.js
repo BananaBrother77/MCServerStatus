@@ -1,11 +1,3 @@
-(function () {
-  const loggedIn = sessionStorage.getItem('isLoggedIn');
-
-  if (loggedIn !== 'true') {
-    window.location.href = '/login/login.html';
-  }
-})();
-
 const SERVER_IP = '191.96.231.2:11026';
 const REFRESH_TIME = 60;
 let timeLeft = REFRESH_TIME;
