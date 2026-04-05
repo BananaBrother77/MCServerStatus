@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MinePulse Ultimate Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="dashboard" id="main-card">
+      <div class="progress-container">
+        <div id="progress-bar"></div>
+      </div>
+
+      <div class="content">
+        <div class="header">
+          <img
+            id="server-icon"
+            src="https://api.mcsrvstat.us/icon/hypixel.net"
+            alt="Icon"
+          />
+          <div class="title-group">
+            <h2 id="display-name">DarksideSMP</h2>
+            <div id="status-pill" class="status-pill offline">Checking...</div>
+          </div>
+        </div>
+
+        <div class="ip-box" onclick="copyIP()" title="Click to copy">
+          <span class="ip-text" id="ip-val">darksidesmp.mcsh.io</span>
+          <span style="font-size: 0.8rem">📋</span>
+        </div>
+
+        <div id="motd" class="motd">Loading server information...</div>
+
+        <div class="stats">
+          <div class="stat-card">
+            <span class="stat-label">PLAYERS</span>
+            <span id="player-count" class="stat-val">0 / 0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">VERSION</span>
+            <span id="version-val" class="stat-val">---</span>
+          </div>
+        </div>
+
+        <div class="footer">
+          <span id="last-update">Initializing...</span>
+          <span style="cursor: pointer" onclick="manualRefresh()">
+            Update now 🔄
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

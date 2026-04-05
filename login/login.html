@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCServerStatus | Login</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <article class="login-card">
+        <div class="login-header">
+            <h2 class="login-title">MCServerStatus</h2>
+            <p class="login-desc">Please enter the password to get access</p>
+        </div>
+        <div class="login">
+            <input
+                id="input"
+                type="password"
+                name="password"
+                placeholder="Password"
+                autocomplete="current-password"
+                aria-label="Password"
+            >
+            <p id="errorText"></p>
+            <button id="loginBtn" type="button">
+                <span>Unlock</span>
+                <span></span>
+            </button>
+        </div>
+    </article>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="./login.js"></script>
+</body>
+</html>
