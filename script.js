@@ -1,6 +1,7 @@
 // Server variables
-const serverIP = 'donutsmp.net';
+const serverIP = '191.96.231.2:11026';
 let serverData;
+let nodeData;
 
 // Elements
 const dot = document.getElementById('statusDot');
@@ -12,25 +13,52 @@ const serverIpValue = document.getElementById('serverIpValue');
 const serverVersion = document.getElementById('serverVersion');
 const motdText = document.getElementById('motdText');
 const copyIpBtn = document.getElementById('copyIpBtn');
+const nodeStatusDot = document.getElementById('nodeStatusDot');
+const nodeStatusState = document.getElementById('nodeStatusState');
+const nodeCPU = document.getElementById('nodeCPU');
+const nodeMemory = document.getElementById('nodeMemory');
+const nodeStorage = document.getElementById('nodeStorage');
+const nodeLatency = document.getElementById('nodeLatency');
+const nodeUptime = document.getElementById('nodeUptime');
+const nodeUptimeBars = document.getElementById('nodeUptimeBars');
 
 // Fetch server information using mcsrvstat.us API
 async function getServerStatus() {
   dot.className = 'status-dot checking';
+  nodeStatusDot.className = 'status-dot checking';
 
   try {
-    const response = await fetch(`https://api.mcsrvstat.us/3/${serverIP}`);
+    const [serverResult, nodeResult] = await Promise.allSettled([
+      fetch(`https://api.mcsrvstat.us/3/${serverIP}`).then((res) => {
+        if (!res.ok) throw new Error('MC API failed');
+        return res.json();
+      }),
+      fetch('https://api.maximerix.dev/mcsh/outages/data').then((res) => {
+        if (!res.ok) throw new Error('Node API failed');
+        return res.json();
+      }),
+    ]);
 
-    if (!response.ok) {
-      throw new Error('Could not fetch resource');
+    if (serverResult.status === 'fulfilled') {
+      serverData = serverResult.value;
+      console.log('MC Server Data:', serverData);
+    } else {
+      console.error('MC API Error:', serverResult.reason);
+      serverData = { online: false };
     }
 
-    serverData = await response.json();
-    console.log(serverData);
+    if (nodeResult.status === 'fulfilled') {
+      nodeData = nodeResult.value;
+      console.log('Node Data:', nodeData);
+    } else {
+      console.error('Node API Error:', nodeResult.reason);
+      nodeData = { online: false };
+    }
 
     displayServerStatus();
+    displayNodeStatus();
   } catch (error) {
-    console.error(error);
-    // Ensure the UI updates to offline if the fetch fails
+    console.error('Critical Fetch Error:', error);
     serverData = { online: false };
     displayServerStatus();
   }
@@ -72,8 +100,8 @@ function displayServerStatus() {
   // Populate the player heads list
   getOnlinePlayers();
 
-  // Loop the check every 10 seconds
-  setTimeout(getServerStatus, 10000);
+  // Loop the check every 30 seconds
+  setTimeout(getServerStatus, 30000);
 }
 
 function getOnlinePlayers() {
@@ -125,5 +153,65 @@ copyIpBtn.addEventListener('click', () => {
     copyIpBtn.textContent = 'Copy IP';
   }, 800);
 });
+
+function displayNodeStatus() {
+  const london = nodeData.regions.find((r) => r.id === 'london');
+  const ares = london.nodes.find((n) => n.name === 'Ares');
+
+  console.log(ares);
+
+  updateUI(ares);
+}
+
+function getUsageClass(value, type) {
+  if (value == null) return '';
+  const val = parseFloat(value);
+
+  if (type === 'cpu') {
+    if (val >= 80) return 'usage-high';
+    if (val >= 60) return 'usage-medium';
+    return 'usage-low';
+  }
+
+  if (type === 'latency') {
+    if (val >= 150) return 'usage-high';
+    if (val >= 60) return 'usage-medium';
+    return 'usage-low';
+  }
+
+  if (type === 'uptime') {
+    if (val < 98.5) return 'usage-high';
+    if (val < 99.9) return 'usage-medium';
+    return 'usage-low';
+  }
+
+  if (val >= 85) return 'usage-high';
+  if (val >= 70) return 'usage-medium';
+  return 'usage-low';
+}
+
+function updateUI(node) {
+  if (!node) return;
+
+  nodeStatusDot.className = node.online
+    ? 'status-dot online'
+    : 'status-dot offline';
+  nodeStatusState.textContent = node.online ? 'Online' : 'Offline';
+
+  nodeCPU.textContent = node.load != null ? `${node.load}%` : '--';
+  nodeCPU.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
+
+  nodeMemory.textContent = node.memory != null ? `${node.memory}%` : '--';
+  nodeMemory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
+
+  nodeStorage.textContent = node.storage != null ? `${node.storage}%` : '--';
+  nodeStorage.className = `card-value ${getUsageClass(node.storage, 'mem')}`;
+
+  nodeLatency.textContent = node.latency != null ? `${node.latency} ms` : '--';
+  nodeLatency.className = `card-value ${getUsageClass(node.latency, 'latency')}`;
+
+  nodeUptime.textContent = node.uptime7d != null ? `${node.uptime7d}` : '--';
+  nodeUptime.className = `card-value ${getUsageClass(node.uptime7d, 'uptime')}`;
+}
 
 getServerStatus();

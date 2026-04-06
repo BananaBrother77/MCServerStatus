@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <title>MCServerStatus</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -60,7 +60,9 @@
           <div class="actions">
             <div>
               <span class="card-label">Server IP:</span>
-              <span id="serverIpValue" class="card-value">play.cubecraft.net</span>
+              <span id="serverIpValue" class="card-value"
+                >play.cubecraft.net</span
+              >
               <div class="divider"></div>
               <button id="copyIpBtn" class="btn-primary">
                 <span id="copyBtnLabel">Copy IP</span>
@@ -79,6 +81,58 @@
           </div>
         </section>
       </div>
+
+      <!-- Node Status Section -->
+      <section class="serverStatus nodeStatus">
+        <div class="container">
+          <div class="server-info">
+            <span class="card-label">Server Node Status</span>
+            <h1 id="nodeName">Ares</h1>
+            <p id="statusText">
+              <span class="status-dot" id="nodeStatusDot"></span>
+              <span id="nodeStatusState">Checking...</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="status-card">
+            <span class="card-label">Latency</span>
+            <div class="divider"></div>
+            <span id="nodeLatency" class="card-value">--</span>
+          </div>
+          <div class="status-card">
+            <span class="card-label">Uptime</span>
+            <div class="divider"></div>
+            <span id="nodeUptime" class="card-value">--</span>
+            <div id="nodeUptimeBars" class="uptime-bars"></div>
+          </div>
+          <div class="status-card">
+            <span class="card-label">CPU Usage</span>
+            <div class="divider"></div>
+            <span id="nodeCPU" class="card-value">--</span>
+          </div>
+          <div class="status-card">
+            <span class="card-label">Memory Usage</span>
+            <div class="divider"></div>
+            <span id="nodeMemory" class="card-value">--</span>
+          </div>
+          <div class="status-card">
+            <span class="card-label">Storage Usage</span>
+            <div class="divider"></div>
+            <span id="nodeStorage" class="card-value">--</span>
+          </div>
+        </div>
+
+        <div class="node-actions">
+          <a
+            href="https://www.mcserverhost.com/status"
+            target="_blank"
+            class="btn-primary"
+            >All Nodes</a
+          >
+        </div>
+      </section>
     </main>
 
     <script src="script.js"></script>

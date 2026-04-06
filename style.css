@@ -69,6 +69,15 @@ body {
   max-width: 1300px;
 }
 
+.nodeStatus {
+  margin-top: 20px;
+}
+
+.nodeStatus .server-info .card-label {
+  opacity: 0.8;
+  margin-bottom: -5px;
+}
+
 #statusText {
   margin-top: 8px;
   margin-left: 5px;
@@ -137,6 +146,36 @@ body {
   text-align: center;
 }
 
+/* Uptime History Bars */
+
+
+.bar {
+  flex: 1;
+  border-radius: 2px;
+  min-height: 4px;
+  background: var(--online-green);
+}
+
+.bar.warn {
+  background: var(--warn-yellow);
+}
+
+.bar.down {
+  background: var(--offline-red);
+}
+
+.usage-low {
+  color: var(--online-green);
+}
+
+.usage-medium {
+  color: var(--warn-yellow);
+}
+
+.usage-high {
+  color: var(--offline-red);
+}
+
 /* Specific sizing for the MOTD status card due to potentially longer content */
 .motd-card {
   min-width: 200px;
@@ -154,6 +193,8 @@ body {
 .btn-primary {
   background: linear-gradient(135deg, #8e43c7, #7636af);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-block;
+  text-decoration: none;
   color: #ffffff;
   padding: 8px;
   border-radius: 12px;
@@ -179,6 +220,12 @@ body {
   transform: translateY(1px) scale(0.99);
 }
 
+.node-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Styles for the server icon image */
 #serverIconImg {
   width: 110px;
@@ -192,7 +239,8 @@ body {
 }
 
 /* Styles for the server name text, including gradient and typography */
-#serverName {
+#serverName,
+#nodeName {
   background: #730c9c;
   background: linear-gradient(
     147deg,
