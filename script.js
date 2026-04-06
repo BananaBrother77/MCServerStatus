@@ -95,7 +95,7 @@ function displayServerStatus() {
 
   // Display MOTD
   motdText.textContent =
-    serverData.motd?.clean?.join(' ') || 'A Minecraft Server';
+    serverData.motd?.clean?.join(' ') || 'Unknown';
 
   // Populate the player heads list
   getOnlinePlayers();
@@ -147,7 +147,7 @@ function getOnlinePlayers() {
 
 // Copy IP to clipboard using the btn
 copyIpBtn.addEventListener('click', () => {
-  navigator.clipboard.writeText(serverIP);
+  navigator.clipboard.writeText(serverIpValue.textContent);
   copyIpBtn.textContent = 'Copied';
   setTimeout(() => {
     copyIpBtn.textContent = 'Copy IP';
