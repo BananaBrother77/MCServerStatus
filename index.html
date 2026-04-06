@@ -7,185 +7,57 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="backdrop" aria-hidden="true">
-      <div class="backdrop-orb orb-a"></div>
-      <div class="backdrop-orb orb-b"></div>
-      <div class="backdrop-grid"></div>
-    </div>
-
-    <main class="app-shell" id="root">
-      <div class="progress-wrap" aria-hidden="true">
-        <div class="progress-fill" id="prog"></div>
-      </div>
-
-      <section class="hero card">
-        <div class="hero-main">
-          <p class="eyebrow">Private Minecraft telemetry</p>
-          <div class="srv">
-            <div class="srv-icon">
-              <img
-                id="srv-img"
-                src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
-                alt="DarksideSMP icon"
-              />
-            </div>
-
-            <div class="srv-copy">
-              <h1 class="srv-name">DarksideSMP</h1>
-              <div class="srv-addr" id="srv-addr">darksidesmp.mcsh.io</div>
-              <p class="hero-summary" id="hero-summary">
-                Checking server heartbeat...
-              </p>
-            </div>
+    <main class="app-wrapper">
+      <section class="serverStatus">
+        <!-- Header: Icon, Name, and Online Dot -->
+        <div class="container">
+          <div class="icon-wrapper">
+            <img
+              src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
+              alt="Server Icon"
+              id="serverIconImg"
+            />
           </div>
-
-          <div class="hero-actions">
-            <button
-              class="action-btn primary"
-              id="refreshBtn"
-              type="button"
-              onclick="manualRefresh()"
-            >
-              <span id="refresh-label">Refresh now</span>
-            </button>
-            <button class="action-btn ghost" type="button" onclick="copyIP()">
-              <span id="ip-copy-lbl">Copy server IP</span>
-            </button>
+          <div class="server-info">
+            <h1 id="serverName">DarksideSMP</h1>
+            <p id="statusText">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="statusState">Pinging...</span>
+            </p>
           </div>
         </div>
 
-        <aside class="hero-side">
+        <!-- Stats: Players and Version -->
+        <div class="stats-row">
+          <!-- Players Card -->
           <div class="status-card">
-            <div class="status-line">
-              <span class="online-badge">
-                <span class="badge-dot loading" id="badge-dot"></span>
-                <span id="badge-txt">Checking...</span>
-              </span>
-              <span class="status-chip is-loading" id="refresh-state">
-                Waiting for first sync
-              </span>
-            </div>
-
-            <div class="time-grid">
-              <div class="time-block">
-                <span class="time-label">Last sync</span>
-                <span class="time-value" id="ts">--:--:--</span>
-              </div>
-              <div class="time-block">
-                <span class="time-label">Next refresh</span>
-                <span class="time-value" id="countdown">60s</span>
-              </div>
-            </div>
-
-            <div class="mini-note" id="footer-t">
-              Initializing live dashboard...
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section class="stats-grid">
-        <article class="card stat-card">
-          <span class="card-label">Players online</span>
-          <div class="player-row">
-            <span class="stat-main" id="pl-online">--</span>
-            <span class="stat-total">/ <span id="pl-max">--</span></span>
-          </div>
-          <div class="occupancy-track" aria-hidden="true">
-            <div class="occupancy-fill" id="occupancy-fill"></div>
-          </div>
-          <div class="stat-sub" id="occupancy-label">
-            Waiting for server data
-          </div>
-        </article>
-
-        <article class="card stat-card">
-          <span class="card-label">Version</span>
-          <div class="version-pill" id="ver">--</div>
-          <div class="stat-sub" id="motd-inline">
-            Live MOTD will appear below.
-          </div>
-        </article>
-
-        <article class="card stat-card">
-          <span class="card-label">Connection</span>
-          <div class="connection-value" id="ip-val">darksidesmp.mcsh.io</div>
-          <div class="stat-sub" id="status-detail">API standby</div>
-        </article>
-      </section>
-
-      <section class="details-grid">
-        <article class="card panel">
-          <div class="panel-head">
-            <span class="section-lbl">Server snapshot</span>
-            <span class="panel-note">Overview</span>
+            <span class="card-label">Online</span>
+            <span id="playersOnline" class="card-value">0</span>
+            <div class="divider"></div>
+            <span id="playersMax" class="card-value">0</span>
           </div>
 
-          <div class="motd-row">
-            <div class="motd-text" id="motd">Loading...</div>
+          <!-- Version Card -->
+          <div class="status-card">
+            <span class="card-label">Version</span>
+            <div class="divider"></div>
+            <span id="serverVersion" class="card-value">1.20.1</span>
           </div>
 
-          <div class="signal-grid">
-            <div class="signal-card">
-              <span class="signal-label">Address</span>
-              <span class="signal-value" id="signal-address">
-                darksidesmp.mcsh.io
-              </span>
-            </div>
-            <div class="signal-card">
-              <span class="signal-label">Refresh cycle</span>
-              <span class="signal-value" id="signal-refresh">
-                Every 60 seconds
-              </span>
-            </div>
+          <!-- MOTD Card -->
+          <div class="status-card motd-card">
+            <span class="card-label">Message</span>
+            <div class="divider"></div>
+            <span id="motdText" class="card-value">Join the Darkside...</span>
           </div>
-        </article>
+        </div>
 
-        <article class="card panel node-block">
-          <div class="panel-head">
-            <span class="section-lbl">Node status</span>
-            <span class="panel-note">Ares - London</span>
-          </div>
-
-          <div class="node-head">
-            <div class="node-id">
-              <div class="ndot loading" id="ndot"></div>
-              <span class="node-name">Ares</span>
-              <span class="node-lat" id="nlat">Latency pending</span>
-            </div>
-            <span class="uptime-tag" id="nuptag">Loading...</span>
-          </div>
-
-          <div class="metrics">
-            <div class="met">
-              <div class="met-val p" id="ncpu">--</div>
-              <div class="met-lbl">CPU</div>
-            </div>
-            <div class="met">
-              <div class="met-val p" id="nmem">--</div>
-              <div class="met-lbl">Memory</div>
-            </div>
-            <div class="met">
-              <div class="met-val p" id="nstor">--</div>
-              <div class="met-lbl">Storage</div>
-            </div>
-          </div>
-
-          <div class="bars" id="bars">
-            <div class="b placeholder" style="height: 28%"></div>
-            <div class="b placeholder" style="height: 28%"></div>
-            <div class="b placeholder" style="height: 28%"></div>
-            <div class="b placeholder" style="height: 28%"></div>
-            <div class="b placeholder" style="height: 28%"></div>
-            <div class="b placeholder" style="height: 28%"></div>
-            <div class="b placeholder" style="height: 28%"></div>
-          </div>
-
-          <div class="bars-foot">
-            <span class="bars-ft">7 days ago</span>
-            <span class="bars-ft">Today</span>
-          </div>
-        </article>
+        <!-- Actions: Copy IP -->
+        <div class="actions">
+          <button id="copyIpBtn" class="btn-primary">
+            <span id="copyBtnLabel">Copy IP Address</span>
+          </button>
+        </div>
       </section>
     </main>
 

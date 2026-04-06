@@ -1,757 +1,242 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap');
-
+/* Root CSS variables for color palette */
 :root {
-  --bg: #061116;
-  --bg-deep: #09181f;
-  --panel: rgba(15, 35, 43, 0.82);
-  --panel-strong: rgba(20, 45, 55, 0.92);
-  --line: rgba(164, 214, 205, 0.14);
-  --text: #edf7f4;
-  --muted: #87a19f;
-  --soft: #b8cfc8;
-  --accent: #49d18d;
-  --accent-strong: #9df0c2;
-  --cool: #77d8ff;
-  --warn: #f4c96e;
-  --danger: #ff8c7a;
-  --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+  --bg-purple: #390c4d;
+
+  --panel-bg: rgba(255, 255, 255, 0.05);
+  --panel-border: rgba(255, 255, 255, 0.1);
+
+  --online-green: #50fa7b;
+  --online-green-shadow: rgba(80, 250, 123, 0.5);
+  --warn-yellow: #f1fa8c;
+  --offline-red: #ff5555;
+
+  --text-main: #f8f8f2;
+  --text-muted: #bd93f9;
 }
 
+/* Universal box-sizing for consistent element dimensions */
 * {
   box-sizing: border-box;
+}
+
+/* Body styles for overall page layout, background, and typography */
+body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
   margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  min-height: 100%;
-  background:
-    radial-gradient(circle at top, rgba(73, 209, 141, 0.08), transparent 32%),
-    linear-gradient(180deg, #061116 0%, #08161c 46%, #051015 100%);
-  color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-body {
-  overflow-x: hidden;
-  position: relative;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-.backdrop {
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  position: fixed;
-}
-
-.backdrop-orb {
-  border-radius: 50%;
-  filter: blur(18px);
-  position: absolute;
-}
-
-.orb-a {
-  background: rgba(73, 209, 141, 0.15);
-  height: 320px;
-  left: -100px;
-  top: 72px;
-  width: 320px;
-}
-
-.orb-b {
-  background: rgba(119, 216, 255, 0.12);
-  height: 260px;
-  right: -80px;
-  top: 180px;
-  width: 260px;
-}
-
-.backdrop-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-position: center;
-  background-size: 48px 48px;
-  inset: 0;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 85%);
-  opacity: 0.28;
-  position: absolute;
-}
-
-.app-shell {
-  margin: 0 auto;
-  max-width: 1120px;
-  padding: 28px 20px 52px;
-  position: relative;
-}
-
-.card {
-  background: linear-gradient(180deg, var(--panel-strong), var(--panel));
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  box-shadow: var(--shadow);
-  position: relative;
-}
-
-.progress-wrap {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 999px;
-  height: 8px;
-  margin-bottom: 22px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  background: linear-gradient(90deg, var(--accent), var(--cool));
-  border-radius: 999px;
-  box-shadow: 0 0 22px rgba(119, 216, 255, 0.35);
-  height: 100%;
-  transition: width 0.9s linear;
-  width: 0%;
-}
-
-.hero {
-  animation: rise 0.65s both;
-  display: grid;
-  gap: 20px;
-  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
-  padding: 28px;
-}
-
-.hero-main,
-.hero-side {
-  min-width: 0;
-}
-
-.eyebrow,
-.card-label,
-.section-lbl,
-.signal-label,
-.met-lbl,
-.time-label,
-.bars-ft {
-  color: var(--muted);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.eyebrow {
-  margin-bottom: 18px;
-}
-
-.srv {
-  align-items: center;
-  display: flex;
-  gap: 18px;
-}
-
-.srv-icon {
-  background:
-    linear-gradient(135deg, rgba(119, 216, 255, 0.16), rgba(73, 209, 141, 0.18)),
-    rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  flex-shrink: 0;
-  height: 84px;
-  overflow: hidden;
-  width: 84px;
-}
-
-.srv-icon img {
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  width: 100%;
-}
-
-.srv-copy {
-  min-width: 0;
-}
-
-.srv-name {
-  font-size: clamp(2.3rem, 5.5vw, 4.4rem);
-  letter-spacing: -0.05em;
-  line-height: 0.92;
-}
-
-.srv-addr,
-.connection-value,
-.status-chip,
-.time-value,
-.node-lat,
-.uptime-tag {
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.srv-addr {
-  color: var(--cool);
-  font-size: 13px;
-  margin-top: 10px;
-  word-break: break-all;
-}
-
-.hero-summary {
-  color: var(--soft);
-  font-size: 1.02rem;
-  line-height: 1.6;
-  margin-top: 14px;
-  max-width: 58ch;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.action-btn {
-  appearance: none;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.98rem;
-  font-weight: 700;
-  min-height: 48px;
-  padding: 0 18px;
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease,
-    background 0.18s ease;
-}
-
-.action-btn:hover {
-  transform: translateY(-1px);
-}
-
-.action-btn:focus-visible {
-  outline: 2px solid rgba(119, 216, 255, 0.7);
-  outline-offset: 2px;
-}
-
-.action-btn:disabled {
-  cursor: wait;
-  opacity: 0.72;
-  transform: none;
-}
-
-.action-btn.primary {
-  background: linear-gradient(135deg, var(--accent), #85f0b7);
-  box-shadow: 0 16px 30px rgba(73, 209, 141, 0.26);
-  color: #072118;
-}
-
-.action-btn.ghost {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.08);
-  color: var(--text);
-}
-
-.status-card {
-  background:
-    linear-gradient(180deg, rgba(119, 216, 255, 0.07), transparent 60%),
-    rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 22px;
+  background: #390c4d;
+  background: linear-gradient(
+    125deg,
+    rgba(57, 12, 77, 1) 0%,
+    rgba(90, 17, 133, 1) 35%,
+    rgba(123, 46, 179, 1) 100%
+  );
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
+  align-items: center;
   padding: 20px;
+  gap: 20px;
 }
 
-.status-line {
-  align-items: center;
+/* Layout for the row containing multiple status cards */
+.stats-row {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 12px;
 }
 
-.online-badge {
+/* Main server status header/dashboard container */
+.serverStatus {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 15px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 999px;
-  display: inline-flex;
-  gap: 8px;
-  min-height: 38px;
-  padding: 0 14px;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
 }
 
-.badge-dot,
-.ndot {
-  border-radius: 50%;
+/* Container for server icon and server information (name, status) */
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  gap: 15px;
+}
+
+/* Container for server name and status text */
+.serverInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Shared Card Style */
+/* Styles for individual status display cards (e.g., players online, version, MOTD) */
+.status-card {
+  background: var(--panel-bg);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
   flex-shrink: 0;
 }
 
-.badge-dot {
-  background: var(--cool);
-  box-shadow: 0 0 0 5px rgba(119, 216, 255, 0.12);
-  height: 10px;
-  width: 10px;
+/* Styles for the small text labels above the values in status cards */
+.card-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 2px;
 }
 
-.badge-dot.on {
-  background: var(--accent);
-  box-shadow: 0 0 0 5px rgba(73, 209, 141, 0.12);
+/* Styles for the horizontal divider line within status cards */
+.divider {
+  width: 100%;
+  height: 2px;
+  background-color: var(--panel-border);
+  margin: 8px 0;
+  border-radius: 2px;
 }
 
-.badge-dot.off {
-  background: var(--danger);
-  box-shadow: 0 0 0 5px rgba(255, 140, 122, 0.12);
-}
-
-.badge-dot.loading,
-.ndot.loading {
-  animation: pulse 1.4s infinite;
-  background: var(--warn);
-}
-
-.status-chip {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: var(--soft);
-  font-size: 12px;
-  min-height: 38px;
-  padding: 10px 12px;
-}
-
-.status-chip.is-ok {
-  background: rgba(73, 209, 141, 0.12);
-  border-color: rgba(73, 209, 141, 0.22);
-  color: var(--accent-strong);
-}
-
-.status-chip.is-warn,
-.uptime-tag.warn {
-  background: rgba(244, 201, 110, 0.12);
-  border-color: rgba(244, 201, 110, 0.2);
-  color: var(--warn);
-}
-
-.status-chip.is-error {
-  background: rgba(255, 140, 122, 0.12);
-  border-color: rgba(255, 140, 122, 0.2);
-  color: #ffb4a8;
-}
-
-.status-chip.is-loading {
-  background: rgba(119, 216, 255, 0.12);
-  border-color: rgba(119, 216, 255, 0.2);
-  color: var(--cool);
-}
-
-.time-grid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 18px;
-}
-
-.time-block {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 18px;
-  min-width: 0;
-  padding: 14px;
-}
-
-.time-value {
-  display: block;
-  font-size: 1.05rem;
-  margin-top: 10px;
-}
-
-.mini-note {
-  color: var(--soft);
-  line-height: 1.5;
-  margin-top: 18px;
-}
-
-.mini-note.is-ok {
-  color: var(--accent-strong);
-}
-
-.mini-note.is-warn {
-  color: var(--warn);
-}
-
-.mini-note.is-error {
-  color: #ffb4a8;
-}
-
-.stats-grid,
-.details-grid {
-  display: grid;
-  gap: 18px;
-  margin-top: 22px;
-}
-
-.stats-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.details-grid {
-  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.24fr);
-}
-
-.stat-card,
-.panel {
-  animation: rise 0.75s both;
-  padding: 22px;
-}
-
-.stat-card:nth-child(2) {
-  animation-delay: 0.06s;
-}
-
-.stat-card:nth-child(3) {
-  animation-delay: 0.12s;
-}
-
-.panel:nth-child(2) {
-  animation-delay: 0.08s;
-}
-
-.player-row {
-  align-items: flex-end;
-  display: flex;
-  gap: 10px;
-}
-
-.stat-main {
-  font-size: clamp(2.8rem, 5vw, 3.6rem);
+/* Styles for the main value text in status cards */
+.card-value {
+  font-size: 1.2rem;
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-
-.stat-total {
-  color: var(--muted);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1rem;
-  margin-bottom: 8px;
-}
-
-.occupancy-track {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 999px;
-  height: 11px;
-  margin-top: 16px;
-  overflow: hidden;
-}
-
-.occupancy-fill {
-  background: linear-gradient(90deg, var(--accent), var(--cool));
-  border-radius: 999px;
-  height: 100%;
-  transition: width 0.35s ease;
-  width: 0%;
-}
-
-.stat-sub {
-  color: var(--soft);
-  line-height: 1.55;
-  margin-top: 14px;
-  min-height: 48px;
-}
-
-.version-pill {
-  align-self: flex-start;
-  background: rgba(119, 216, 255, 0.12);
-  border: 1px solid rgba(119, 216, 255, 0.22);
-  border-radius: 16px;
-  color: var(--cool);
-  display: inline-flex;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-top: 14px;
-  padding: 10px 14px;
-}
-
-.connection-value {
-  font-size: 1.08rem;
-  line-height: 1.6;
-  margin-top: 14px;
-  word-break: break-all;
-}
-
-.panel-head {
-  align-items: center;
-  display: flex;
-  gap: 12px;
-  justify-content: space-between;
-  margin-bottom: 18px;
-}
-
-.panel-note {
-  color: var(--soft);
-  font-size: 0.92rem;
-}
-
-.motd-row {
-  align-items: center;
-  background:
-    linear-gradient(135deg, rgba(73, 209, 141, 0.08), transparent 55%),
-    rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(73, 209, 141, 0.12);
-  border-radius: 22px;
-  display: flex;
-  min-height: 150px;
-  padding: 22px;
-}
-
-.motd-text {
-  font-size: clamp(1.02rem, 2.1vw, 1.18rem);
-  line-height: 1.7;
-}
-
-.signal-grid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 16px;
-}
-
-.signal-card,
-.met {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 18px;
-}
-
-.signal-card {
-  min-width: 0;
-  padding: 16px;
-}
-
-.signal-value {
-  display: block;
-  line-height: 1.55;
-  margin-top: 10px;
-  word-break: break-word;
-}
-
-.node-head {
-  align-items: center;
-  display: flex;
-  gap: 14px;
-  justify-content: space-between;
-}
-
-.node-id {
-  align-items: center;
-  display: flex;
-  gap: 10px;
-  min-width: 0;
-}
-
-.ndot {
-  background: var(--accent);
-  box-shadow: 0 0 0 6px rgba(73, 209, 141, 0.12);
-  height: 12px;
-  width: 12px;
-}
-
-.ndot.down {
-  background: var(--danger);
-  box-shadow: 0 0 0 6px rgba(255, 140, 122, 0.12);
-}
-
-.node-name {
-  font-size: 1.08rem;
-  font-weight: 700;
-}
-
-.node-lat {
-  color: var(--soft);
-  font-size: 0.86rem;
-}
-
-.uptime-tag {
-  background: rgba(73, 209, 141, 0.12);
-  border: 1px solid rgba(73, 209, 141, 0.2);
-  border-radius: 999px;
-  color: var(--accent-strong);
-  font-size: 12px;
-  padding: 8px 12px;
-}
-
-.metrics {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 20px 0 18px;
-}
-
-.met {
-  padding: 18px 12px;
+  color: var(--text-main);
+  line-height: 1.2;
   text-align: center;
 }
 
-.met-val {
-  font-size: 1.8rem;
-  font-weight: 700;
+/* Specific sizing for the MOTD status card due to potentially longer content */
+.motd-card {
+  min-width: 200px;
+  max-width: 350px;
+}
+
+/* Styles for the server icon image */
+#serverIconImg {
+  width: 80px;
+  border-radius: 15px;
+  object-fit: cover;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+/* Styles for the server name text, including gradient and typography */
+#serverName {
+  background: #730c9c;
+  background: linear-gradient(
+    147deg,
+    rgba(115, 12, 156, 1) 0%,
+    rgba(166, 78, 217, 1) 82%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: 2.2rem;
+  letter-spacing: -1px;
+  text-transform: uppercase;
   line-height: 1;
+  margin: 0;
 }
 
-.g {
-  color: var(--accent-strong);
-}
-
-.w {
-  color: var(--warn);
-}
-
-.r {
-  color: #ffb4a8;
-}
-
-.p {
-  color: var(--cool);
-}
-
-.bars {
-  align-items: flex-end;
-  display: flex;
-  gap: 8px;
-  height: 84px;
-  padding-top: 12px;
-}
-
-.b {
-  border-radius: 12px 12px 5px 5px;
-  flex: 1;
-  min-height: 10px;
+/* Base styles for the online/offline status indicator dot */
+.status-dot {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
   transition:
-    height 0.3s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.b:hover {
-  transform: translateY(-2px);
+/* Styles for the status dot when the server is online */
+.status-dot.online {
+  background-color: var(--online-green);
+  box-shadow: 0 0 10px var(--online-green);
 }
 
-.b.up {
-  background: linear-gradient(180deg, #88ffc6, #1ea76c);
+/* Styles for the status dot when the server is offline */
+.status-dot.offline {
+  background-color: var(--offline-red);
+  box-shadow: 0 0 10px var(--offline-red);
 }
 
-.b.dn {
-  background: linear-gradient(180deg, #ffc27f, #db625f);
+/* Styles for the status dot when the server is checking/pinging */
+.status-dot.checking {
+  background-color: var(--warn-yellow);
+  box-shadow: 0 0 10px var(--warn-yellow);
+  animation: pulse 1.5s infinite;
 }
 
-.b.placeholder {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.bars-foot {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
+/* Keyframe animation for the pulsing effect of the checking status dot */
 @keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scale(0.95);
+  0% {
+    opacity: 1;
+    transform: scale(1);
   }
-
   50% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  100% {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
+/* Media queries for responsive design on screens up to 768px wide */
+@media (max-width: 768px) {
+  .serverStatus {
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+    width: 90%;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 960px) {
-  .hero,
-  .details-grid,
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    padding: 24px;
-  }
-}
-
-@media (max-width: 720px) {
-  .app-shell {
-    padding: 18px 14px 42px;
-  }
-
-  .hero,
-  .stat-card,
-  .panel {
-    border-radius: 24px;
-    padding: 18px;
-  }
-
-  .srv {
-    align-items: flex-start;
+  /* Adjust status card layout for smaller screens */
+  .status-card {
     flex-direction: column;
   }
 
-  .srv-icon {
-    height: 72px;
-    width: 72px;
-  }
-
-  .hero-actions,
-  .status-line,
-  .node-head,
-  .panel-head {
-    align-items: flex-start;
+  /* Adjust container layout for smaller screens */
+  .container {
     flex-direction: column;
   }
 
-  .action-btn,
-  .online-badge,
-  .status-chip {
-    width: 100%;
+  /* Adjust server icon image size for smaller screens */
+  #serverIconImg {
+    width: 100px;
   }
 
-  .time-grid,
-  .signal-grid,
-  .metrics {
-    grid-template-columns: 1fr;
-  }
-
-  .node-id {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .bars {
-    gap: 6px;
-    height: 72px;
+  /* Adjust status text alignment for smaller screens */
+  #statusText {
+    justify-content: center;
   }
 }

@@ -1,1 +1,0 @@
-# TODO: Change dashboard colors to purple\n\n- [ ] Create TODO.md with steps (done)\n- [ ] Update CSS variables to purple theme\n- [ ] Update backdrop orbs and gradients to purple\n- [ ] Test the changes\n- [ ] Mark complete\n
