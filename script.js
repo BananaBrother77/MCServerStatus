@@ -1,4 +1,4 @@
-const serverIP = 'mcsh.io';
+const serverIP = 'play.cubecraft.net';
 let serverData;
 
 const dot = document.getElementById('statusDot');
@@ -8,6 +8,7 @@ const playersOnline = document.getElementById('playersOnline');
 const playerMax = document.getElementById('playersMax');
 const serverVersion = document.getElementById('serverVersion');
 const motdText = document.getElementById('motdText');
+const copyIpBtn = document.getElementById('copyIpBtn');
 
 async function getServerStatus() {
   dot.className = 'status-dot checking';
@@ -46,21 +47,37 @@ function displayServerStatus() {
 
   if (serverData.players.online > 0) {
     playersOnline.textContent = serverData.players.online;
+  } else {
+    playersOnline.textContent = '0';
   }
 
   if (serverData.players.max > 0) {
     playerMax.textContent = serverData.players.max;
+  } else {
+    playerMax.textContent = 'Unknown';
   }
 
   if (serverData.version) {
-    serverVersion.textContent = serverData.version;
+    serverVersion.textContent = serverData.version.replace(/^\D+/, '');
+  } else {
+    serverVersion.textContent = 'Unknown';
   }
 
   if (serverData.motd.clean.length > 0) {
     motdText.textContent = serverData.motd.clean.join(' ');
+  } else {
+    motdText.textContent = 'A Minecraft Server';
   }
 
-  setTimeout(getServerStatus, 5000);
+  setTimeout(getServerStatus, 10000);
 }
+
+copyIpBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(serverIP);
+  copyIpBtn.textContent = 'Copied';
+  setTimeout(() => {
+    copyIpBtn.textContent = 'Copy IP';
+  }, 800);
+});
 
 getServerStatus();

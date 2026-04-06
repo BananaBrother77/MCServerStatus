@@ -54,15 +54,15 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid var(--panel-border);
   border-radius: 20px;
-  padding: 15px 20px;
+  padding: 30px 50px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 50px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
 }
 
 /* Container for server icon and server information (name, status) */
@@ -94,7 +94,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
   flex-shrink: 0;
 }
 
@@ -115,6 +114,7 @@ body {
   background-color: var(--panel-border);
   margin: 8px 0;
   border-radius: 2px;
+  flex-shrink: 0;
 }
 
 /* Styles for the main value text in status cards */
@@ -132,9 +132,45 @@ body {
   max-width: 350px;
 }
 
+/* Container for the action button section */
+.actions {
+  display: flex;
+  justify-content: center;
+  width: auto;
+}
+
+/* Modern gradient button with elevation effects */
+.btn-primary {
+  background: linear-gradient(135deg, #8e43c7, #7636af);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 3px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
+  filter: brightness(1.1);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
 /* Styles for the server icon image */
 #serverIconImg {
-  width: 80px;
+  width: 110px;
   border-radius: 15px;
   object-fit: cover;
   backdrop-filter: blur(5px);
@@ -157,7 +193,7 @@ body {
   color: transparent;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
-  font-size: 2.2rem;
+  font-size: clamp(2rem, 6vw, 3.2rem);
   letter-spacing: -1px;
   text-transform: uppercase;
   line-height: 1;
@@ -211,32 +247,67 @@ body {
   }
 }
 
+.server-ip-section {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 30px 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 70px;
+  width: 30%;
+  max-width: 250px;
+  margin-top: 20px;
+  text-align: center;
+}
+
 /* Media queries for responsive design on screens up to 768px wide */
 @media (max-width: 768px) {
   .serverStatus {
     flex-direction: column;
-    text-align: center;
-    gap: 25px;
-    width: 90%;
+    padding: 25px 15px;
+    gap: 30px;
+    width: calc(100% - 40px);
+    margin: 20px auto;
   }
 
-  /* Adjust status card layout for smaller screens */
-  .status-card {
+  .server-ip-section {
     flex-direction: column;
+    padding: 25px 15px;
+    gap: 30px;
+    width: calc(100% - 40px);
+    margin: 20px auto;
   }
 
-  /* Adjust container layout for smaller screens */
+  .stats-row {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+
+  .status-card {
+    flex: 1 1 120px;
+    min-width: 100px;
+  }
+
   .container {
     flex-direction: column;
+    text-align: center;
   }
 
-  /* Adjust server icon image size for smaller screens */
   #serverIconImg {
-    width: 100px;
+    width: 70px;
   }
 
-  /* Adjust status text alignment for smaller screens */
   #statusText {
     justify-content: center;
+  }
+
+  .actions,
+  .btn-primary {
+    width: 100%;
   }
 }
