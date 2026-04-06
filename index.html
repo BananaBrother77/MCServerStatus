@@ -19,7 +19,7 @@
             />
           </div>
           <div class="server-info">
-            <h1 id="serverName">CubeCraft</h1>
+            <h1 id="serverName">DonutSMP</h1>
             <p id="statusText">
               <span class="status-dot" id="statusDot"></span>
               <span id="statusState">Pinging...</span>
@@ -53,19 +53,31 @@
         </div>
       </section>
 
-      <section class="server-ip-section">
-        <!-- Actions: Copy IP -->
-        <div class="actions">
-          <div>
-            <span class="card-label">Server IP:</span>
-            <span class="card-value">play.cubecraft.net</span>
-            <div class="divider"></div>
-            <button id="copyIpBtn" class="btn-primary">
-              <span id="copyBtnLabel">Copy IP</span>
-            </button>
+      <!-- Bottom Layout Wrapper -->
+      <div class="stats-row bottom-container">
+        <section class="server-ip-section">
+          <div class="actions">
+            <div>
+              <span class="card-label">Server IP:</span>
+              <span id="serverIpValue" class="card-value">play.cubecraft.net</span>
+              <div class="divider"></div>
+              <button id="copyIpBtn" class="btn-primary">
+                <span id="copyBtnLabel">Copy IP</span>
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section class="online-players-section serverStatus">
+          <div class="serverInfo">
+            <span class="card-label">Online Players</span>
+            <div class="divider"></div>
+            <div id="playerHeadsContainer" class="stats-row player-grid">
+              <!-- Player avatars will be injected here by script.js -->
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <script src="script.js"></script>

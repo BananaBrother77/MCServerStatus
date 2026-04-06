@@ -17,6 +17,8 @@
 /* Universal box-sizing for consistent element dimensions */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Body styles for overall page layout, background, and typography */
@@ -63,6 +65,13 @@ body {
   gap: 50px;
   width: 100%;
   max-width: 1300px;
+}
+
+#statusText {
+  margin-top: 8px;
+  margin-left: 5px;
+    font-size: 0.9rem;
+  font-weight: 600;
 }
 
 /* Container for server icon and server information (name, status) */
@@ -262,7 +271,67 @@ body {
   width: 30%;
   max-width: 250px;
   margin-top: 20px;
+  height: auto;
   text-align: center;
+}
+
+.bottom-container {
+  width: 100%;
+  max-width: 1300px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.online-players-section {
+  flex: 1;
+  margin-top: 20px;
+  padding: 30px;
+}
+
+.online-players-section .serverInfo {
+  width: 100%;
+  align-items: flex-start;
+}
+
+.player-grid {
+  justify-content: flex-start !important;
+  width: 100%;
+  gap: 8px;
+}
+
+.player-tag {
+  display: flex;
+  align-items: center;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  padding: 5px 12px 5px 5px;
+  border-radius: 10px;
+  gap: 10px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.player-tag:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.player-head-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.player-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.no-players-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 /* Media queries for responsive design on screens up to 768px wide */
