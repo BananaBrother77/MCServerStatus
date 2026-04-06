@@ -1,5 +1,5 @@
 // Server variables
-const serverIP = '191.96.231.2:11026';
+const serverIP = 'donutsmp.net';
 let serverData;
 
 // Elements
