@@ -4,31 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MCServerStatus | Login</title>
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="./login.css" />
   </head>
   <body>
-    <article class="serverStatus login-panel">
-      <div class="serverInfo">
-        <h1 id="serverName">Login</h1>
-        <p class="card-label">Restricted Access</p>
+    <article class="login-card">
+      <div class="login-header">
+        <h2 class="login-title">Login</h2>
+        <p class="login-desc">Restricted Access</p>
       </div>
-
-      <div class="divider"></div>
-
-      <div class="login-content">
+      <div class="login-body">
+        <div class="divider"></div>
         <input
           id="input"
           type="password"
           name="password"
-          placeholder="Enter password..."
+          class="form-input"
+          placeholder="Password"
           autocomplete="current-password"
           aria-label="Password"
-          class="glass-input"
         />
-        <button id="loginBtn" type="button" class="btn-primary">
-          <span>Unlock Dashboard</span>
+        <p id="errorText"></p>
+        <button id="loginBtn" type="button" class="btn-primary btn-login">
+          <span>Unlock</span>
         </button>
-        <p id="errorText" class="no-players-text login-error"></p>
       </div>
     </article>
 
