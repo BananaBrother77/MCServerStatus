@@ -1,1 +1,19 @@
-# Fix Auth Redirect Issue&#10;&#10;## Pending Steps&#10;- [ ] 1. Create wrangler.toml with mcserverstatus config + ASSETS binding&#10;- [ ] 2. git add . &amp;&amp; git commit -m "Fix deploy: add wrangler.toml for mcserverstatus with ASSETS" &amp;&amp; git push&#10;- [ ] 3. Verify deploy (check versions/secrets if needed)&#10;- [ ] 4. Test: clear cookies on live site → auto /login/login.html → login → dashboard&#10;- [ ] 5. wrangler tail logs if issues&#10;&#10;## Expected Flow&#10;- No token → 302 to /login/login.html (assets served)&#10;- POST password == SITE_PASSWORD → set auth_token cookie&#10;- Valid token → serve index.html/script.js dashboard
+# Fix Auth Redirect Issue
+
+## Completed Steps
+
+- [x] 1. Create wrangler.toml with mcserverstatus config + ASSETS binding
+- [x] 2. git add/commit/push wrangler.toml + TODO.md
+
+## Pending Steps
+
+- [ ] 3. Deploy & verify (wrangler deploy or CI)
+- [ ] 4. Test: clear cookies on https://mcserverstatus.[subdomain].workers.dev → auto redirect /login/login.html → enter password → dashboard access
+- [ ] 5. wrangler tail --name mcserverstatus for logs if needed
+
+## Expected Flow (Confirmed No Errors)
+
+- No auth_token cookie → Worker 302 to /login/login.html (ASSETS serves it)
+- Login form POST /login → if password == env.SITE_PASSWORD, set HttpOnly cookie → redirect /
+- Valid cookie → serve index.html + script.js dashboard (MC status)
+- All files syntax-clean; GitHub CI should deploy on push.
