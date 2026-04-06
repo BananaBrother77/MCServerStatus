@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 /* Root CSS variables for color palette */
 :root {
   --bg-purple: #390c4d;
@@ -70,7 +72,7 @@ body {
 #statusText {
   margin-top: 8px;
   margin-left: 5px;
-    font-size: 0.9rem;
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
@@ -174,7 +176,7 @@ body {
 }
 
 .btn-primary:active {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.99);
 }
 
 /* Styles for the server icon image */
@@ -307,7 +309,9 @@ body {
   padding: 5px 12px 5px 5px;
   border-radius: 10px;
   gap: 10px;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 .player-tag:hover {
@@ -332,6 +336,59 @@ body {
   font-size: 0.9rem;
   font-style: italic;
   opacity: 0.8;
+}
+
+/* Login Specific Styles */
+.login-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 450px;
+  margin-top: 10vh;
+  padding: 40px;
+  gap: 20px;
+  text-align: center;
+}
+
+.login-panel #serverName {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.login-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.glass-input {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 15px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.glass-input:focus {
+  border-color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(210, 168, 247, 0.18);
+}
+
+.login-error {
+  color: var(--offline-red) !important;
+  text-align: center;
+  height: 1.2rem;
+  font-weight: 500;
 }
 
 /* Media queries for responsive design on screens up to 768px wide */

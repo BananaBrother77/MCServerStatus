@@ -1,35 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MCServerStatus | Login</title>
-    <link rel="stylesheet" href="./login.css">
-</head>
-<body>
-    <article class="login-card">
-        <div class="login-header">
-            <h2 class="login-title">MCServerStatus</h2>
-            <p class="login-desc">Please enter the password to get access</p>
-        </div>
-        <div class="login">
-            <input
-                id="input"
-                type="password"
-                name="password"
-                placeholder="Password"
-                autocomplete="current-password"
-                aria-label="Password"
-            >
-            <p id="errorText"></p>
-            <button id="loginBtn" type="button">
-                <span>Unlock</span>
-                <span></span>
-            </button>
-        </div>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <article class="serverStatus login-panel">
+      <div class="serverInfo">
+        <h1 id="serverName">Login</h1>
+        <p class="card-label">Restricted Access</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="login-content">
+        <input
+          id="input"
+          type="password"
+          name="password"
+          placeholder="Enter password..."
+          autocomplete="current-password"
+          aria-label="Password"
+          class="glass-input"
+        />
+        <button id="loginBtn" type="button" class="btn-primary">
+          <span>Unlock Dashboard</span>
+        </button>
+        <p id="errorText" class="no-players-text login-error"></p>
+      </div>
     </article>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="./login.js"></script>
-</body>
+  </body>
 </html>
