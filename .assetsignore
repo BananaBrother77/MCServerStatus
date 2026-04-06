@@ -1,0 +1,10 @@
+_worker.js
+wrangler.toml
+wrangler.jsonc
+TODO.md
+.git/
+.gitignore
+.prettierrc
+.vite/
+.wrangler/
+.assetsignore
