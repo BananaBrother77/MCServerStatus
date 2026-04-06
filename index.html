@@ -7,48 +7,100 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="dashboard" id="main-card">
-      <div class="progress-container">
-        <div id="progress-bar"></div>
+    <div class="pg" id="root">
+      <div class="progress-wrap">
+        <div class="progress-fill" id="prog"></div>
       </div>
 
-      <div class="content">
-        <div class="header">
-          <img
-            id="server-icon"
-            src="https://api.mcsrvstat.us/icon/hypixel.net"
-            alt="Icon"
-          />
-          <div class="title-group">
-            <h2 id="display-name">DarksideSMP</h2>
-            <div id="status-pill" class="status-pill offline">Checking...</div>
+      <div class="top">
+        <div class="srv">
+          <div class="srv-icon">
+            <img
+              id="srv-img"
+              src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
+              alt="logo"
+            />
+          </div>
+          <div>
+            <div class="srv-name">DarksideSMP</div>
+            <div class="srv-addr" id="srv-addr">darksidesmp.mcsh.io</div>
+            <div class="online-badge">
+              <span class="badge-dot loading" id="badge-dot"></span
+              ><span id="badge-txt">Checking...</span>
+            </div>
           </div>
         </div>
+        <div class="ts" id="ts">—</div>
+      </div>
 
-        <div class="ip-box" onclick="copyIP()" title="Click to copy">
-          <span class="ip-text" id="ip-val">darksidesmp.mcsh.io</span>
-          <span style="font-size: 0.8rem">📋</span>
+      <div class="big-stats">
+        <div class="bs">
+          <div class="bs-n" id="pl-online">—</div>
+          <div class="bs-l">Online</div>
         </div>
-
-        <div id="motd" class="motd">Loading server information...</div>
-
-        <div class="stats">
-          <div class="stat-card">
-            <span class="stat-label">PLAYERS</span>
-            <span id="player-count" class="stat-val">0 / 0</span>
+        <div class="bs">
+          <div class="bs-n" id="pl-max">—</div>
+          <div class="bs-l">Max slots</div>
+        </div>
+        <div class="bs">
+          <div class="bs-n" id="ver" style="font-size: 18px; padding-top: 6px">
+            —
           </div>
-          <div class="stat-card">
-            <span class="stat-label">VERSION</span>
-            <span id="version-val" class="stat-val">---</span>
+          <div class="bs-l">Version</div>
+        </div>
+      </div>
+
+      <div class="motd-row">
+        <div class="motd-text" id="motd">Loading...</div>
+      </div>
+
+      <div class="ip-row" onclick="copyIP()">
+        <span class="ip-val" id="ip-val">darksidesmp.mcsh.io</span>
+        <span class="ip-copy" id="ip-copy-lbl">Copy IP</span>
+      </div>
+
+      <div class="node-block">
+        <div class="section-lbl">Node status — Ares · London</div>
+        <div class="node-head">
+          <div class="node-id">
+            <div class="ndot loading" id="ndot"></div>
+            <span class="node-name">Ares</span>
+            <span class="node-lat" id="nlat">—</span>
+          </div>
+          <span class="uptime-tag" id="nuptag">Loading...</span>
+        </div>
+        <div class="metrics">
+          <div class="met">
+            <div class="met-val p" id="ncpu">—</div>
+            <div class="met-lbl">CPU</div>
+          </div>
+          <div class="met">
+            <div class="met-val p" id="nmem">—</div>
+            <div class="met-lbl">Memory</div>
+          </div>
+          <div class="met">
+            <div class="met-val p" id="nstor">—</div>
+            <div class="met-lbl">Storage</div>
           </div>
         </div>
-
-        <div class="footer">
-          <span id="last-update">Initializing...</span>
-          <span style="cursor: pointer" onclick="manualRefresh()">
-            Update now 🔄
-          </span>
+        <div class="bars" id="bars">
+          <div class="b" style="height: 50%"></div>
+          <div class="b" style="height: 50%"></div>
+          <div class="b" style="height: 50%"></div>
+          <div class="b" style="height: 50%"></div>
+          <div class="b" style="height: 50%"></div>
+          <div class="b" style="height: 50%"></div>
+          <div class="b" style="height: 50%"></div>
         </div>
+        <div class="bars-foot">
+          <span class="bars-ft">7 days ago</span
+          ><span class="bars-ft">Today</span>
+        </div>
+      </div>
+
+      <div class="footer-row">
+        <span class="footer-t" id="footer-t">Initializing...</span>
+        <button class="rfbtn" onclick="manualRefresh()">↻ Refresh now</button>
       </div>
     </div>
 

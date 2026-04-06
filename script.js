@@ -2,68 +2,117 @@ const SERVER_IP = '191.96.231.2:11026';
 const REFRESH_TIME = 60;
 let timeLeft = REFRESH_TIME;
 
-async function fetchData() {
-  const card = document.getElementById('main-card');
-  card.classList.add('loading-shimmer');
+function metricColor(val, type) {
+  if (val == null) return 'p';
+  if (type === 'cpu') return val >= 80 ? 'r' : val >= 55 ? 'w' : 'g';
+  return val >= 80 ? 'r' : 'g';
+}
 
+function renderBars(history) {
+  const c = document.getElementById('bars');
+  c.innerHTML = history
+    .slice(-7)
+    .map((v) => {
+      if (v == null || v < 0) return '<div class="b" style="height:40%"></div>';
+      const pct = Math.max(8, Math.min(100, 10 + (v - 99) * 90));
+      const cls = v < 99 ? 'dn' : 'up';
+      return `<div class="b ${cls}" style="height:${pct.toFixed(1)}%"></div>`;
+    })
+    .join('');
+}
+
+async function fetchNodeStatus() {
   try {
-    const response = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}`);
-    const data = await response.json();
-
-    // Status Badge & Icon
-    const pill = document.getElementById('status-pill');
-    const icon = document.getElementById('server-icon');
-
-    if (data.online) {
-      pill.innerText = 'Online';
-      pill.className = 'status-pill online';
-      icon.src = data.icon || `https://api.mcsrvstat.us/icon/${SERVER_IP}`;
-
-      document.getElementById('motd').innerText =
-        data.motd.clean[0] || 'Ein Minecraft Server';
-      document.getElementById('player-count').innerText =
-        `${data.players.online} / ${data.players.max}`;
-      document.getElementById('version-val').innerText = data.version || '???';
-    } else {
-      pill.innerText = 'Offline';
-      pill.className = 'status-pill offline';
-      document.getElementById('motd').innerText =
-        'Server ist aktuell nicht erreichbar.';
-      document.getElementById('player-count').innerText = '0 / 0';
+    const res = await fetch('https://api.maximerix.dev/mcsh/outages/data', {
+      cache: 'no-store',
+    });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const london = data.regions?.find((r) => r.id === 'london');
+    const ares = london?.nodes?.find((n) => n.name === 'Ares');
+    if (!ares) return;
+    const dot = document.getElementById('ndot');
+    dot.className = 'ndot ' + (ares.online === true ? '' : 'down');
+    const tag = document.getElementById('nuptag');
+    if (ares.uptime7d) {
+      const good = parseFloat(ares.uptime7d) >= 99;
+      tag.textContent = ares.uptime7d;
+      tag.className = 'uptime-tag' + (good ? '' : ' warn');
     }
-
-    const jetzt = new Date();
-    document.getElementById('last-update').innerText =
-      `Update: ${jetzt.toLocaleTimeString()}`;
-  } catch (error) {
-    console.error('Fehler:', error);
-    document.getElementById('last-update').innerText = 'Fehler beim Laden';
-  } finally {
-    card.classList.remove('loading-shimmer');
-    timeLeft = REFRESH_TIME; // Reset Timer
+    if (ares.latency != null)
+      document.getElementById('nlat').textContent = ares.latency + 'ms';
+    const cpu = document.getElementById('ncpu');
+    const mem = document.getElementById('nmem');
+    const stor = document.getElementById('nstor');
+    if (ares.load != null) {
+      cpu.textContent = ares.load + '%';
+      cpu.className = 'met-val ' + metricColor(ares.load, 'cpu');
+    }
+    if (ares.memory != null) {
+      mem.textContent = ares.memory + '%';
+      mem.className = 'met-val ' + metricColor(ares.memory, 'mem');
+    }
+    if (ares.storage != null) {
+      stor.textContent = ares.storage + '%';
+      stor.className = 'met-val ' + metricColor(ares.storage, 'mem');
+    }
+    const hist = ares.uptimeHistory7d || ares.uptimeHistory14d;
+    if (hist) renderBars(hist);
+  } catch (e) {
+    console.error('[node]', e);
   }
 }
 
-// Timer Logik für Progress Bar
+async function fetchData() {
+  try {
+    const r = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}`);
+    const d = await r.json();
+    const dot = document.getElementById('badge-dot');
+    const txt = document.getElementById('badge-txt');
+    if (d.online) {
+      dot.className = 'badge-dot on';
+      txt.textContent = 'Online';
+      document.getElementById('srv-img').src =
+        d.icon || `https://api.mcsrvstat.us/icon/${SERVER_IP}`;
+      document.getElementById('motd').textContent =
+        d.motd?.clean?.[0] || 'A Minecraft Server';
+      document.getElementById('pl-online').textContent = d.players.online;
+      document.getElementById('pl-max').textContent = d.players.max;
+      document.getElementById('ver').textContent = d.version || '???';
+    } else {
+      dot.className = 'badge-dot off';
+      txt.textContent = 'Offline';
+      document.getElementById('motd').textContent =
+        'Server is currently unreachable.';
+      document.getElementById('pl-online').textContent = '0';
+      document.getElementById('pl-max').textContent = '0';
+    }
+    document.getElementById('footer-t').textContent =
+      'Updated ' + new Date().toLocaleTimeString();
+    document.getElementById('ts').textContent = new Date().toLocaleTimeString();
+  } catch (e) {
+    document.getElementById('footer-t').textContent = 'Failed to load';
+  }
+  timeLeft = REFRESH_TIME;
+  await fetchNodeStatus();
+}
+
 setInterval(() => {
   timeLeft--;
-  const percentage = ((REFRESH_TIME - timeLeft) / REFRESH_TIME) * 100;
-  document.getElementById('progress-bar').style.width = percentage + '%';
-
-  if (timeLeft <= 0) {
-    fetchData();
-  }
+  const pct = ((REFRESH_TIME - timeLeft) / REFRESH_TIME) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+  if (timeLeft <= 0) fetchData();
 }, 1000);
 
 function manualRefresh() {
+  timeLeft = REFRESH_TIME;
   fetchData();
 }
-
 function copyIP() {
-  const ip = document.getElementById('ip-val').innerText;
-  navigator.clipboard.writeText(ip);
-  alert('IP kopiert: ' + ip);
+  navigator.clipboard.writeText(document.getElementById('ip-val').textContent);
+  const lbl = document.getElementById('ip-copy-lbl');
+  lbl.textContent = 'Copied!';
+  setTimeout(() => (lbl.textContent = 'Copy IP'), 1500);
 }
 
-// Erster Start
 fetchData();
