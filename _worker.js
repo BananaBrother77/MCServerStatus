@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
 
     console.log('PATH:', url.pathname);
-    console.log('AUTH_SECRET defined:', !!env.AUTH_SECRET);
+    console.log('AUTH_SECRET first 4 chars:', env.AUTH_SECRET?.substring(0, 4));
     const cookie = request.headers.get('Cookie') || '';
     console.log('COOKIE:', cookie);
 
