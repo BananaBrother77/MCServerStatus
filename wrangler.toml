@@ -1,0 +1,1 @@
+name = "mcserverstatus"&#10;main = "_worker.js"&#10;compatibility_date = "2024-10-01"&#10;&#10;[[assets]]&#10;directory = "."&#10;binding = "ASSETS"
