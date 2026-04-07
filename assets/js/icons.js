@@ -1,26 +1,13 @@
-import {
-  createIcons,
-  Server,
-  Users,
-  Info,
-  MessageSquare,
-  Activity,
-  Clock,
-  Cpu,
-  MemoryStick,
-  HardDrive,
-} from 'lucide';
-
-createIcons({
+lucide.createIcons({
   icons: {
-    Server,
-    Users,
-    Info,
-    MessageSquare,
-    Activity,
-    Clock,
-    Cpu,
-    MemoryStick,
-    HardDrive,
+    Server: lucide.Server,
+    Users: lucide.Users,
+    Info: lucide.Info,
+    MessageSquare: lucide.MessageSquare,
+    Activity: lucide.Activity,
+    Clock: lucide.Clock,
+    Cpu: lucide.Cpu,
+    MemoryStick: lucide.MemoryStick,
+    HardDrive: lucide.HardDrive,
   },
 });
