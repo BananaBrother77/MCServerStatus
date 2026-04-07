@@ -32,6 +32,7 @@
         <div class="stats-row">
           <!-- Players Card -->
           <div class="status-card">
+            <i data-lucide="users"></i>
             <span class="card-label">Online</span>
             <span id="playersOnline" class="card-value">0</span>
             <div class="divider"></div>
@@ -40,6 +41,7 @@
 
           <!-- Version Card -->
           <div class="status-card">
+            <i data-lucide="info"></i>
             <span class="card-label">Version</span>
             <div class="divider"></div>
             <span id="serverVersion" class="card-value">1.20.1</span>
@@ -47,6 +49,7 @@
 
           <!-- MOTD Card -->
           <div class="status-card motd-card">
+            <i data-lucide="message-square"></i>
             <span class="card-label">Message</span>
             <div class="divider"></div>
             <span id="motdText" class="card-value">Nothing to see here</span>
@@ -64,9 +67,11 @@
               <div class="divider"></div>
               <div class="buttons">
                 <button id="copyIpBtn" class="btn-primary">
+                  <i data-lucide="copy"></i>
                   <span id="copyBtnLabel">Copy IP</span>
                 </button>
                 <button id="editBtn" class="btn-primary">
+                  <i data-lucide="pencil"></i>
                   <span id="editBtnLabel">Edit</span>
                 </button>
               </div>
@@ -100,27 +105,32 @@
 
         <div class="stats-row">
           <div class="status-card">
+            <i data-lucide="activity"></i>
             <span class="card-label">Latency</span>
             <div class="divider"></div>
             <span id="nodeLatency" class="card-value">--</span>
           </div>
           <div class="status-card">
+            <i data-lucide="clock"></i>
             <span class="card-label">Uptime</span>
             <div class="divider"></div>
             <span id="nodeUptime" class="card-value">--</span>
             <div id="nodeUptimeBars" class="uptime-bars"></div>
           </div>
           <div class="status-card">
+            <i data-lucide="cpu"></i>
             <span class="card-label">CPU Usage</span>
             <div class="divider"></div>
             <span id="nodeCPU" class="card-value">--</span>
           </div>
           <div class="status-card">
+            <i data-lucide="memory-stick"></i>
             <span class="card-label">Memory Usage</span>
             <div class="divider"></div>
             <span id="nodeMemory" class="card-value">--</span>
           </div>
           <div class="status-card">
+            <i data-lucide="hard-drive"></i>
             <span class="card-label">Storage Usage</span>
             <div class="divider"></div>
             <span id="nodeStorage" class="card-value">--</span>
@@ -235,5 +245,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script type="module" src="icons.js"></script>
   </body>
 </html>

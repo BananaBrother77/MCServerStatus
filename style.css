@@ -117,6 +117,13 @@ body {
   flex-shrink: 0;
 }
 
+.status-card svg {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
 /* Styles for the small text labels above the values in status cards */
 .card-label {
   font-size: 0.7rem;
@@ -194,7 +201,6 @@ body {
   gap: 12px;
 }
 
-/* Modern gradient button with elevation effects */
 .btn-primary {
   background: linear-gradient(135deg, #8e43c7, #7636af);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -208,11 +214,20 @@ body {
   font-size: 1rem;
   cursor: pointer;
   margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
     filter 0.2s ease;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary svg {
+  width: 18px;
+  height: 18px;
 }
 
 .btn-primary:hover {
