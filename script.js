@@ -1,11 +1,13 @@
 // Server variables
-const serverIP = '191.96.231.2:11026';
+let serverIP = localStorage.getItem('serverIP') || '191.96.231.2:11026';
+let serverName = localStorage.getItem('serverName') || 'DarksideSMP';
 let serverData;
 let nodeData;
 
 // Elements
 const dot = document.getElementById('statusDot');
 const statusState = document.getElementById('statusState');
+const serverNameText = document.getElementById('serverName');
 const serverIconImg = document.getElementById('serverIconImg');
 const playersOnline = document.getElementById('playersOnline');
 const playerMax = document.getElementById('playersMax');
@@ -22,8 +24,18 @@ const nodeLatency = document.getElementById('nodeLatency');
 const nodeUptime = document.getElementById('nodeUptime');
 const nodeUptimeBars = document.getElementById('nodeUptimeBars');
 
+const editOverlay = document.getElementById('overlayBackdrop');
+const editBtn = document.getElementById('editBtn');
+const applyBtn = document.getElementById('applyBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const serverNameInput = document.getElementById('serverNameInput');
+const serverIpInput = document.getElementById('serverIpInput');
+const errorText = document.getElementById('errorText');
+
 // Fetch server information using mcsrvstat.us API
 async function getServerStatus() {
+  serverNameText.textContent = serverName;
+
   dot.className = 'status-dot checking';
   nodeStatusDot.className = 'status-dot checking';
 
@@ -57,11 +69,17 @@ async function getServerStatus() {
 
     displayServerStatus();
     displayNodeStatus();
+    saveServerInfo();
   } catch (error) {
     console.error('Critical Fetch Error:', error);
     serverData = { online: false };
     displayServerStatus();
   }
+}
+
+function saveServerInfo() {
+  localStorage.setItem('serverIP', serverIP);
+  localStorage.setItem('serverName', serverName);
 }
 
 // Display server information
@@ -77,10 +95,6 @@ function displayServerStatus() {
     : 'status-dot offline';
   statusState.textContent = serverData.online ? 'Online' : 'Offline';
 
-  // Display player count
-  playersOnline.textContent = serverData.players?.online ?? '0';
-  playerMax.textContent = serverData.players?.max ?? 'Unknown';
-
   // Display server IP
   if (serverIP === '191.96.231.2:11026')
     serverIpValue.textContent = 'darksidesmp.mcsh.io';
@@ -88,14 +102,26 @@ function displayServerStatus() {
     serverIpValue.textContent = serverIP;
   }
 
+  // Display server status of DarksideSMP when offline
+  if (serverIP === '191.96.231.2:11026' && serverData.online === false) {
+    playerMax.textContent = '20';
+    serverVersion.textContent = '1.21.11';
+    motdText.textContent = 'Very DARK in here...';
+    getOnlinePlayers();
+    return;
+  }
+
+  // Display player count
+  playersOnline.textContent = serverData.players?.online ?? '0';
+  playerMax.textContent = serverData.players?.max ?? 'Unknown';
+
   // Display server version
   serverVersion.textContent = serverData.version
     ? serverData.version.replace(/^\D+/, '')
     : 'Unknown';
 
   // Display MOTD
-  motdText.textContent =
-    serverData.motd?.clean?.join(' ') || 'Unknown';
+  motdText.textContent = serverData.motd?.clean?.join(' ') || 'Unknown';
 
   // Populate the player heads list
   getOnlinePlayers();
@@ -215,3 +241,29 @@ function updateUI(node) {
 }
 
 getServerStatus();
+
+editBtn.addEventListener('click', () => {
+  editOverlay.classList.add('show');
+});
+
+cancelBtn.addEventListener('click', () => {
+  editOverlay.classList.remove('show');
+});
+
+applyBtn.addEventListener('click', applyChanges);
+
+function applyChanges() {
+  const newName = serverNameInput.value.trim();
+  const newIP = serverIpInput.value.trim();
+
+  if (!newName || !newIP) {
+    errorText.textContent = 'Please fill out all fields.';
+    return;
+  }
+
+  serverIP = newIP;
+  serverName = newName;
+  errorText.textContent = '';
+  editOverlay.classList.remove('show');
+  getServerStatus();
+}

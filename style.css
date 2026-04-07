@@ -148,7 +148,6 @@ body {
 
 /* Uptime History Bars */
 
-
 .bar {
   flex: 1;
   border-radius: 2px;
@@ -187,6 +186,12 @@ body {
   display: flex;
   justify-content: center;
   width: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 }
 
 /* Modern gradient button with elevation effects */
@@ -439,6 +444,135 @@ body {
   font-weight: 500;
 }
 
+#overlayBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  z-index: 9998;
+}
+
+#overlayBackdrop.show {
+  display: flex;
+}
+
+#editOverlay {
+  position: fixed;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background: var(--bg-purple);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 30px 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+  min-height: 500px;
+}
+
+.edit-title {
+  font-weight: 800;
+  font-size: 3rem;
+  margin-bottom: 10px;
+  background: linear-gradient(147deg, #7b11a5 0%, #a64ed9 82%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.edit-desc {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.edit-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 12px 15px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px rgba(142, 67, 199, 0.2);
+}
+
+.btn {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    filter 0.2s;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+#applyBtn {
+  background: linear-gradient(135deg, #8e43c7, #7636af);
+}
+
+#applyBtn:hover {
+  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
+}
+
+#cancelBtn {
+  background: linear-gradient(135deg, #a19c9c, #a2a2a2);
+}
+
+#cancelBtn:hover {
+  box-shadow: 0 15px 25px rgba(207, 204, 213, 0.3);
+}
+
+#errorText {
+  color: var(--offline-red);
+  font-size: 0.85rem;
+  margin-top: 10px;
+  min-height: 1.2rem;
+  font-weight: 600;
+}
+
 /* Media queries for responsive design on screens up to 768px wide */
 @media (max-width: 768px) {
   .serverStatus {
@@ -483,5 +617,10 @@ body {
   .actions,
   .btn-primary {
     width: 100%;
+  }
+
+  #editOverlay {
+    top: 50%;
+    max-width: 300px;
   }
 }
