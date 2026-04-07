@@ -243,14 +243,36 @@ function updateUI(node) {
 getServerStatus();
 
 editBtn.addEventListener('click', () => {
-  editOverlay.classList.add('show');
+  if (!editOverlay.classList.contains('show')) {
+    editOverlay.classList.add('show');
+  }
 });
 
 cancelBtn.addEventListener('click', () => {
-  editOverlay.classList.remove('show');
+  closeEditOverlay();
 });
 
 applyBtn.addEventListener('click', applyChanges);
+
+serverNameInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') applyChanges();
+});
+
+serverIpInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') applyChanges();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeEditOverlay();
+  }
+});
+
+function closeEditOverlay() {
+  if (editOverlay.classList.contains('show')) {
+    editOverlay.classList.remove('show');
+  }
+}
 
 function applyChanges() {
   const newName = serverNameInput.value.trim();
