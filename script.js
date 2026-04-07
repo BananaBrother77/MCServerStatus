@@ -244,6 +244,9 @@ getServerStatus();
 
 editBtn.addEventListener('click', () => {
   if (!editOverlay.classList.contains('show')) {
+    serverNameInput.value = serverName;
+    serverIpInput.value = serverIP;
+    errorText.textContent = '';
     editOverlay.classList.add('show');
   }
 });

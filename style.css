@@ -573,6 +573,91 @@ body {
   font-weight: 600;
 }
 
+.site-footer {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 1140px;
+  padding: 25px 30px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-logo {
+  background: #730c9c;
+  background: linear-gradient(
+    147deg,
+    rgba(115, 12, 156, 1) 0%,
+    rgba(166, 78, 217, 1) 82%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.footer-social {
+  display: flex;
+  gap: 20px;
+}
+
+.social-link {
+  color: var(--text-muted);
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+  display: flex;
+}
+
+.social-link:hover {
+  color: var(--text-main);
+  transform: translateY(-2px);
+}
+
+.social-link svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.footer-bottom {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 5px;
+  opacity: 0.8;
+}
+
+.text-heart {
+  color: #ff4d4d;
+}
+
+.text-code-muted {
+  color: var(--text-muted);
+}
+
 /* Media queries for responsive design on screens up to 768px wide */
 @media (max-width: 768px) {
   .serverStatus {
@@ -622,5 +707,12 @@ body {
   #editOverlay {
     top: 50%;
     max-width: 300px;
+  }
+}
+
+@media (min-width: 769px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
