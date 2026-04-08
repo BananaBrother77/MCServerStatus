@@ -8,6 +8,30 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
+    <div class="serverListWrapper">
+      <div class="serverList">
+        <span>
+          <i data-lucide="server" width="35" height="35"></i>
+        </span>
+      </div>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h3>Servers</h3>
+        <button id="closeServerListBtn">&times;</button>
+      </div>
+      <ul class="sidebar-links">
+        <li>
+          <button id="darksidesmpBtn" class="serverBtn">
+            <i data-lucide="server"></i> DarksideSMP
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div id="overlay" class="sidebar-overlay"></div>
+
     <main class="app-wrapper">
       <section class="serverStatus">
         <!-- Header: Icon, Name, and Online Dot -->

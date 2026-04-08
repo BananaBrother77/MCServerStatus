@@ -23,6 +23,11 @@ const serverIpValue = document.getElementById('serverIpValue');
 const serverVersion = document.getElementById('serverVersion');
 const motdText = document.getElementById('motdText');
 const copyIpBtn = document.getElementById('copyIpBtn');
+const serverListBtn = document.querySelector('.serverList');
+const closeServerListBtn = document.getElementById('closeServerListBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const darksidesmpBtn = document.getElementById('darksidesmpBtn');
 const nodeStatusDot = document.getElementById('nodeStatusDot');
 const nodeStatusState = document.getElementById('nodeStatusState');
 const nodeCPU = document.getElementById('nodeCPU');
@@ -308,3 +313,39 @@ function updateUrlParameter(newServerIP) {
 
   window.history.pushState({}, '', url);
 }
+
+function updateQueryParameter(key, value) {
+  let url = new URL(window.location.href);
+
+  url.searchParams.set(key, value);
+
+  window.location.href = url.href;
+}
+
+serverListBtn.addEventListener('click', openServerList);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 's') openServerList();
+});
+
+closeServerListBtn.addEventListener('click', closeServerList);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeServerList();
+});
+
+function openServerList() {
+  if (sidebar.classList.contains('active')) {
+    closeServerList();
+    return;
+  }
+  sidebar.classList.add('active');
+  overlay.classList.add('active');
+}
+
+function closeServerList() {
+  sidebar.classList.remove('active');
+  overlay.classList.remove('active');
+}
+
+darksidesmpBtn.addEventListener('click', () => {
+  updateQueryParameter('server', '191.96.231.2:11026');
+});
