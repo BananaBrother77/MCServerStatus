@@ -1,3 +1,5 @@
+import { fetchServerData, fetchNodeData } from './api.js';
+
 // URL Params
 const urlParams = new URLSearchParams(window.location.search);
 
