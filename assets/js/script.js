@@ -1,17 +1,21 @@
 import { fetchServerData, fetchNodeData } from './api.js';
 
+// Servers
+let servers = JSON.parse(localStorage.getItem('servers')) || [
+  {
+    name: 'DarksideSMP',
+    ip: '191.96.231.2:11026',
+  },
+];
+
+document.addEventListener('DOMContentLoaded', loadServerList);
+
 // URL Params
 const urlParams = new URLSearchParams(window.location.search);
 
 // Server variables
-let serverIP =
-  urlParams.get('server') ||
-  localStorage.getItem('serverIP') ||
-  '191.96.231.2:11026';
-
-let serverName =
-  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
-
+let serverIP = urlParams.get('server') || localStorage.getItem('serverIP') || '191.96.231.2:11026';
+let serverName = urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
 updateUrl({ server: serverIP, name: serverName });
 
 let serverData;
@@ -30,6 +34,8 @@ const serverVersion = document.getElementById('serverVersion');
 const motdText = document.getElementById('motdText');
 const copyIpBtn = document.getElementById('copyIpBtn');
 const serverListBtn = document.querySelector('.serverList');
+const addToListCheckbox = document.getElementById('addToServerListCheckBox');
+const sidebarLinks = document.querySelector('.sidebar-links');
 const closeServerListBtn = document.getElementById('closeServerListBtn');
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('overlay');
@@ -41,7 +47,6 @@ const nodeMemory = document.getElementById('nodeMemory');
 const nodeStorage = document.getElementById('nodeStorage');
 const nodeLatency = document.getElementById('nodeLatency');
 const nodeUptime = document.getElementById('nodeUptime');
-const nodeUptimeBars = document.getElementById('nodeUptimeBars');
 
 const editOverlay = document.getElementById('overlayBackdrop');
 const editBtn = document.getElementById('editBtn');
@@ -50,6 +55,35 @@ const cancelBtn = document.getElementById('cancelBtn');
 const serverNameInput = document.getElementById('serverNameInput');
 const serverIpInput = document.getElementById('serverIpInput');
 const errorText = document.getElementById('errorText');
+
+function loadServerList() {
+  sidebarLinks.innerHTML = '';
+
+  servers.forEach((server) => {
+    const li = document.createElement('li');
+
+    li.innerHTML = `
+    <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
+      <i data-lucide="server"></i> <span>${server.name}</span>
+    </button>
+  `;
+
+    sidebarLinks.appendChild(li);
+
+    const newBtn = li.querySelector('.serverBtn');
+    newBtn.addEventListener('click', () => {
+      serverIP = server.ip;
+      serverName = server.name;
+      updateUrl({ server: serverIP, name: serverName });
+      closeServerList();
+      getServerStatus();
+    });
+  });
+
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+}
 
 // Fetch server information using mcsrvstat.us API
 async function getServerStatus() {
@@ -109,11 +143,7 @@ function displayServerStatus() {
   statusState.textContent = serverData.online ? 'Online' : 'Offline';
 
   // Display server IP
-  if (serverIP === '191.96.231.2:11026')
-    serverIpValue.textContent = 'darksidesmp.mcsh.io';
-  else {
-    serverIpValue.textContent = serverIP;
-  }
+  serverIpValue.textContent = serverIP;
 
   // Display server status of DarksideSMP when offline
   if (serverIP === '191.96.231.2:11026' && serverData.online === false) {
@@ -300,14 +330,22 @@ function applyChanges() {
     return;
   }
 
+  if (addToListCheckbox.checked) {
+    const exists = servers.some((s) => s.ip === newIP);
+    if (!exists) {
+      servers.push({ name: newName, ip: newIP });
+      localStorage.setItem('servers', JSON.stringify(servers));
+      loadServerList();
+    }
+  }
+
   serverIP = newIP;
   serverName = newName;
+
   errorText.textContent = '';
   closeEditOverlay();
-  updateUrl({
-    server: serverIP,
-    name: serverName,
-  });
+
+  updateUrl({ server: serverIP, name: serverName });
   getServerStatus();
 }
 
