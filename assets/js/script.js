@@ -1,28 +1,35 @@
 import { fetchServerData, fetchNodeData } from './api.js';
 
-// Servers
+// ============================================================
+// STATE
+// ============================================================
+
 let servers = JSON.parse(localStorage.getItem('servers')) || [
-  {
-    name: 'DarksideSMP',
-    ip: '191.96.231.2:11026',
-  },
+  { name: 'DarksideSMP', ip: '191.96.231.2:11026', showNode: 'Ares' },
 ];
 
-document.addEventListener('DOMContentLoaded', loadServerList);
+// nodeSettings: { [serverIP]: nodeName | 'none' }
+let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
 
-// URL Params
 const urlParams = new URLSearchParams(window.location.search);
 
-// Server variables
-let serverIP = urlParams.get('server') || localStorage.getItem('serverIP') || '191.96.231.2:11026';
-let serverName = urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
-updateUrl({ server: serverIP, name: serverName });
+let serverIP =
+  urlParams.get('server') ||
+  localStorage.getItem('serverIP') ||
+  '191.96.231.2:11026';
+let serverName =
+  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
 
 let serverData;
 let nodeData;
 let statusTimeout;
 
-// Elements
+updateUrl({ server: serverIP, name: serverName });
+
+// ============================================================
+// ELEMENT REFS
+// ============================================================
+
 const dot = document.getElementById('statusDot');
 const statusState = document.getElementById('statusState');
 const serverNameText = document.getElementById('serverName');
@@ -47,31 +54,50 @@ const nodeMemory = document.getElementById('nodeMemory');
 const nodeStorage = document.getElementById('nodeStorage');
 const nodeLatency = document.getElementById('nodeLatency');
 const nodeUptime = document.getElementById('nodeUptime');
+const nodeStatusSection = document.getElementById('nodeStatusSection');
+const setNodeBtn = document.getElementById('setNodeBtn');
 
-const editOverlay = document.getElementById('overlayBackdrop');
+const editOverlay = document.getElementById('editOverlayBackdrop');
+const changeNodeOverlay = document.getElementById('changeNodeOverlayBackdrop');
+const changeNodeBtn = document.getElementById('changeNodeBtn');
 const editBtn = document.getElementById('editBtn');
-const applyBtn = document.getElementById('applyBtn');
-const cancelBtn = document.getElementById('cancelBtn');
+const applyEditBtn = document.getElementById('applyEditBtn');
+const applyNodeChangeBtn = document.getElementById('applyNodeChangeBtn');
+const cancelEditBtn = document.getElementById('cancelEditBtn');
+const cancelNodeChangeBtn = document.getElementById('cancelNodeChangeBtn');
 const serverNameInput = document.getElementById('serverNameInput');
 const serverIpInput = document.getElementById('serverIpInput');
 const errorText = document.getElementById('errorText');
+
+const selectBtn = document.getElementById('selectBtn');
+const selectOptions = document.getElementById('selectOptions');
+const selectedText = document.getElementById('selectedOptionText');
+
+let pendingNodeValue = null;
+
+// ============================================================
+// INIT
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', loadServerList);
+
+// ============================================================
+// SERVER LIST
+// ============================================================
 
 function loadServerList() {
   sidebarLinks.innerHTML = '';
 
   servers.forEach((server) => {
     const li = document.createElement('li');
-
     li.innerHTML = `
-    <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
-      <i data-lucide="server"></i> <span>${server.name}</span>
-    </button>
-  `;
-
+      <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
+        <i data-lucide="server"></i> <span>${server.name}</span>
+      </button>
+    `;
     sidebarLinks.appendChild(li);
 
-    const newBtn = li.querySelector('.serverBtn');
-    newBtn.addEventListener('click', () => {
+    li.querySelector('.serverBtn').addEventListener('click', () => {
       serverIP = server.ip;
       serverName = server.name;
       updateUrl({ server: serverIP, name: serverName });
@@ -80,15 +106,15 @@ function loadServerList() {
     });
   });
 
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// Fetch server information using mcsrvstat.us API
+// ============================================================
+// FETCH
+// ============================================================
+
 async function getServerStatus() {
   serverNameText.textContent = serverName;
-
   dot.className = 'status-dot checking';
   nodeStatusDot.className = 'status-dot checking';
 
@@ -98,24 +124,23 @@ async function getServerStatus() {
       fetchNodeData(),
     ]);
 
-    if (serverResult.status === 'fulfilled') {
-      serverData = serverResult.value;
-      console.log('MC Server Data:', serverData);
-    } else {
-      console.error('MC API Error:', serverResult.reason);
-      serverData = { online: false };
-    }
+    serverData =
+      serverResult.status === 'fulfilled'
+        ? serverResult.value
+        : (console.error('MC API Error:', serverResult.reason),
+          { online: false });
 
-    if (nodeResult.status === 'fulfilled') {
-      nodeData = nodeResult.value;
-      console.log('Node Data:', nodeData);
-    } else {
-      console.error('Node API Error:', nodeResult.reason);
-      nodeData = { online: false };
-    }
+    nodeData =
+      nodeResult.status === 'fulfilled'
+        ? nodeResult.value
+        : (console.error('Node API Error:', nodeResult.reason),
+          { online: false });
+
+    console.log('MC Server Data:', serverData);
+    console.log('Node Data:', nodeData);
 
     displayServerStatus();
-    displayNodeStatus();
+    displayNodeStatus(getSavedNode());
     saveServerInfo();
   } catch (error) {
     console.error('Critical Fetch Error:', error);
@@ -129,24 +154,36 @@ function saveServerInfo() {
   localStorage.setItem('serverName', serverName);
 }
 
-// Display server information
+// ============================================================
+// NODE SETTINGS — per-server persistence
+// ============================================================
+
+function getSavedNode() {
+  return nodeSettings[serverIP] ?? 'Ares';
+}
+
+function saveNodeForCurrentServer(nodeName) {
+  nodeSettings[serverIP] = nodeName;
+  localStorage.setItem('nodeSettings', JSON.stringify(nodeSettings));
+}
+
+// ============================================================
+// DISPLAY — server
+// ============================================================
+
 function displayServerStatus() {
-  // Display server icon or BananaBrother77 profile picture
   serverIconImg.src =
     serverData.icon ||
     'https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg';
 
-  // Display server status
   dot.className = serverData.online
     ? 'status-dot online'
     : 'status-dot offline';
   statusState.textContent = serverData.online ? 'Online' : 'Offline';
-
-  // Display server IP
   serverIpValue.textContent = serverIP;
 
-  // Display server status of DarksideSMP when offline
-  if (serverIP === '191.96.231.2:11026' && serverData.online === false) {
+  // Fallback defaults for the DarksideSMP server when offline
+  if (serverIP === '191.96.231.2:11026' && !serverData.online) {
     playerMax.textContent = '20';
     serverVersion.textContent = '1.21.11';
     motdText.textContent = 'Very DARK in here...';
@@ -154,22 +191,15 @@ function displayServerStatus() {
     return;
   }
 
-  // Display player count
   playersOnline.textContent = serverData.players?.online ?? '0';
   playerMax.textContent = serverData.players?.max ?? 'Unknown';
-
-  // Display server version
   serverVersion.textContent = serverData.version
     ? serverData.version.replace(/^\D+/, '')
     : 'Unknown';
-
-  // Display MOTD
   motdText.textContent = serverData.motd?.clean?.join(' ') || 'Unknown';
 
-  // Populate the player heads list
   getOnlinePlayers();
 
-  // Loop the check every 30 seconds
   clearTimeout(statusTimeout);
   statusTimeout = setTimeout(getServerStatus, 30000);
 }
@@ -178,33 +208,33 @@ function getOnlinePlayers() {
   const headsContainer = document.getElementById('playerHeadsContainer');
   headsContainer.innerHTML = '';
 
-  if (!serverData || !serverData.online) {
+  if (!serverData?.online) {
     headsContainer.innerHTML =
       '<span class="no-players-text">Server is unreachable or offline.</span>';
     return;
   }
 
   const players = serverData.players?.list || [];
+
   if (players.length > 0) {
     players.forEach((player) => {
       const identifier = player.uuid || player.name;
-      const displayName = player.name;
 
-      const playerWrapper = document.createElement('div');
-      playerWrapper.classList.add('player-tag');
+      const tag = document.createElement('div');
+      tag.classList.add('player-tag');
 
       const img = document.createElement('img');
       img.src = `https://mc-heads.net/avatar/${identifier}/32`;
-      img.alt = displayName;
+      img.alt = player.name;
       img.classList.add('player-head-icon');
 
       const nameSpan = document.createElement('span');
-      nameSpan.textContent = displayName;
+      nameSpan.textContent = player.name;
       nameSpan.classList.add('player-name');
 
-      playerWrapper.appendChild(img);
-      playerWrapper.appendChild(nameSpan);
-      headsContainer.appendChild(playerWrapper);
+      tag.appendChild(img);
+      tag.appendChild(nameSpan);
+      headsContainer.appendChild(tag);
     });
   } else if (serverData.players?.online > 0) {
     headsContainer.innerHTML =
@@ -215,52 +245,62 @@ function getOnlinePlayers() {
   }
 }
 
-// Copy IP to clipboard using the btn
-copyIpBtn.addEventListener('click', () => {
-  navigator.clipboard.writeText(serverIpValue.textContent);
-  copyIpBtn.textContent = 'Copied';
-  setTimeout(() => {
-    copyIpBtn.textContent = 'Copy IP';
-  }, 800);
-});
+// ============================================================
+// DISPLAY — node
+// ============================================================
 
-function displayNodeStatus() {
-  const london = nodeData.regions.find((r) => r.id === 'london');
-  const ares = london.nodes.find((n) => n.name === 'Ares');
+function displayNodeStatus(targetName) {
+  const nodeName = document.getElementById('nodeName');
 
-  console.log(ares);
+  if (targetName === 'none') {
+    nodeStatusSection.style.display = 'none';
+    setNodeBtn.style.display = 'flex';
+    return;
+  }
 
-  updateUI(ares);
+  nodeStatusSection.style.display = 'flex';
+  setNodeBtn.style.display = 'none';
+
+  if (!nodeData?.regions) {
+    nodeStatusDot.className = 'status-dot offline';
+    nodeStatusState.textContent = 'Unavailable';
+    return;
+  }
+
+  for (const region of nodeData.regions) {
+    const found = region.nodes.find(
+      (n) => n.name.toLowerCase() === targetName.toLowerCase(),
+    );
+    if (found) {
+      nodeName.textContent = found.name;
+      updateNodeUI(found);
+      return;
+    }
+  }
+
+  nodeStatusDot.className = 'status-dot offline';
+  nodeStatusState.textContent = 'Node not found';
 }
 
 function getUsageClass(value, type) {
   if (value == null) return '';
   const val = parseFloat(value);
 
-  if (type === 'cpu') {
-    if (val >= 80) return 'usage-high';
-    if (val >= 60) return 'usage-medium';
-    return 'usage-low';
-  }
+  if (type === 'cpu')
+    return val >= 80 ? 'usage-high' : val >= 60 ? 'usage-medium' : 'usage-low';
+  if (type === 'latency')
+    return val >= 150 ? 'usage-high' : val >= 60 ? 'usage-medium' : 'usage-low';
+  if (type === 'uptime')
+    return val < 98.5
+      ? 'usage-high'
+      : val < 99.9
+        ? 'usage-medium'
+        : 'usage-low';
 
-  if (type === 'latency') {
-    if (val >= 150) return 'usage-high';
-    if (val >= 60) return 'usage-medium';
-    return 'usage-low';
-  }
-
-  if (type === 'uptime') {
-    if (val < 98.5) return 'usage-high';
-    if (val < 99.9) return 'usage-medium';
-    return 'usage-low';
-  }
-
-  if (val >= 85) return 'usage-high';
-  if (val >= 70) return 'usage-medium';
-  return 'usage-low';
+  return val >= 85 ? 'usage-high' : val >= 70 ? 'usage-medium' : 'usage-low';
 }
 
-function updateUI(node) {
+function updateNodeUI(node) {
   if (!node) return;
 
   nodeStatusDot.className = node.online
@@ -269,59 +309,61 @@ function updateUI(node) {
   nodeStatusState.textContent = node.online ? 'Online' : 'Offline';
 
   nodeCPU.textContent = node.load != null ? `${node.load}%` : '--';
-  nodeCPU.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
-
   nodeMemory.textContent = node.memory != null ? `${node.memory}%` : '--';
-  nodeMemory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
-
   nodeStorage.textContent = node.storage != null ? `${node.storage}%` : '--';
-  nodeStorage.className = `card-value ${getUsageClass(node.storage, 'mem')}`;
-
   nodeLatency.textContent = node.latency != null ? `${node.latency} ms` : '--';
-  nodeLatency.className = `card-value ${getUsageClass(node.latency, 'latency')}`;
-
   nodeUptime.textContent = node.uptime7d != null ? `${node.uptime7d}` : '--';
+
+  nodeCPU.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
+  nodeMemory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
+  nodeStorage.className = `card-value ${getUsageClass(node.storage, 'mem')}`;
+  nodeLatency.className = `card-value ${getUsageClass(node.latency, 'latency')}`;
   nodeUptime.className = `card-value ${getUsageClass(node.uptime7d, 'uptime')}`;
 }
 
-getServerStatus();
+// ============================================================
+// COPY IP
+// ============================================================
 
-editBtn.addEventListener('click', () => {
-  if (!editOverlay.classList.contains('show')) {
+copyIpBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(serverIpValue.textContent);
+  copyIpBtn.textContent = 'Copied';
+  setTimeout(() => {
+    copyIpBtn.textContent = 'Copy IP';
+  }, 800);
+});
+
+// ============================================================
+// EDIT SERVER OVERLAY
+// ============================================================
+
+editBtn.addEventListener('click', () => showOverlay(editOverlay));
+
+cancelEditBtn.addEventListener('click', () => closeOverlay(editOverlay));
+
+applyEditBtn.addEventListener('click', applyServerChanges);
+serverNameInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') applyServerChanges();
+});
+serverIpInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') applyServerChanges();
+});
+
+function showOverlay(target) {
+  target.classList.add('show');
+
+  if (target === editOverlay) {
     serverNameInput.value = serverName;
     serverIpInput.value = serverIP;
     errorText.textContent = '';
-    editOverlay.classList.add('show');
-  }
-});
-
-cancelBtn.addEventListener('click', () => {
-  closeEditOverlay();
-});
-
-applyBtn.addEventListener('click', applyChanges);
-
-serverNameInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') applyChanges();
-});
-
-serverIpInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') applyChanges();
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeEditOverlay();
-  if (e.key === 'Escape') closeServerList();
-  if (e.key === 's') openServerList();
-});
-
-function closeEditOverlay() {
-  if (editOverlay.classList.contains('show')) {
-    editOverlay.classList.remove('show');
   }
 }
 
-function applyChanges() {
+function closeOverlay(target) {
+  target.classList.remove('show');
+}
+
+function applyServerChanges() {
   const newName = serverNameInput.value.trim();
   const newIP = serverIpInput.value.trim();
 
@@ -330,38 +372,80 @@ function applyChanges() {
     return;
   }
 
-  if (addToListCheckbox.checked) {
-    const exists = servers.some((s) => s.ip === newIP);
-    if (!exists) {
-      servers.push({ name: newName, ip: newIP });
-      localStorage.setItem('servers', JSON.stringify(servers));
-      loadServerList();
-    }
+  if (addToListCheckbox.checked && !servers.some((s) => s.ip === newIP)) {
+    servers.push({ name: newName, ip: newIP });
+    localStorage.setItem('servers', JSON.stringify(servers));
+    loadServerList();
   }
 
   serverIP = newIP;
   serverName = newName;
 
   errorText.textContent = '';
-  closeEditOverlay();
-
+  closeOverlay(editOverlay);
   updateUrl({ server: serverIP, name: serverName });
   getServerStatus();
 }
 
-function updateUrl(params) {
-  const url = new URL(window.location);
+// ============================================================
+// CHANGE NODE OVERLAY
+// ============================================================
 
-  Object.keys(params).forEach((key) => {
-    url.searchParams.set(key, params[key]);
-  });
+changeNodeBtn.addEventListener('click', openChangeNodeOverlay);
+setNodeBtn.addEventListener('click', openChangeNodeOverlay);
 
-  window.history.pushState({}, '', url);
+function openChangeNodeOverlay() {
+  // Pre-select the dropdown to the currently saved node for this server
+  const current = getSavedNode();
+  const match = [...selectOptions.querySelectorAll('li[data-value]')].find(
+    (li) =>
+      li.getAttribute('data-value').toLowerCase() === current.toLowerCase(),
+  );
+
+  selectedText.textContent = match ? match.textContent : 'Choose node...';
+  pendingNodeValue = current === 'none' ? 'none' : match ? current : null;
+
+  showOverlay(changeNodeOverlay);
 }
 
-serverListBtn.addEventListener('click', openServerList);
+cancelNodeChangeBtn.addEventListener('click', () =>
+  closeOverlay(changeNodeOverlay),
+);
 
+selectBtn.addEventListener('click', () => {
+  selectOptions.classList.toggle('show-menu');
+});
+
+selectOptions.querySelectorAll('li[data-value]').forEach((option) => {
+  option.addEventListener('click', () => {
+    pendingNodeValue = option.getAttribute('data-value');
+    selectedText.textContent = option.textContent;
+    selectOptions.classList.remove('show-menu');
+  });
+});
+
+applyNodeChangeBtn.addEventListener('click', () => {
+  if (pendingNodeValue !== null) {
+    saveNodeForCurrentServer(pendingNodeValue);
+    displayNodeStatus(pendingNodeValue);
+  }
+  closeOverlay(changeNodeOverlay);
+});
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+
+serverListBtn.addEventListener('click', openServerList);
 closeServerListBtn.addEventListener('click', closeServerList);
+
+darksidesmpBtn.addEventListener('click', () => {
+  serverIP = '191.96.231.2:11026';
+  serverName = 'DarksideSMP';
+  updateUrl({ server: serverIP, name: serverName });
+  closeServerList();
+  getServerStatus();
+});
 
 function openServerList() {
   if (sidebar.classList.contains('active')) {
@@ -377,15 +461,32 @@ function closeServerList() {
   overlay.classList.remove('active');
 }
 
-darksidesmpBtn.addEventListener('click', () => {
-  serverIP = '191.96.231.2:11026';
-  serverName = 'DarksideSMP';
+// ============================================================
+// KEYBOARD SHORTCUTS
+// ============================================================
 
-  updateUrl({
-    server: serverIP,
-    name: serverName,
-  });
-
-  closeServerList();
-  getServerStatus();
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeOverlay(editOverlay);
+    closeServerList();
+  }
+  if (e.key === 's') openServerList();
 });
+
+// ============================================================
+// URL HELPERS
+// ============================================================
+
+function updateUrl(params) {
+  const url = new URL(window.location);
+  Object.entries(params).forEach(([key, val]) =>
+    url.searchParams.set(key, val),
+  );
+  window.history.pushState({}, '', url);
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+
+getServerStatus();

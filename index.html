@@ -7,16 +7,21 @@
     <title>MCServerStatus</title>
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
+
   <body>
+    <!-- ============================================================
+         SIDEBAR TOGGLE BUTTON
+         ============================================================ -->
     <div class="serverListWrapper">
       <div class="serverList">
-        <span>
-          <i data-lucide="server" width="35" height="35"></i>
-        </span>
+        <i data-lucide="server" width="35" height="35"></i>
       </div>
     </div>
 
-    <div id="sidebar" class="sidebar">
+    <!-- ============================================================
+         SIDEBAR
+         ============================================================ -->
+    <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <h3>Servers</h3>
         <button id="closeServerListBtn">&times;</button>
@@ -28,21 +33,22 @@
           </button>
         </li>
       </ul>
-    </div>
+    </aside>
 
     <div id="overlay" class="sidebar-overlay"></div>
 
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
     <main class="app-wrapper">
+      <!-- Server Header -->
       <section class="serverStatus">
-        <!-- Header: Icon, Name, and Online Dot -->
         <div class="container">
-          <div class="icon-wrapper">
-            <img
-              src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
-              alt="Server Icon"
-              id="serverIconImg"
-            />
-          </div>
+          <img
+            src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
+            alt="Server Icon"
+            id="serverIconImg"
+          />
           <div class="server-info">
             <h1 id="serverName">DarksideSMP</h1>
             <p id="statusText">
@@ -52,9 +58,7 @@
           </div>
         </div>
 
-        <!-- Stats: Players and Version -->
         <div class="stats-row">
-          <!-- Players Card -->
           <div class="status-card">
             <i data-lucide="users"></i>
             <span class="card-label">Online</span>
@@ -63,7 +67,6 @@
             <span id="playersMax" class="card-value">0</span>
           </div>
 
-          <!-- Version Card -->
           <div class="status-card">
             <i data-lucide="info"></i>
             <span class="card-label">Version</span>
@@ -71,7 +74,6 @@
             <span id="serverVersion" class="card-value">1.20.1</span>
           </div>
 
-          <!-- MOTD Card -->
           <div class="status-card motd-card">
             <i data-lucide="message-square"></i>
             <span class="card-label">Message</span>
@@ -81,7 +83,7 @@
         </div>
       </section>
 
-      <!-- Bottom Layout Wrapper -->
+      <!-- Server IP + Online Players -->
       <div class="stats-row bottom-container">
         <section class="server-ip-section">
           <div class="actions">
@@ -96,6 +98,13 @@
                 <button id="editBtn" class="btn-primary">
                   <span id="editBtnLabel">Edit</span>
                 </button>
+                <button
+                  id="setNodeBtn"
+                  class="btn-primary"
+                  style="display: none"
+                >
+                  <i data-lucide="server"></i> Set Node
+                </button>
               </div>
             </div>
           </div>
@@ -106,19 +115,19 @@
             <span class="card-label">Online Players</span>
             <div class="divider"></div>
             <div id="playerHeadsContainer" class="stats-row player-grid">
-              <!-- Player avatars will be injected here by script.js -->
+              <!-- Player avatars injected by script.js -->
             </div>
           </div>
         </section>
       </div>
 
-      <!-- Node Status Section -->
-      <section class="serverStatus nodeStatus">
+      <!-- Node Status -->
+      <section id="nodeStatusSection" class="serverStatus nodeStatus">
         <div class="container">
           <div class="server-info">
             <span class="card-label">MCServerHost Node Status</span>
             <h1 id="nodeName">Ares</h1>
-            <p id="statusText">
+            <p id="nodeStatusText">
               <span class="status-dot" id="nodeStatusDot"></span>
               <span id="nodeStatusState">Checking...</span>
             </p>
@@ -164,13 +173,20 @@
             href="https://www.mcserverhost.com/status"
             target="_blank"
             class="btn-primary"
-            >All Nodes</a
           >
+            All Nodes
+          </a>
+          <button id="changeNodeBtn" class="btn-primary">Change</button>
         </div>
       </section>
     </main>
 
-    <div id="overlayBackdrop">
+    <!-- ============================================================
+         MODALS
+         ============================================================ -->
+
+    <!-- Edit Server Modal -->
+    <div class="overlayBackdrop" id="editOverlayBackdrop">
       <div id="editOverlay">
         <div class="edit-header">
           <h2 class="edit-title">Edit Server</h2>
@@ -180,16 +196,16 @@
         <div class="edit-content">
           <input
             type="text"
-            name="Server Name"
-            class="edit-input"
             id="serverNameInput"
+            class="edit-input"
+            name="Server Name"
             placeholder="Server Name..."
           />
           <input
             type="text"
-            name="Server IP"
-            class="edit-input"
             id="serverIpInput"
+            class="edit-input"
+            name="Server IP"
             placeholder="Server IP..."
           />
           <label class="custom-checkbox">
@@ -198,12 +214,77 @@
             Add to server list
           </label>
           <p id="errorText"></p>
-          <button class="btn" id="applyBtn">Apply</button>
-          <button class="btn" id="cancelBtn">Cancel</button>
+          <button class="btn" id="applyEditBtn">Apply</button>
+          <button class="btn" id="cancelEditBtn">Cancel</button>
         </div>
       </div>
     </div>
 
+    <!-- Change Node Modal -->
+    <div class="overlayBackdrop" id="changeNodeOverlayBackdrop">
+      <div id="changeNodeOverlay">
+        <div class="edit-header">
+          <h2 class="edit-title">Change Node</h2>
+          <p class="edit-desc">Choose which node status you want to see</p>
+        </div>
+        <div class="divider"></div>
+        <div class="edit-content">
+          <div class="node-select-container">
+            <button id="selectBtn" class="select-button">
+              <span id="selectedOptionText">Choose node...</span>
+              <i data-lucide="chevron-down"></i>
+            </button>
+            <ul id="selectOptions" class="select-options">
+              <li data-value="none">None</li>
+
+              <li class="select-group-label">— London —</li>
+              <li data-value="adonis">Adonis</li>
+              <li data-value="aglaea">Aglaea</li>
+              <li data-value="ajax">Ajax</li>
+              <li data-value="alcyone">Alcyone</li>
+              <li data-value="anteros">Anteros</li>
+              <li data-value="ares">Ares</li>
+              <li data-value="atlas">Atlas</li>
+              <li data-value="artemis">Artemis</li>
+              <li data-value="apollo">Apollo</li>
+              <li data-value="athena">Athena</li>
+              <li data-value="achilles">Achilles</li>
+              <li data-value="aphrodite">Aphrodite</li>
+              <li data-value="aeolus">Aeolus</li>
+              <li data-value="aether">Aether</li>
+              <li data-value="asclepius">Asclepius</li>
+              <li data-value="atreus">Atreus</li>
+
+              <li class="select-group-label">— New York —</li>
+              <li data-value="cronus">Cronus</li>
+              <li data-value="ceres">Ceres</li>
+              <li data-value="dryas">Dryas</li>
+              <li data-value="deimos">Deimos</li>
+
+              <li class="select-group-label">— Singapore —</li>
+              <li data-value="ceto">Ceto</li>
+              <li data-value="cybele">Cybele</li>
+              <li data-value="calliope">Calliope</li>
+              <li data-value="castor">Castor</li>
+              <li data-value="clio">Clio</li>
+              <li data-value="cratos">Cratos</li>
+              <li data-value="caelus">Caelus</li>
+              <li data-value="cassiopeia">Cassiopeia</li>
+              <li data-value="chiron">Chiron</li>
+              <li data-value="calypso">Calypso</li>
+              <li data-value="cerberus">Cerberus</li>
+              <li data-value="circe">Circe</li>
+            </ul>
+          </div>
+          <button class="btn" id="applyNodeChangeBtn">Apply</button>
+          <button class="btn" id="cancelNodeChangeBtn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
     <footer class="site-footer">
       <div class="footer-content">
         <div class="footer-brand">
@@ -216,7 +297,8 @@
             rel="noopener noreferrer"
             class="social-link"
             title="Website"
-            ><svg
+          >
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
               viewBox="0 -960 960 960"
@@ -265,12 +347,15 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Made with</span> <span class="text-heart">❤</span>
-        <span>and</span> <span class="text-code-muted">code</span> —
-        <span>All rights reserved.</span>
+        <span>Made with</span>
+        <span class="text-heart">❤</span>
+        <span>and</span>
+        <span class="text-code-muted">code</span>
+        <span>— All rights reserved.</span>
       </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="assets/js/script.js"></script>
     <script type="module" src="assets/js/api.js"></script>

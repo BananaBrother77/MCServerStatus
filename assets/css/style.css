@@ -1,35 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* Root CSS variables for color palette */
-:root {
-  --bg-purple: #390c4d;
+/* ============================================================
+   VARIABLES
+   ============================================================ */
 
+:root {
+  /* Backgrounds */
+  --bg-purple: #390c4d;
+  --bg-purple-light: #611681;
+
+  /* Panels */
   --panel-bg: rgba(255, 255, 255, 0.05);
   --panel-border: rgba(255, 255, 255, 0.1);
 
+  /* Status colours */
   --online-green: #50fa7b;
   --online-green-shadow: rgba(80, 250, 123, 0.5);
   --warn-yellow: #f1fa8c;
   --offline-red: #ff5555;
 
+  /* Text */
   --text-main: #f8f8f2;
   --text-muted: #bd93f9;
   --text-muted-bright: #cbaafb;
 }
 
-/* Universal box-sizing for consistent element dimensions */
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Body styles for overall page layout, background, and typography */
 body {
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
-  margin: 0;
-  background: #390c4d;
   background: linear-gradient(
     125deg,
     rgba(57, 12, 77, 1) 0%,
@@ -44,124 +52,25 @@ body {
   gap: 20px;
 }
 
-.serverListWrapper {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
-}
+/* ============================================================
+   PANEL / CARD — shared glass style
+   ============================================================ */
 
-.serverList {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: var(--text-muted);
+.status-card,
+.serverStatus,
+.server-ip-section,
+.site-footer {
   background: var(--panel-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--panel-border);
-  border-radius: 14px;
-  padding: 10px 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.serverList:hover {
-  transform: scale(1.03);
-  background: rgba(255, 255, 255, 0.1);
-}
+/* ============================================================
+   LAYOUT — main sections
+   ============================================================ */
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 280px;
-  height: 100%;
-  background: var(--panel-bg);
-  backdrop-filter: blur(15px);
-  border-right: 1px solid var(--panel-border);
-  z-index: 10001;
-  transition: transform 0.3s ease-in-out;
-  transform: translateX(-100%);
-  padding: 20px;
-  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.sidebar.active {
-  transform: translateX(0);
-}
-
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  color: var(--text-main);
-}
-
-#closeServerListBtn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.sidebar-links {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar-links li {
-  margin: 15px 0;
-}
-
-.sidebar-links button {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: 0.2s;
-  background: var(--panel-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--panel-border);
-  border-radius: 14px;
-  padding: 10px 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease;
-}
-
-.sidebar-links button:hover {
-  transform: translateX(5px);
-  color: var(--text-muted-bright);
-  box-shadow: 0 5px 10px rgba(124, 58, 237, 0.3);
-  filter: brightness(1.1);
-}
-
-.sidebar-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
-  z-index: 10000;
-}
-
-.sidebar-overlay.active {
-  display: block;
-}
-
-/* Layout for the row containing multiple status cards */
 .stats-row {
   display: flex;
   flex-direction: row;
@@ -170,14 +79,58 @@ body {
   gap: 12px;
 }
 
-/* Main server status header/dashboard container */
+.bottom-container {
+  width: 100%;
+  max-width: 1300px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  gap: 15px;
+}
+
+.serverInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  width: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.buttons .btn-primary {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.node-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ============================================================
+   SERVER STATUS HEADER
+   ============================================================ */
+
 .serverStatus {
-  background: var(--panel-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--panel-border);
-  border-radius: 20px;
   padding: 20px 50px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -203,183 +156,19 @@ body {
   font-weight: 600;
 }
 
-/* Container for server icon and server information (name, status) */
-.container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: auto;
-  gap: 15px;
-}
-
-/* Container for server name and status text */
-.serverInfo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* Shared Card Style */
-/* Styles for individual status display cards (e.g., players online, version, MOTD) */
-.status-card {
-  background: var(--panel-bg);
-  backdrop-filter: blur(5px);
-  border: 1px solid var(--panel-border);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  border-radius: 15px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.status-card svg {
-  width: 20px;
-  height: 20px;
-  margin-bottom: 8px;
-  color: var(--text-muted);
-}
-
-/* Styles for the small text labels above the values in status cards */
-.card-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-
-/* Styles for the horizontal divider line within status cards */
-.divider {
-  width: 100%;
-  height: 2px;
-  background-color: var(--panel-border);
-  margin: 8px 0;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-/* Styles for the main value text in status cards */
-.card-value {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-main);
-  line-height: 1.2;
-  text-align: center;
-}
-
-/* Uptime History Bars */
-
-.bar {
-  flex: 1;
-  border-radius: 2px;
-  min-height: 4px;
-  background: var(--online-green);
-}
-
-.bar.warn {
-  background: var(--warn-yellow);
-}
-
-.bar.down {
-  background: var(--offline-red);
-}
-
-.usage-low {
-  color: var(--online-green);
-}
-
-.usage-medium {
-  color: var(--warn-yellow);
-}
-
-.usage-high {
-  color: var(--offline-red);
-}
-
-/* Specific sizing for the MOTD status card due to potentially longer content */
-.motd-card {
-  min-width: 200px;
-  max-width: 350px;
-}
-
-/* Container for the action button section */
-.actions {
-  display: flex;
-  justify-content: center;
-  width: auto;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #8e43c7, #7636af);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  display: inline-block;
-  text-decoration: none;
-  color: #ffffff;
-  padding: 10px;
-  border-radius: 12px;
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.btn-primary svg {
-  width: 18px;
-  height: 18px;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
-  filter: brightness(1.1);
-}
-
-.btn-primary:active {
-  transform: translateY(1px) scale(0.99);
-}
-
-.node-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Styles for the server icon image */
 #serverIconImg {
   width: 110px;
-  border-radius: 15px;
   object-fit: cover;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--panel-border);
   border-radius: 15px;
   padding: 10px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
 }
 
-/* Styles for the server name text, including gradient and typography */
 #serverName,
 #nodeName {
-  background: #730c9c;
   background: linear-gradient(
     147deg,
     rgba(115, 12, 156, 1) 0%,
@@ -397,7 +186,90 @@ body {
   margin: 0;
 }
 
-/* Base styles for the online/offline status indicator dot */
+/* ============================================================
+   STATUS CARDS
+   ============================================================ */
+
+.status-card {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  backdrop-filter: blur(5px);
+}
+
+.status-card svg {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
+.card-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.card-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.divider {
+  width: 100%;
+  height: 2px;
+  background-color: var(--panel-border);
+  margin: 8px 0;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.motd-card {
+  min-width: 200px;
+  max-width: 350px;
+}
+
+/* ============================================================
+   UPTIME BARS
+   ============================================================ */
+
+.bar {
+  flex: 1;
+  border-radius: 2px;
+  min-height: 4px;
+  background: var(--online-green);
+}
+
+.bar.warn {
+  background: var(--warn-yellow);
+}
+.bar.down {
+  background: var(--offline-red);
+}
+
+.usage-low {
+  color: var(--online-green);
+}
+.usage-medium {
+  color: var(--warn-yellow);
+}
+.usage-high {
+  color: var(--offline-red);
+}
+
+/* ============================================================
+   STATUS DOT
+   ============================================================ */
+
 .status-dot {
   height: 12px;
   width: 12px;
@@ -409,28 +281,25 @@ body {
     box-shadow 0.3s ease;
 }
 
-/* Styles for the status dot when the server is online */
 .status-dot.online {
   background-color: var(--online-green);
   box-shadow: 0 0 10px var(--online-green);
 }
 
-/* Styles for the status dot when the server is offline */
 .status-dot.offline {
   background-color: var(--offline-red);
   box-shadow: 0 0 10px var(--offline-red);
 }
 
-/* Styles for the status dot when the server is checking/pinging */
 .status-dot.checking {
   background-color: var(--warn-yellow);
   box-shadow: 0 0 10px var(--warn-yellow);
   animation: pulse 1.5s infinite;
 }
 
-/* Keyframe animation for the pulsing effect of the checking status dot */
 @keyframes pulse {
-  0% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -438,19 +307,14 @@ body {
     opacity: 0.5;
     transform: scale(0.9);
   }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
+/* ============================================================
+   SERVER IP SECTION
+   ============================================================ */
+
 .server-ip-section {
-  background: var(--panel-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--panel-border);
-  border-radius: 20px;
   padding: 25px 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -463,12 +327,9 @@ body {
   text-align: center;
 }
 
-.bottom-container {
-  width: 100%;
-  max-width: 1300px;
-  align-items: stretch;
-  justify-content: center;
-}
+/* ============================================================
+   ONLINE PLAYERS
+   ============================================================ */
 
 .online-players-section {
   flex: 1;
@@ -524,60 +385,213 @@ body {
   opacity: 0.8;
 }
 
-/* Login Specific Styles */
-.login-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 450px;
-  margin-top: 10vh;
-  padding: 40px;
-  gap: 20px;
-  text-align: center;
-}
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 
-.login-panel #serverName {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.login-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.glass-input {
-  background: var(--panel-bg);
-  border: 1px solid var(--panel-border);
+.btn-primary {
+  background: linear-gradient(135deg, #8e43c7, #7636af);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 10px;
   border-radius: 12px;
-  padding: 15px;
-  color: var(--text-main);
   font-family: inherit;
+  font-weight: 600;
   font-size: 1rem;
-  width: 100%;
-  outline: none;
+  cursor: pointer;
+  margin-top: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   transition:
-    border-color 0.2s ease,
+    transform 0.2s ease,
     box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    filter 0.2s ease;
 }
 
-.glass-input:focus {
-  border-color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(210, 168, 247, 0.18);
+.btn-primary svg {
+  width: 18px;
+  height: 18px;
 }
 
-.login-error {
-  color: var(--offline-red) !important;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
+  filter: brightness(1.1);
+}
+
+.btn-primary:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    filter 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+#applyEditBtn,
+#applyNodeChangeBtn {
+  background: linear-gradient(135deg, #8e43c7, #7636af);
+}
+
+#applyEditBtn:hover,
+#applyNodeChangeBtn:hover {
+  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
+}
+
+#cancelEditBtn,
+#cancelNodeChangeBtn {
+  background: linear-gradient(135deg, #a19c9c, #a2a2a2);
+}
+
+#cancelEditBtn:hover,
+#cancelNodeChangeBtn:hover {
+  box-shadow: 0 15px 25px rgba(207, 204, 213, 0.3);
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+
+.serverListWrapper {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+}
+
+.serverList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  height: 1.2rem;
-  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 10px 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
-#overlayBackdrop {
+.serverList:hover {
+  transform: scale(1.03);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: var(--panel-bg);
+  backdrop-filter: blur(15px);
+  border-right: 1px solid var(--panel-border);
+  z-index: 10001;
+  padding: 20px;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  color: var(--text-main);
+}
+
+#closeServerListBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-links li {
+  margin: 15px 0;
+}
+
+.sidebar-links button {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 10px 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.sidebar-links button:hover {
+  transform: translateX(5px);
+  color: var(--text-muted-bright);
+  box-shadow: 0 5px 10px rgba(124, 58, 237, 0.3);
+  filter: brightness(1.1);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 10000;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* ============================================================
+   OVERLAYS & MODALS
+   ============================================================ */
+
+.overlayBackdrop {
   display: none;
   position: fixed;
   inset: 0;
@@ -588,11 +602,12 @@ body {
   z-index: 9998;
 }
 
-#overlayBackdrop.show {
+.overlayBackdrop.show {
   display: flex;
 }
 
-#editOverlay {
+#editOverlay,
+#changeNodeOverlay {
   position: fixed;
   top: 38%;
   left: 50%;
@@ -659,6 +674,18 @@ body {
   box-shadow: 0 0 0 3px rgba(142, 67, 199, 0.2);
 }
 
+#errorText {
+  color: var(--offline-red);
+  font-size: 0.85rem;
+  margin-top: 10px;
+  min-height: 1.2rem;
+  font-weight: 600;
+}
+
+/* ============================================================
+   CUSTOM CHECKBOX
+   ============================================================ */
+
 .custom-checkbox {
   display: flex;
   align-items: center;
@@ -701,17 +728,17 @@ body {
   border-color: var(--text-muted-bright);
 }
 
-.checkmark:after {
+.checkmark::after {
   content: '';
   position: absolute;
   display: none;
 }
 
-.custom-checkbox input:checked ~ .checkmark:after {
+.custom-checkbox input:checked ~ .checkmark::after {
   display: block;
 }
 
-.custom-checkbox .checkmark:after {
+.custom-checkbox .checkmark::after {
   left: 6px;
   top: 2.5px;
   width: 5px;
@@ -721,59 +748,159 @@ body {
   transform: rotate(45deg);
 }
 
-.btn {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  padding: 12px;
-  border-radius: 12px;
-  font-family: inherit;
+/* ============================================================
+   CUSTOM SELECT
+   ============================================================ */
+
+.node-select-container {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.select-button {
+  width: 100%;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #923ad6, #502278);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.select-options {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: var(--bg-purple);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  list-style: none;
+  padding: 5px;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.select-options.show-menu {
+  display: block;
+}
+
+.select-options::-webkit-scrollbar {
+  width: 6px;
+}
+.select-options::-webkit-scrollbar-track {
+  background: transparent;
+}
+.select-options::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+.select-options li {
+  padding: 10px;
+  border-radius: 5px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.select-options li:hover {
+  background: var(--bg-purple-light);
+}
+
+.select-group-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  padding: 8px 10px 4px;
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.7;
+}
+
+.select-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: none;
+}
+
+.show-menu {
+  display: block;
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+
+.login-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 450px;
+  margin-top: 10vh;
+  padding: 40px;
+  gap: 20px;
+  text-align: center;
+}
+
+.login-panel #serverName {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.login-content {
   width: 100%;
-  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.glass-input {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 15px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
   transition:
-    transform 0.2s,
-    box-shadow 0.2s,
-    filter 0.2s;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
+.glass-input:focus {
+  border-color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(210, 168, 247, 0.18);
 }
 
-#applyBtn {
-  background: linear-gradient(135deg, #8e43c7, #7636af);
+.login-error {
+  color: var(--offline-red) !important;
+  text-align: center;
+  height: 1.2rem;
+  font-weight: 500;
 }
 
-#applyBtn:hover {
-  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
-}
-
-#cancelBtn {
-  background: linear-gradient(135deg, #a19c9c, #a2a2a2);
-}
-
-#cancelBtn:hover {
-  box-shadow: 0 15px 25px rgba(207, 204, 213, 0.3);
-}
-
-#errorText {
-  color: var(--offline-red);
-  font-size: 0.85rem;
-  margin-top: 10px;
-  min-height: 1.2rem;
-  font-weight: 600;
-}
+/* ============================================================
+   FOOTER
+   ============================================================ */
 
 .site-footer {
-  background: var(--panel-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--panel-border);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 1140px;
   padding: 25px 30px;
@@ -793,7 +920,6 @@ body {
 }
 
 .footer-logo {
-  background: #730c9c;
   background: linear-gradient(
     147deg,
     rgba(115, 12, 156, 1) 0%,
@@ -817,10 +943,10 @@ body {
 
 .social-link {
   color: var(--text-muted);
+  display: flex;
   transition:
     color 0.2s ease,
     transform 0.2s ease;
-  display: flex;
 }
 
 .social-link:hover {
@@ -848,12 +974,14 @@ body {
 .text-heart {
   color: #ff4d4d;
 }
-
 .text-code-muted {
   color: var(--text-muted);
 }
 
-/* Media queries for responsive design on screens up to 768px wide */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
 @media (max-width: 768px) {
   .serverStatus {
     flex-direction: column;
@@ -902,6 +1030,10 @@ body {
   #editOverlay {
     top: 50%;
     max-width: 300px;
+  }
+
+  .node-actions {
+    flex-direction: column;
   }
 }
 
