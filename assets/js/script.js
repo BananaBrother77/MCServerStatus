@@ -1,5 +1,13 @@
+// URL Params
+const urlParams = new URLSearchParams(window.location.search);
+
 // Server variables
-let serverIP = localStorage.getItem('serverIP') || '191.96.231.2:11026';
+let serverIP =
+  urlParams.get('server') ||
+  localStorage.getItem('serverIP') ||
+  '191.96.231.2:11026';
+updateUrlParameter(serverIP);
+
 let serverName = localStorage.getItem('serverName') || 'DarksideSMP';
 let serverData;
 let nodeData;
@@ -290,5 +298,13 @@ function applyChanges() {
   serverName = newName;
   errorText.textContent = '';
   editOverlay.classList.remove('show');
+  updateUrlParameter(serverIP);
   getServerStatus();
+}
+
+function updateUrlParameter(newServerIP) {
+  const url = new URL(window.location);
+  url.searchParams.set('server', newServerIP);
+
+  window.history.pushState({}, '', url);
 }
