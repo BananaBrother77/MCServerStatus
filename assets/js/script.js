@@ -1,3 +1,6 @@
+// Import API function
+import { fetchServerData, fetchNodeData } from './api.js';
+
 // Server variables
 let serverIP = localStorage.getItem('serverIP') || '191.96.231.2:11026';
 let serverName = localStorage.getItem('serverName') || 'DarksideSMP';
@@ -41,14 +44,8 @@ async function getServerStatus() {
 
   try {
     const [serverResult, nodeResult] = await Promise.allSettled([
-      fetch(`https://api.mcsrvstat.us/3/${serverIP}`).then((res) => {
-        if (!res.ok) throw new Error('MC API failed');
-        return res.json();
-      }),
-      fetch('https://api.maximerix.dev/mcsh/outages/data').then((res) => {
-        if (!res.ok) throw new Error('Node API failed');
-        return res.json();
-      }),
+      fetchServerData(serverIP),
+      fetchNodeData()
     ]);
 
     if (serverResult.status === 'fulfilled') {
