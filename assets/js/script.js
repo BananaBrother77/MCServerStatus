@@ -8,11 +8,15 @@ let serverIP =
   urlParams.get('server') ||
   localStorage.getItem('serverIP') ||
   '191.96.231.2:11026';
-updateUrlParameter(serverIP);
 
-let serverName = localStorage.getItem('serverName') || 'DarksideSMP';
+let serverName =
+  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
+
+updateUrl({ server: serverIP, name: serverName });
+
 let serverData;
 let nodeData;
+let statusTimeout;
 
 // Elements
 const dot = document.getElementById('statusDot');
@@ -57,7 +61,7 @@ async function getServerStatus() {
   try {
     const [serverResult, nodeResult] = await Promise.allSettled([
       fetchServerData(serverIP),
-      fetchNodeData()
+      fetchNodeData(),
     ]);
 
     if (serverResult.status === 'fulfilled') {
@@ -136,7 +140,8 @@ function displayServerStatus() {
   getOnlinePlayers();
 
   // Loop the check every 30 seconds
-  setTimeout(getServerStatus, 30000);
+  clearTimeout(statusTimeout);
+  statusTimeout = setTimeout(getServerStatus, 30000);
 }
 
 function getOnlinePlayers() {
@@ -275,9 +280,9 @@ serverIpInput.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeEditOverlay();
-  }
+  if (e.key === 'Escape') closeEditOverlay();
+  if (e.key === 'Escape') closeServerList();
+  if (e.key === 's') openServerList();
 });
 
 function closeEditOverlay() {
@@ -298,35 +303,27 @@ function applyChanges() {
   serverIP = newIP;
   serverName = newName;
   errorText.textContent = '';
-  editOverlay.classList.remove('show');
-  updateUrlParameter(serverIP);
+  closeEditOverlay();
+  updateUrl({
+    server: serverIP,
+    name: serverName,
+  });
   getServerStatus();
 }
 
-function updateUrlParameter(newServerIP) {
+function updateUrl(params) {
   const url = new URL(window.location);
-  url.searchParams.set('server', newServerIP);
+
+  Object.keys(params).forEach((key) => {
+    url.searchParams.set(key, params[key]);
+  });
 
   window.history.pushState({}, '', url);
 }
 
-function updateQueryParameter(key, value) {
-  let url = new URL(window.location.href);
-
-  url.searchParams.set(key, value);
-
-  window.location.href = url.href;
-}
-
 serverListBtn.addEventListener('click', openServerList);
-document.addEventListener('keydown', (e) => {
-  if (e.key === 's') openServerList();
-});
 
 closeServerListBtn.addEventListener('click', closeServerList);
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeServerList();
-});
 
 function openServerList() {
   if (sidebar.classList.contains('active')) {
@@ -343,5 +340,14 @@ function closeServerList() {
 }
 
 darksidesmpBtn.addEventListener('click', () => {
-  updateQueryParameter('server', '191.96.231.2:11026');
+  serverIP = '191.96.231.2:11026';
+  serverName = 'DarksideSMP';
+
+  updateUrl({
+    server: serverIP,
+    name: serverName,
+  });
+
+  closeServerList();
+  getServerStatus();
 });
