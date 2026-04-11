@@ -1,7 +1,9 @@
 // Fetch Minecraft server data
 export async function fetchServerData(serverIP) {
   try {
-    const res = await fetch(`https://api.mcsrvstat.us/3/${serverIP}`);
+    const res = await fetch(
+      `https://api.mcstatus.io/v2/status/java/${serverIP}`,
+    );
     if (!res.ok) throw new Error('MC API failed');
     const data = await res.json();
     return data;

@@ -91,14 +91,14 @@ function loadServerList() {
   servers.forEach((server) => {
     const li = document.createElement('li');
     li.innerHTML = `
-      <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
-        <i data-lucide="server"></i> <span>${server.name}</span>
-      </button>
-    `;
+        <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
+          <i data-lucide="server"></i> <span>${server.name}</span>
+        </button>
+      `;
     sidebarLinks.appendChild(li);
 
     li.querySelector('.serverBtn').addEventListener('click', () => {
-      serverIP = server.ip;
+      serverIP = server.ip_address;
       serverName = server.name;
       updateUrl({ server: serverIP, name: serverName });
       closeServerList();
@@ -193,11 +193,10 @@ function displayServerStatus() {
 
   playersOnline.textContent = serverData.players?.online ?? '0';
   playerMax.textContent = serverData.players?.max ?? 'Unknown';
-  serverVersion.textContent = serverData.version
-    ? serverData.version.replace(/^\D+/, '')
+  serverVersion.textContent = serverData.version.name_clean
+    ? serverData.version.name_clean.replace(/^\D+/, '')
     : 'Unknown';
-  motdText.textContent = serverData.motd?.clean?.join(' ') || 'Unknown';
-
+  motdText.textContent = serverData.motd?.clean || 'Unknown';
   getOnlinePlayers();
 
   clearTimeout(statusTimeout);
@@ -218,18 +217,18 @@ function getOnlinePlayers() {
 
   if (players.length > 0) {
     players.forEach((player) => {
-      const identifier = player.uuid || player.name;
+      const identifier = player.uuid || player.name_raw;
 
       const tag = document.createElement('div');
       tag.classList.add('player-tag');
 
       const img = document.createElement('img');
-      img.src = `https://mc-heads.net/avatar/${identifier}/32`;
-      img.alt = player.name;
+      img.src = `https://minotar.net/avatar/${identifier}/32`;
+      img.alt = player.name_raw;
       img.classList.add('player-head-icon');
 
       const nameSpan = document.createElement('span');
-      nameSpan.textContent = player.name;
+      nameSpan.textContent = player.name_raw;
       nameSpan.classList.add('player-name');
 
       tag.appendChild(img);

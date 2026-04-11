@@ -9,6 +9,6 @@ lucide.createIcons({
     Cpu: lucide.Cpu,
     MemoryStick: lucide.MemoryStick,
     HardDrive: lucide.HardDrive,
-    chevronDown: lucide.ChevronDown,
+    ChevronDown: lucide.ChevronDown,
   },
 });
