@@ -180,7 +180,12 @@ function displayServerStatus() {
     ? 'status-dot online'
     : 'status-dot offline';
   statusState.textContent = serverData.online ? 'Online' : 'Offline';
+  
+  if (serverIP === '191.96.231.2:11026') {
+  serverIpValue.textContent = 'darksidesmp.mcsh.io';
+} else {
   serverIpValue.textContent = serverIP;
+}
 
   // Fallback defaults for the DarksideSMP server when offline
   if (serverIP === '191.96.231.2:11026' && !serverData.online) {
