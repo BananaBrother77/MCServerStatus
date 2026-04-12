@@ -17,6 +17,7 @@ let serverIP =
   urlParams.get('server') ||
   localStorage.getItem('serverIP') ||
   '191.96.231.2:11026';
+
 let serverName =
   urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
 
@@ -98,7 +99,7 @@ function loadServerList() {
     sidebarLinks.appendChild(li);
 
     li.querySelector('.serverBtn').addEventListener('click', () => {
-      serverIP = server.ip_address;
+      serverIP = server.ip;
       serverName = server.name;
       updateUrl({ server: serverIP, name: serverName });
       closeServerList();
@@ -180,12 +181,12 @@ function displayServerStatus() {
     ? 'status-dot online'
     : 'status-dot offline';
   statusState.textContent = serverData.online ? 'Online' : 'Offline';
-  
+
   if (serverIP === '191.96.231.2:11026') {
-  serverIpValue.textContent = 'darksidesmp.mcsh.io';
-} else {
-  serverIpValue.textContent = serverIP;
-}
+    serverIpValue.textContent = 'darksidesmp.mcsh.io';
+  } else {
+    serverIpValue.textContent = serverIP;
+  }
 
   // Fallback defaults for the DarksideSMP server when offline
   if (serverIP === '191.96.231.2:11026' && !serverData.online) {
@@ -446,6 +447,7 @@ closeServerListBtn.addEventListener('click', closeServerList);
 darksidesmpBtn.addEventListener('click', () => {
   serverIP = '191.96.231.2:11026';
   serverName = 'DarksideSMP';
+
   updateUrl({ server: serverIP, name: serverName });
   closeServerList();
   getServerStatus();
