@@ -317,13 +317,13 @@ function updateNodeUI(node) {
   nodeMemory.textContent = node.memory != null ? `${node.memory}%` : '--';
   nodeStorage.textContent = node.storage != null ? `${node.storage}%` : '--';
   nodeLatency.textContent = node.latency != null ? `${node.latency} ms` : '--';
-  nodeUptime.textContent = node.uptime7d != null ? `${node.uptime7d}` : '--';
+  nodeUptime.textContent = node.uptimeOverall != null ? `${node.uptimeOverall}` : '--';
 
   nodeCPU.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
   nodeMemory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
   nodeStorage.className = `card-value ${getUsageClass(node.storage, 'mem')}`;
   nodeLatency.className = `card-value ${getUsageClass(node.latency, 'latency')}`;
-  nodeUptime.className = `card-value ${getUsageClass(node.uptime7d, 'uptime')}`;
+  nodeUptime.className = `card-value ${getUsageClass(node.uptimeOverall, 'uptime')}`;
 }
 
 // ============================================================
