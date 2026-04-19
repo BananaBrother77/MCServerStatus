@@ -169,50 +169,51 @@ function saveNodeForCurrentServer(nodeName) {
 // ============================================================
 
 function displayServerStatus() {
+  updateServerIcon();
+  updateOnlineStatus();
+  updateServerIpDisplay();
+  updateServerDetails();
+  getOnlinePlayers();
+
+  if (serverData.online) {
+    clearTimeout(statusTimeout);
+    statusTimeout = setTimeout(getServerStatus, 30000);
+  }
+}
+
+function updateServerIcon() {
   serverIconImg.src =
     serverData.icon ||
     'https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg';
+}
 
+function updateOnlineStatus() {
   dot.className = serverData.online
     ? 'status-dot online'
     : 'status-dot offline';
   statusState.textContent = serverData.online ? 'Online' : 'Offline';
+}
 
-  // Early return for any offline server
+function updateServerIpDisplay() {
+  serverIpValue.textContent =
+    serverIP === '191.96.231.2:11026' ? 'darksidesmp.mcsh.io' : serverIP;
+}
+
+function updateServerDetails() {
   if (!serverData.online) {
     playersOnline.textContent = '0';
     playerMax.textContent = '--';
     serverVersion.textContent = '--';
     motdText.textContent = '--';
-    getOnlinePlayers();
-    return;
-  }
-
-  if (serverIP === '191.96.231.2:11026') {
-    serverIpValue.textContent = 'darksidesmp.mcsh.io';
-  } else {
-    serverIpValue.textContent = serverIP;
-  }
-
-  // Fallback defaults for the DarksideSMP server when offline
-  if (serverIP === '191.96.231.2:11026' && !serverData.online) {
-    playerMax.textContent = '20';
-    serverVersion.textContent = '1.21.11';
-    motdText.textContent = 'Very DARK in here...';
-    getOnlinePlayers();
     return;
   }
 
   playersOnline.textContent = serverData.players?.online ?? '0';
   playerMax.textContent = serverData.players?.max ?? 'Unknown';
-  serverVersion.textContent = serverData.version.name_clean
+  serverVersion.textContent = serverData.version?.name_clean
     ? serverData.version.name_clean.replace(/^\D+/, '')
     : 'Unknown';
   motdText.textContent = serverData.motd?.clean || 'Unknown';
-  getOnlinePlayers();
-
-  clearTimeout(statusTimeout);
-  statusTimeout = setTimeout(getServerStatus, 30000);
 }
 
 function getOnlinePlayers() {
