@@ -169,6 +169,15 @@ function saveNodeForCurrentServer(nodeName) {
 // ============================================================
 
 function displayServerStatus() {
+  if (
+    serverData.motd?.clean ===
+      `■ Server Is Paused\nJoin to auto-start ${serverIP}` &&
+    serverIP.endsWith('.mcsh.io')
+  ) {
+    displayMCSHPaused();
+    return;
+  }
+
   updateServerIcon();
   updateOnlineStatus();
   updateServerIpDisplay();
@@ -216,8 +225,9 @@ function updateServerDetails() {
   motdText.textContent = serverData.motd?.clean || 'Unknown';
 }
 
+const headsContainer = document.getElementById('playerHeadsContainer');
+
 function getOnlinePlayers() {
-  const headsContainer = document.getElementById('playerHeadsContainer');
   headsContainer.innerHTML = '';
 
   if (!serverData?.online) {
@@ -255,6 +265,23 @@ function getOnlinePlayers() {
     headsContainer.innerHTML =
       '<span class="no-players-text">No players currently online.</span>';
   }
+}
+
+// ============================================================
+// DISPLAY — MCSH Server Paused
+// ============================================================
+
+function displayMCSHPaused() {
+  dot.className = 'status-dot offline';
+  statusState.textContent = 'Paused';
+  serverIconImg.src = 'assets/img/mcshServerLogo.png';
+  headsContainer.innerHTML =
+    '<span class="no-players-text">This server is currenlty Paused.</span>';
+  playersOnline.textContent = '0';
+  playerMax.textContent = '--';
+  serverVersion.textContent = '--';
+  motdText.textContent = `Join to auto-start ${serverName}`;
+  serverIpValue.textContent = serverIP;
 }
 
 // ============================================================
