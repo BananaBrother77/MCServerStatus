@@ -483,7 +483,10 @@ document.addEventListener('keydown', (e) => {
     closeOverlay(editOverlay);
     closeServerList();
   }
-  if (e.key === 's') openServerList();
+
+  if (!editOverlay.classList.contains('show')) {
+    if (e.key === 's') openServerList();
+  }
 });
 
 // ============================================================
