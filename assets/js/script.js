@@ -128,14 +128,10 @@ async function getServerStatus() {
     serverData =
       serverResult.status === 'fulfilled'
         ? serverResult.value
-        : (console.error('MC API Error:', serverResult.reason),
-          { online: false });
+        : { online: false };
 
     nodeData =
-      nodeResult.status === 'fulfilled'
-        ? nodeResult.value
-        : (console.error('Node API Error:', nodeResult.reason),
-          { online: false });
+      nodeResult.status === 'fulfilled' ? nodeResult.value : { online: false };
 
     console.log('MC Server Data:', serverData);
     console.log('Node Data:', nodeData);
@@ -181,6 +177,16 @@ function displayServerStatus() {
     ? 'status-dot online'
     : 'status-dot offline';
   statusState.textContent = serverData.online ? 'Online' : 'Offline';
+
+  // Early return for any offline server
+  if (!serverData.online) {
+    playersOnline.textContent = '0';
+    playerMax.textContent = '--';
+    serverVersion.textContent = '--';
+    motdText.textContent = '--';
+    getOnlinePlayers();
+    return;
+  }
 
   if (serverIP === '191.96.231.2:11026') {
     serverIpValue.textContent = 'darksidesmp.mcsh.io';
@@ -317,7 +323,8 @@ function updateNodeUI(node) {
   nodeMemory.textContent = node.memory != null ? `${node.memory}%` : '--';
   nodeStorage.textContent = node.storage != null ? `${node.storage}%` : '--';
   nodeLatency.textContent = node.latency != null ? `${node.latency} ms` : '--';
-  nodeUptime.textContent = node.uptimeOverall != null ? `${node.uptimeOverall}` : '--';
+  nodeUptime.textContent =
+    node.uptimeOverall != null ? `${node.uptimeOverall}` : '--';
 
   nodeCPU.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
   nodeMemory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
