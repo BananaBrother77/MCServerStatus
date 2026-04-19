@@ -5,7 +5,7 @@ import { fetchServerData, fetchNodeData } from './api.js';
 // ============================================================
 
 let servers = JSON.parse(localStorage.getItem('servers')) || [
-  { name: 'DarksideSMP', ip: '191.96.231.2:11026', showNode: 'Ares' },
+  { name: 'DarksideSMP', ip: 'darksidesmp.mcsh.io', showNode: 'Ares' },
 ];
 
 // nodeSettings: { [serverIP]: nodeName | 'none' }
@@ -16,7 +16,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let serverIP =
   urlParams.get('server') ||
   localStorage.getItem('serverIP') ||
-  '191.96.231.2:11026';
+  'darksidesmp.mcsh.io';
 
 let serverName =
   urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
@@ -204,8 +204,7 @@ function updateOnlineStatus() {
 }
 
 function updateServerIpDisplay() {
-  serverIpValue.textContent =
-    serverIP === '191.96.231.2:11026' ? 'darksidesmp.mcsh.io' : serverIP;
+  serverIpValue.textContent = serverIP;
 }
 
 function updateServerDetails() {
@@ -480,7 +479,7 @@ serverListBtn.addEventListener('click', openServerList);
 closeServerListBtn.addEventListener('click', closeServerList);
 
 darksidesmpBtn.addEventListener('click', () => {
-  serverIP = '191.96.231.2:11026';
+  serverIP = 'darksidesmp.mcsh.io';
   serverName = 'DarksideSMP';
 
   updateUrl({ server: serverIP, name: serverName });
