@@ -4,14 +4,11 @@ import { fetchServerData, fetchNodeData } from './api.js';
 // STATE
 // ============================================================
 
+const urlParams = new URLSearchParams(window.location.search);
+
 let servers = JSON.parse(localStorage.getItem('servers')) || [
   { name: 'DarksideSMP', ip: 'darksidesmp.mcsh.io', showNode: 'Ares' },
 ];
-
-// nodeSettings: { [serverIP]: nodeName | 'none' }
-let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
-
-const urlParams = new URLSearchParams(window.location.search);
 
 let serverIP =
   urlParams.get('server') ||
@@ -19,7 +16,15 @@ let serverIP =
   'darksidesmp.mcsh.io';
 
 let serverName =
-  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
+  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';  
+
+let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
+
+const urlNode = urlParams.get('node');
+if (urlNode) {
+  nodeSettings[serverIP] = urlNode;
+}
+
 
 let serverData;
 let nodeData;
@@ -101,7 +106,9 @@ function loadServerList() {
     li.querySelector('.serverBtn').addEventListener('click', () => {
       serverIP = server.ip;
       serverName = server.name;
-      updateUrl({ server: serverIP, name: serverName });
+      const currentNode = getSavedNode();
+
+      updateUrl({ server: serverIP, name: serverName, node: currentNode });
       closeServerList();
       getServerStatus();
     });
@@ -467,6 +474,8 @@ applyNodeChangeBtn.addEventListener('click', () => {
   if (pendingNodeValue !== null) {
     saveNodeForCurrentServer(pendingNodeValue);
     displayNodeStatus(pendingNodeValue);
+    
+    updateUrl({ server: serverIP, name: serverName, node: pendingNodeValue });
   }
   closeOverlay(changeNodeOverlay);
 });
