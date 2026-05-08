@@ -464,8 +464,6 @@ function addServer() {
 }
 
 function applyServerChanges() {
-  const oldName = serverName;
-  const oldIP = serverIP;
   const newName = serverNameInput.value.trim();
   const newIP = serverIpInput.value.trim();
 
@@ -474,23 +472,17 @@ function applyServerChanges() {
     return;
   }
 
-  let savedServers = JSON.parse(localStorage.getItem('servers') || '[]');
-
-  const foundServer = savedServers.find(
+  const foundServer = servers.find(
     (server) =>
       server.ip === serverIpValue.textContent.trim() ||
       server.name === serverNameText.textContent.trim(),
   );
 
-  if (foundServer) {
-    console.log('server found');
+  if (!foundServer) return;
 
-    foundServer.ip = newIP;
-    foundServer.name = newName;
-    localStorage.setItem('servers', JSON.stringify(savedServers));
-  } else {
-    console.log('Not found, safe to add!');
-  }
+  foundServer.ip = newIP;
+  foundServer.name = newName;
+  localStorage.setItem('servers', JSON.stringify(servers));
 
   serverIP = newIP;
   serverName = newName;
@@ -498,6 +490,7 @@ function applyServerChanges() {
   errorText.textContent = '';
   closeOverlay(editOverlay);
   updateUrl({ server: serverIP, name: serverName });
+  loadServerList();
   getServerStatus();
 }
 
