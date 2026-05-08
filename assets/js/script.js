@@ -23,6 +23,9 @@ let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
 const urlNode = urlParams.get('node');
 if (urlNode) {
   nodeSettings[serverIP] = urlNode;
+  updateUrl({ server: serverIP, name: serverName, node: urlNode });
+} else {
+  updateUrl({ server: serverIP, name: serverName, node: getSavedNode() });
 }
 
 
