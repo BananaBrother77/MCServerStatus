@@ -1,364 +1,308 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <title>MCServerStatus</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
 
-  <body>
-    <!-- ============================================================
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <title>MCServerStatus</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <!-- ============================================================
          SIDEBAR TOGGLE BUTTON
          ============================================================ -->
-    <div class="serverListWrapper">
-      <div class="serverList">
-        <i data-lucide="server" width="35" height="35"></i>
-      </div>
+  <div class="serverListWrapper">
+    <div class="serverList">
+      <i data-lucide="server" width="35" height="35"></i>
     </div>
-
-    <!-- ============================================================
+  </div>
+  
+  <!-- ============================================================
          SIDEBAR
          ============================================================ -->
-    <aside id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-        <h3>Servers</h3>
-        <button id="closeServerListBtn">&times;</button>
-      </div>
-      <ul class="sidebar-links">
-        <li>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Servers</h3>
+      <button id="closeServerListBtn">&times;</button>
+    </div>
+    <ul class="sidebar-links">
+      <li>
+        <div class="server-button-container">
           <button id="darksidesmpBtn" class="serverBtn">
             <i data-lucide="server"></i> DarksideSMP
           </button>
-        </li>
-      </ul>
-    </aside>
-
-    <div id="overlay" class="sidebar-overlay"></div>
-
-    <!-- ============================================================
+          <button class="serverBtn delete-btn" id="deleteBtn"><i data-lucide="Trash2"></i></button>
+        </div>
+      </li>
+    </ul>
+  </aside>
+  
+  <div id="overlay" class="sidebar-overlay"></div>
+  
+  <!-- ============================================================
          MAIN CONTENT
          ============================================================ -->
-    <main class="app-wrapper">
-      <!-- Server Header -->
-      <section class="serverStatus">
-        <div class="container">
-          <img
-            src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
-            alt="Server Icon"
-            id="serverIconImg"
-          />
-          <div class="server-info">
-            <h1 id="serverName">DarksideSMP</h1>
-            <p id="statusText">
-              <span class="status-dot" id="statusDot"></span>
-              <span id="statusState">Pinging...</span>
-            </p>
-          </div>
+  <main class="app-wrapper">
+    <!-- Server Header -->
+    <section class="serverStatus">
+      <div class="container">
+        <img src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg" alt="Server Icon" id="serverIconImg" />
+        <div class="server-info">
+          <h1 id="serverName">DarksideSMP</h1>
+          <p id="statusText">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusState">Pinging...</span>
+          </p>
         </div>
-
-        <div class="stats-row">
-          <div class="status-card">
-            <i data-lucide="users"></i>
-            <span class="card-label">Online</span>
-            <span id="playersOnline" class="card-value">0</span>
-            <div class="divider"></div>
-            <span id="playersMax" class="card-value">0</span>
-          </div>
-
-          <div class="status-card">
-            <i data-lucide="info"></i>
-            <span class="card-label">Version</span>
-            <div class="divider"></div>
-            <span id="serverVersion" class="card-value">1.20.1</span>
-          </div>
-
-          <div class="status-card motd-card">
-            <i data-lucide="message-square"></i>
-            <span class="card-label">Message</span>
-            <div class="divider"></div>
-            <span id="motdText" class="card-value">Nothing to see here</span>
-          </div>
+      </div>
+      
+      <div class="stats-row">
+        <div class="status-card">
+          <i data-lucide="users"></i>
+          <span class="card-label">Online</span>
+          <span id="playersOnline" class="card-value">0</span>
+          <div class="divider"></div>
+          <span id="playersMax" class="card-value">0</span>
         </div>
-      </section>
-
-      <!-- Server IP + Online Players -->
-      <div class="stats-row bottom-container">
-        <section class="server-ip-section">
-          <div class="actions">
-            <div>
-              <span class="card-label">Server IP:</span>
-              <span id="serverIpValue" class="card-value"></span>
-              <div class="divider"></div>
-              <div class="buttons">
-                <button id="copyIpBtn" class="btn-primary">
-                  <span id="copyBtnLabel">Copy IP</span>
+        
+        <div class="status-card">
+          <i data-lucide="info"></i>
+          <span class="card-label">Version</span>
+          <div class="divider"></div>
+          <span id="serverVersion" class="card-value">1.20.1</span>
+        </div>
+        
+        <div class="status-card motd-card">
+          <i data-lucide="message-square"></i>
+          <span class="card-label">Message</span>
+          <div class="divider"></div>
+          <span id="motdText" class="card-value">Nothing to see here</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Server IP + Online Players -->
+    <div class="stats-row bottom-container">
+      <section class="server-ip-section">
+        <div class="actions">
+          <div>
+            <span class="card-label">Server IP:</span>
+            <span id="serverIpValue" class="card-value"></span>
+            <div class="divider"></div>
+            <div class="buttons">
+              <button id="copyIpBtn" class="btn-primary">
+                <i data-lucide="copy"></i> Copy IP
                 </button>
                 <button id="editBtn" class="btn-primary">
-                  <span id="editBtnLabel">Edit</span>
+                  <i data-lucide="pencil"></i> Edit
                 </button>
-                <button
-                  id="setNodeBtn"
-                  class="btn-primary"
-                  style="display: none"
-                >
+                
+                <button id="setNodeBtn" class="btn-primary" style="display: none">
                   <i data-lucide="server"></i> Set Node
                 </button>
-              </div>
             </div>
           </div>
-        </section>
-
-        <section class="online-players-section serverStatus">
-          <div class="serverInfo">
-            <span class="card-label">Online Players</span>
-            <div class="divider"></div>
-            <div id="playerHeadsContainer" class="stats-row player-grid">
-              <!-- Player avatars injected by script.js -->
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Node Status -->
-      <section id="nodeStatusSection" class="serverStatus nodeStatus">
-        <div class="container">
-          <div class="server-info">
-            <span class="card-label">MCServerHost Node Status</span>
-            <h1 id="nodeName">Ares</h1>
-            <p id="nodeStatusText">
-              <span class="status-dot" id="nodeStatusDot"></span>
-              <span id="nodeStatusState">Checking...</span>
-            </p>
-          </div>
-        </div>
-
-        <div class="stats-row">
-          <div class="status-card">
-            <i data-lucide="activity"></i>
-            <span class="card-label">Latency</span>
-            <div class="divider"></div>
-            <span id="nodeLatency" class="card-value">--</span>
-          </div>
-          <div class="status-card">
-            <i data-lucide="clock"></i>
-            <span class="card-label">Uptime</span>
-            <div class="divider"></div>
-            <span id="nodeUptime" class="card-value">--</span>
-            <div id="nodeUptimeBars" class="uptime-bars"></div>
-          </div>
-          <div class="status-card">
-            <i data-lucide="cpu"></i>
-            <span class="card-label">CPU Usage</span>
-            <div class="divider"></div>
-            <span id="nodeCPU" class="card-value">--</span>
-          </div>
-          <div class="status-card">
-            <i data-lucide="memory-stick"></i>
-            <span class="card-label">Memory Usage</span>
-            <div class="divider"></div>
-            <span id="nodeMemory" class="card-value">--</span>
-          </div>
-          <div class="status-card">
-            <i data-lucide="hard-drive"></i>
-            <span class="card-label">Storage Usage</span>
-            <div class="divider"></div>
-            <span id="nodeStorage" class="card-value">--</span>
-          </div>
-        </div>
-
-        <div class="node-actions">
-          <a
-            href="https://www.mcserverhost.com/status"
-            target="_blank"
-            class="btn-primary"
-          >
-            All Nodes
-          </a>
-          <button id="changeNodeBtn" class="btn-primary">Change</button>
         </div>
       </section>
-    </main>
-
-    <!-- ============================================================
+      
+      <section class="online-players-section serverStatus">
+        <div class="serverInfo">
+          <span class="card-label">Online Players</span>
+          <div class="divider"></div>
+          <div id="playerHeadsContainer" class="stats-row player-grid">
+            <!-- Player avatars injected by script.js -->
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Node Status -->
+    <section id="nodeStatusSection" class="serverStatus nodeStatus">
+      <div class="container">
+        <div class="server-info">
+          <span class="card-label">MCServerHost Node Status</span>
+          <h1 id="nodeName">Ares</h1>
+          <p id="nodeStatusText">
+            <span class="status-dot" id="nodeStatusDot"></span>
+            <span id="nodeStatusState">Checking...</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="stats-row">
+        <div class="status-card">
+          <i data-lucide="activity"></i>
+          <span class="card-label">Latency</span>
+          <div class="divider"></div>
+          <span id="nodeLatency" class="card-value">--</span>
+        </div>
+        <div class="status-card">
+          <i data-lucide="clock"></i>
+          <span class="card-label">Uptime</span>
+          <div class="divider"></div>
+          <span id="nodeUptime" class="card-value">--</span>
+          <div id="nodeUptimeBars" class="uptime-bars"></div>
+        </div>
+        <div class="status-card">
+          <i data-lucide="cpu"></i>
+          <span class="card-label">CPU Usage</span>
+          <div class="divider"></div>
+          <span id="nodeCPU" class="card-value">--</span>
+        </div>
+        <div class="status-card">
+          <i data-lucide="memory-stick"></i>
+          <span class="card-label">Memory Usage</span>
+          <div class="divider"></div>
+          <span id="nodeMemory" class="card-value">--</span>
+        </div>
+        <div class="status-card">
+          <i data-lucide="hard-drive"></i>
+          <span class="card-label">Storage Usage</span>
+          <div class="divider"></div>
+          <span id="nodeStorage" class="card-value">--</span>
+        </div>
+      </div>
+      
+      <div class="node-actions">
+        <a href="https://maximerix.dev/mcsh/status/" target="_blank" class="btn-primary">
+          All Nodes
+        </a>
+        <button id="changeNodeBtn" class="btn-primary">Change</button>
+      </div>
+    </section>
+  </main>
+  
+  <!-- ============================================================
          MODALS
          ============================================================ -->
-
-    <!-- Edit Server Modal -->
-    <div class="overlayBackdrop" id="editOverlayBackdrop">
-      <div id="editOverlay">
-        <div class="edit-header">
-          <h2 class="edit-title">Edit Server</h2>
-          <p class="edit-desc">Choose what server status you want to see</p>
-        </div>
-        <div class="divider"></div>
-        <div class="edit-content">
-          <input
-            type="text"
-            id="serverNameInput"
-            class="edit-input"
-            name="Server Name"
-            placeholder="Server Name..."
-          />
-          <input
-            type="text"
-            id="serverIpInput"
-            class="edit-input"
-            name="Server IP"
-            placeholder="Server IP..."
-          />
-          <label class="custom-checkbox">
-            <input type="checkbox" id="addToServerListCheckBox" checked />
-            <span class="checkmark"></span>
-            Add to server list
-          </label>
-          <p id="errorText"></p>
-          <button class="btn" id="applyEditBtn">Apply</button>
-          <button class="btn" id="cancelEditBtn">Cancel</button>
-        </div>
+  
+  <!-- Edit Server Modal -->
+  <div class="overlayBackdrop" id="editOverlayBackdrop">
+    <div id="editOverlay">
+      <div class="edit-header">
+        <h2 class="edit-title">Edit Server</h2>
+        <p class="edit-desc">Choose what server status you want to see</p>
+      </div>
+      <div class="divider"></div>
+      <div class="edit-content">
+        <input type="text" id="serverNameInput" class="edit-input" name="Server Name" placeholder="Server Name..." />
+        <input type="text" id="serverIpInput" class="edit-input" name="Server IP" placeholder="Server IP..." />
+        <label class="custom-checkbox">
+          <input type="checkbox" id="addToServerListCheckBox" checked />
+          <span class="checkmark"></span>
+          Add to server list
+        </label>
+        <p id="errorText"></p>
+        <button class="btn" id="applyEditBtn">Apply</button>
+        <button class="btn" id="cancelEditBtn">Cancel</button>
       </div>
     </div>
-
-    <!-- Change Node Modal -->
-    <div class="overlayBackdrop" id="changeNodeOverlayBackdrop">
-      <div id="changeNodeOverlay">
-        <div class="edit-header">
-          <h2 class="edit-title">Change Node</h2>
-          <p class="edit-desc">Choose which node status you want to see</p>
+  </div>
+  
+  <!-- Change Node Modal -->
+  <div class="overlayBackdrop" id="changeNodeOverlayBackdrop">
+    <div id="changeNodeOverlay">
+      <div class="edit-header">
+        <h2 class="edit-title">Change Node</h2>
+        <p class="edit-desc">Choose which node status you want to see</p>
+      </div>
+      <div class="divider"></div>
+      <div class="edit-content">
+        <div class="node-select-container">
+          <button id="selectBtn" class="select-button">
+            <span id="selectedOptionText">Choose node...</span>
+            <i data-lucide="chevron-down"></i>
+          </button>
+          <ul id="selectOptions" class="select-options">
+            <li data-value="none">None</li>
+            
+            <li class="select-group-label">— London —</li>
+            <li data-value="adonis">Adonis</li>
+            <li data-value="aglaea">Aglaea</li>
+            <li data-value="ajax">Ajax</li>
+            <li data-value="alcyone">Alcyone</li>
+            <li data-value="anteros">Anteros</li>
+            <li data-value="ares">Ares</li>
+            <li data-value="atlas">Atlas</li>
+            <li data-value="artemis">Artemis</li>
+            <li data-value="apollo">Apollo</li>
+            <li data-value="athena">Athena</li>
+            <li data-value="achilles">Achilles</li>
+            <li data-value="aphrodite">Aphrodite</li>
+            <li data-value="aeolus">Aeolus</li>
+            <li data-value="aether">Aether</li>
+            <li data-value="asclepius">Asclepius</li>
+            <li data-value="atreus">Atreus</li>
+            
+            <li class="select-group-label">— New York —</li>
+            <li data-value="cronus">Cronus</li>
+            <li data-value="ceres">Ceres</li>
+            <li data-value="dryas">Dryas</li>
+            <li data-value="deimos">Deimos</li>
+            
+            <li class="select-group-label">— Singapore —</li>
+            <li data-value="ceto">Ceto</li>
+            <li data-value="cybele">Cybele</li>
+            <li data-value="calliope">Calliope</li>
+            <li data-value="castor">Castor</li>
+            <li data-value="clio">Clio</li>
+            <li data-value="cratos">Cratos</li>
+            <li data-value="caelus">Caelus</li>
+            <li data-value="cassiopeia">Cassiopeia</li>
+            <li data-value="chiron">Chiron</li>
+            <li data-value="calypso">Calypso</li>
+            <li data-value="cerberus">Cerberus</li>
+            <li data-value="circe">Circe</li>
+          </ul>
         </div>
-        <div class="divider"></div>
-        <div class="edit-content">
-          <div class="node-select-container">
-            <button id="selectBtn" class="select-button">
-              <span id="selectedOptionText">Choose node...</span>
-              <i data-lucide="chevron-down"></i>
-            </button>
-            <ul id="selectOptions" class="select-options">
-              <li data-value="none">None</li>
-
-              <li class="select-group-label">— London —</li>
-              <li data-value="adonis">Adonis</li>
-              <li data-value="aglaea">Aglaea</li>
-              <li data-value="ajax">Ajax</li>
-              <li data-value="alcyone">Alcyone</li>
-              <li data-value="anteros">Anteros</li>
-              <li data-value="ares">Ares</li>
-              <li data-value="atlas">Atlas</li>
-              <li data-value="artemis">Artemis</li>
-              <li data-value="apollo">Apollo</li>
-              <li data-value="athena">Athena</li>
-              <li data-value="achilles">Achilles</li>
-              <li data-value="aphrodite">Aphrodite</li>
-              <li data-value="aeolus">Aeolus</li>
-              <li data-value="aether">Aether</li>
-              <li data-value="asclepius">Asclepius</li>
-              <li data-value="atreus">Atreus</li>
-
-              <li class="select-group-label">— New York —</li>
-              <li data-value="cronus">Cronus</li>
-              <li data-value="ceres">Ceres</li>
-              <li data-value="dryas">Dryas</li>
-              <li data-value="deimos">Deimos</li>
-
-              <li class="select-group-label">— Singapore —</li>
-              <li data-value="ceto">Ceto</li>
-              <li data-value="cybele">Cybele</li>
-              <li data-value="calliope">Calliope</li>
-              <li data-value="castor">Castor</li>
-              <li data-value="clio">Clio</li>
-              <li data-value="cratos">Cratos</li>
-              <li data-value="caelus">Caelus</li>
-              <li data-value="cassiopeia">Cassiopeia</li>
-              <li data-value="chiron">Chiron</li>
-              <li data-value="calypso">Calypso</li>
-              <li data-value="cerberus">Cerberus</li>
-              <li data-value="circe">Circe</li>
-            </ul>
-          </div>
-          <button class="btn" id="applyNodeChangeBtn">Apply</button>
-          <button class="btn" id="cancelNodeChangeBtn">Cancel</button>
-        </div>
+        <button class="btn" id="applyNodeChangeBtn">Apply</button>
+        <button class="btn" id="cancelNodeChangeBtn">Cancel</button>
       </div>
     </div>
-
-    <!-- ============================================================
+  </div>
+  
+  <!-- ============================================================
          FOOTER
          ============================================================ -->
-    <footer class="site-footer">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <h2 class="footer-logo">BananaBrother77</h2>
-        </div>
-        <div class="footer-social">
-          <a
-            href="https://bananabrother77.online/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            title="Website"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="currentColor"
-            >
-              <path
-                d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://discord.gg/mtzPBcjUHN"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            title="Discord"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://github.com/BananaBrother77"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            title="GitHub"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-              />
-            </svg>
-          </a>
-        </div>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2 class="footer-logo">BananaBrother77</h2>
       </div>
-      <div class="footer-bottom">
-        <span>Made with</span>
-        <span class="text-heart">❤</span>
-        <span>and</span>
-        <span class="text-code-muted">code</span>
-        <span>— All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://bananabrother77.online/" target="_blank" rel="noopener noreferrer" class="social-link" title="Website">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+            <path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z" />
+          </svg>
+        </a>
+        <a href="https://discord.gg/mtzPBcjUHN" target="_blank" rel="noopener noreferrer" class="social-link" title="Discord">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
+          </svg>
+        </a>
+        <a href="https://github.com/BananaBrother77" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+          </svg>
+        </a>
       </div>
-    </footer>
+    </div>
+    <div class="footer-bottom">
+      <span>Made with</span>
+      <span class="text-heart">❤</span>
+      <span>and</span>
+      <span class="text-code-muted">code</span>
+      <span>— All rights reserved.</span>
+    </div>
+  </footer>
+  
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="assets/js/script.js"></script>
+  <script type="module" src="assets/js/api.js"></script>
+  <script type="module" src="assets/js/icons.js"></script>
+</body>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script type="module" src="assets/js/script.js"></script>
-    <script type="module" src="assets/js/api.js"></script>
-    <script type="module" src="assets/js/icons.js"></script>
-  </body>
 </html>
