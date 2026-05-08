@@ -16,7 +16,7 @@ let serverIP =
   'darksidesmp.mcsh.io';
 
 let serverName =
-  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';  
+  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
 
 let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
 
@@ -27,7 +27,6 @@ if (urlNode) {
 } else {
   updateUrl({ server: serverIP, name: serverName, node: getSavedNode() });
 }
-
 
 let serverData;
 let nodeData;
@@ -118,12 +117,12 @@ function loadServerList() {
       closeServerList();
       getServerStatus();
     });
-    
+
     li.querySelector('.delete-btn').addEventListener('click', deleteServer);
 
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-})}
-
+    updateIcons();
+  });
+}
 
 // ============================================================
 // FETCH
@@ -381,9 +380,11 @@ function updateNodeUI(node) {
 
 copyIpBtn.addEventListener('click', () => {
   navigator.clipboard.writeText(serverIpValue.textContent);
-  copyIpBtn.textContent = 'Copied';
+  copyIpBtn.innerHTML = `<i data-lucide="check"></i> Copied`;
+  updateIcons();
   setTimeout(() => {
-    copyIpBtn.textContent = 'Copy IP';
+    copyIpBtn.innerHTML = `<i data-lucide="copy"></i> Copy IP`;
+    updateIcons();
   }, 800);
 });
 
@@ -482,7 +483,7 @@ applyNodeChangeBtn.addEventListener('click', () => {
   if (pendingNodeValue !== null) {
     saveNodeForCurrentServer(pendingNodeValue);
     displayNodeStatus(pendingNodeValue);
-    
+
     updateUrl({ server: serverIP, name: serverName, node: pendingNodeValue });
   }
   closeOverlay(changeNodeOverlay);
@@ -494,7 +495,6 @@ applyNodeChangeBtn.addEventListener('click', () => {
 
 serverListBtn.addEventListener('click', openServerList);
 closeServerListBtn.addEventListener('click', closeServerList);
-
 
 darksidesmpBtn.addEventListener('click', () => {
   serverIP = 'darksidesmp.mcsh.io';
@@ -521,10 +521,10 @@ function closeServerList() {
 
 function deleteServer(e) {
   const ipToDelete = e.target.closest('.delete-btn').dataset.server;
-  
-  servers = servers.filter(server => server.ip !== ipToDelete);
+
+  servers = servers.filter((server) => server.ip !== ipToDelete);
   localStorage.setItem('servers', JSON.stringify(servers));
-  
+
   loadServerList();
 }
 
@@ -553,6 +553,14 @@ function updateUrl(params) {
     url.searchParams.set(key, val),
   );
   window.history.pushState({}, '', url);
+}
+
+// ============================================================
+// UPDATE ICONS (Lucide)
+// ============================================================
+
+function updateIcons() {
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 // ============================================================
