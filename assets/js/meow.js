@@ -50,7 +50,9 @@ const motdText = document.getElementById('motdText');
 const copyIpBtn = document.getElementById('copyIpBtn');
 const serverListBtn = document.querySelector('.serverList');
 const addToListCheckbox = document.getElementById('addToServerListCheckBox');
-const connectToServerNowCheckBox = document.getElementById('connectToServerNowCheckBox');
+const connectToServerNowCheckBox = document.getElementById(
+  'connectToServerNowCheckBox',
+);
 const sidebarLinks = document.querySelector('.sidebar-links');
 const closeServerListBtn = document.getElementById('closeServerListBtn');
 const sidebar = document.getElementById('sidebar');
@@ -462,12 +464,32 @@ function addServer() {
 }
 
 function applyServerChanges() {
+  const oldName = serverName;
+  const oldIP = serverIP;
   const newName = serverNameInput.value.trim();
   const newIP = serverIpInput.value.trim();
 
   if (!newName || !newIP) {
     errorText.textContent = 'Please fill out all fields.';
     return;
+  }
+
+  let savedServers = JSON.parse(localStorage.getItem('servers') || '[]');
+
+  const foundServer = savedServers.find(
+    (server) =>
+      server.ip === serverIpValue.textContent.trim() ||
+      server.name === serverNameText.textContent.trim(),
+  );
+
+  if (foundServer) {
+    console.log('server found');
+
+    foundServer.ip = newIP;
+    foundServer.name = newName;
+    localStorage.setItem('servers', JSON.stringify(savedServers));
+  } else {
+    console.log('Not found, safe to add!');
   }
 
   serverIP = newIP;
