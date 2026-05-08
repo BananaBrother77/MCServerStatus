@@ -92,9 +92,12 @@ function loadServerList() {
   servers.forEach((server) => {
     const li = document.createElement('li');
     li.innerHTML = `
+    <div class="server-button-container">
         <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
           <i data-lucide="server"></i> <span>${server.name}</span>
         </button>
+          <button class="serverBtn delete-btn" data-server="${server.ip}"><i data-lucide="Trash2"></i></button>
+          </div>
       `;
     sidebarLinks.appendChild(li);
 
@@ -105,10 +108,12 @@ function loadServerList() {
       closeServerList();
       getServerStatus();
     });
-  });
+    
+    li.querySelector('.delete-btn').addEventListener('click', deleteServer);
 
   if (typeof lucide !== 'undefined') lucide.createIcons();
-}
+})}
+
 
 // ============================================================
 // FETCH
@@ -478,6 +483,7 @@ applyNodeChangeBtn.addEventListener('click', () => {
 serverListBtn.addEventListener('click', openServerList);
 closeServerListBtn.addEventListener('click', closeServerList);
 
+
 darksidesmpBtn.addEventListener('click', () => {
   serverIP = 'darksidesmp.mcsh.io';
   serverName = 'DarksideSMP';
@@ -499,6 +505,15 @@ function openServerList() {
 function closeServerList() {
   sidebar.classList.remove('active');
   overlay.classList.remove('active');
+}
+
+function deleteServer(e) {
+  const ipToDelete = e.target.closest('.delete-btn').dataset.server;
+  
+  servers = servers.filter(server => server.ip !== ipToDelete);
+  localStorage.setItem('servers', JSON.stringify(servers));
+  
+  loadServerList();
 }
 
 // ============================================================

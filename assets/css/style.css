@@ -549,7 +549,14 @@ body {
   margin: 15px 0;
 }
 
-.sidebar-links button {
+.server-button-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.sidebar-links .serverBtn {
   color: var(--text-muted);
   font-size: 1.1rem;
   display: flex;
@@ -568,11 +575,20 @@ body {
     background 0.2s ease;
 }
 
-.sidebar-links button:hover {
-  transform: translateX(5px);
+.sidebar-links .delete-btn {
+  color: var(--offline-red);
+}
+
+.sidebar-links .serverBtn:hover {
+  transform: translateY(-3px);
   color: var(--text-muted-bright);
   box-shadow: 0 5px 10px rgba(124, 58, 237, 0.3);
   filter: brightness(1.1);
+}
+
+.sidebar-links .delete-btn:hover {
+  color: #F13434;
+  box-shadow: 0 5px 10px rgba(220, 38, 38, 0.3);
 }
 
 .sidebar-overlay {
