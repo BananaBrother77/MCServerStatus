@@ -418,6 +418,12 @@ serverNameInput.addEventListener('keydown', (e) => {
 serverIpInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') applyServerChanges();
 });
+addServerNameInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') addServer();
+});
+addServerIpInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') addServer();
+});
 
 function showOverlay(target) {
   target.classList.add('show');
@@ -587,10 +593,14 @@ function deleteServer(e) {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeOverlay(editOverlay);
+    closeOverlay(addServerOverlay);
     closeServerList();
   }
 
-  if (!editOverlay.classList.contains('show')) {
+  if (
+    !editOverlay.classList.contains('show') &&
+    !addServerOverlay.classList.contains('show')
+  ) {
     if (e.key === 's') openServerList();
   }
 });
