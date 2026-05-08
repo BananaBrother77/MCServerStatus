@@ -50,6 +50,7 @@ const motdText = document.getElementById('motdText');
 const copyIpBtn = document.getElementById('copyIpBtn');
 const serverListBtn = document.querySelector('.serverList');
 const addToListCheckbox = document.getElementById('addToServerListCheckBox');
+const connectToServerNowCheckBox = document.getElementById('connectToServerNowCheckBox');
 const sidebarLinks = document.querySelector('.sidebar-links');
 const closeServerListBtn = document.getElementById('closeServerListBtn');
 const sidebar = document.getElementById('sidebar');
@@ -66,15 +67,21 @@ const nodeStatusSection = document.getElementById('nodeStatusSection');
 const setNodeBtn = document.getElementById('setNodeBtn');
 
 const editOverlay = document.getElementById('editOverlayBackdrop');
+const addServerOverlay = document.getElementById('addServerOverlayBackdrop');
 const changeNodeOverlay = document.getElementById('changeNodeOverlayBackdrop');
 const changeNodeBtn = document.getElementById('changeNodeBtn');
 const editBtn = document.getElementById('editBtn');
+const addServerBtn = document.getElementById('addServerBtn');
+const applyAddServerBtn = document.getElementById('applyAddServerBtn');
 const applyEditBtn = document.getElementById('applyEditBtn');
 const applyNodeChangeBtn = document.getElementById('applyNodeChangeBtn');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
 const cancelNodeChangeBtn = document.getElementById('cancelNodeChangeBtn');
+const addServerErrorText = document.getElementById('addServerErrorText');
 const serverNameInput = document.getElementById('serverNameInput');
 const serverIpInput = document.getElementById('serverIpInput');
+const addServerNameInput = document.getElementById('addServerNameInput');
+const addServerIpInput = document.getElementById('addServerIpInput');
 const errorText = document.getElementById('errorText');
 
 const selectBtn = document.getElementById('selectBtn');
@@ -393,10 +400,16 @@ copyIpBtn.addEventListener('click', () => {
 // ============================================================
 
 editBtn.addEventListener('click', () => showOverlay(editOverlay));
+addServerBtn.addEventListener('click', () => showOverlay(addServerOverlay));
 
 cancelEditBtn.addEventListener('click', () => closeOverlay(editOverlay));
+cancelAddServerBtn.addEventListener('click', () =>
+  closeOverlay(addServerOverlay),
+);
 
 applyEditBtn.addEventListener('click', applyServerChanges);
+applyAddServerBtn.addEventListener('click', addServer);
+
 serverNameInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') applyServerChanges();
 });
@@ -411,11 +424,41 @@ function showOverlay(target) {
     serverNameInput.value = serverName;
     serverIpInput.value = serverIP;
     errorText.textContent = '';
+  } else if (target === addServerOverlay) {
+    closeServerList();
+    addServerNameInput.value = '';
+    addServerIpInput.value = '';
+    addServerErrorText.textContent = '';
   }
 }
 
 function closeOverlay(target) {
   target.classList.remove('show');
+}
+
+function addServer() {
+  const name = addServerNameInput.value.trim();
+  const ip = addServerIpInput.value.trim();
+
+  if (!name || !ip) {
+    addServerErrorText.textContent = 'Please fill out all fields.';
+    return;
+  }
+
+  if (addToListCheckbox.checked && !servers.some((s) => s.ip === ip)) {
+    servers.push({ name: name, ip: ip });
+    localStorage.setItem('servers', JSON.stringify(servers));
+    loadServerList();
+  }
+
+  serverIP = ip;
+  serverName = name;
+
+  addServerErrorText.textContent = '';
+  closeOverlay(addServerOverlay);
+  updateUrl({ server: serverIP, name: serverName });
+
+  if (connectToServerNowCheckBox.checked) getServerStatus();
 }
 
 function applyServerChanges() {
@@ -425,12 +468,6 @@ function applyServerChanges() {
   if (!newName || !newIP) {
     errorText.textContent = 'Please fill out all fields.';
     return;
-  }
-
-  if (addToListCheckbox.checked && !servers.some((s) => s.ip === newIP)) {
-    servers.push({ name: newName, ip: newIP });
-    localStorage.setItem('servers', JSON.stringify(servers));
-    loadServerList();
   }
 
   serverIP = newIP;

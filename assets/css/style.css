@@ -8,17 +8,17 @@
   /* Backgrounds */
   --bg-purple: #390c4d;
   --bg-purple-light: #611681;
-  
+
   /* Panels */
   --panel-bg: rgba(255, 255, 255, 0.05);
   --panel-border: rgba(255, 255, 255, 0.1);
-  
+
   /* Status colours */
   --online-green: #50fa7b;
   --online-green-shadow: rgba(80, 250, 123, 0.5);
   --warn-yellow: #f1fa8c;
   --offline-red: #ff5555;
-  
+
   /* Text */
   --text-main: #f8f8f2;
   --text-muted: #bd93f9;
@@ -38,10 +38,12 @@
 body {
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
-  background: linear-gradient(125deg,
-      rgba(57, 12, 77, 1) 0%,
-      rgba(90, 17, 133, 1) 35%,
-      rgba(123, 46, 179, 1) 100%);
+  background: linear-gradient(
+    125deg,
+    rgba(57, 12, 77, 1) 0%,
+    rgba(90, 17, 133, 1) 35%,
+    rgba(123, 46, 179, 1) 100%
+  );
   color: var(--text-main);
   display: flex;
   flex-direction: column;
@@ -167,9 +169,11 @@ body {
 
 #serverName,
 #nodeName {
-  background: linear-gradient(147deg,
-      rgba(115, 12, 156, 1) 0%,
-      rgba(166, 78, 217, 1) 82%);
+  background: linear-gradient(
+    147deg,
+    rgba(115, 12, 156, 1) 0%,
+    rgba(166, 78, 217, 1) 82%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -300,13 +304,12 @@ body {
 }
 
 @keyframes pulse {
-  
   0%,
   100% {
     opacity: 1;
     transform: scale(1);
   }
-  
+
   50% {
     opacity: 0.5;
     transform: scale(0.9);
@@ -455,22 +458,26 @@ body {
 }
 
 #applyEditBtn,
-#applyNodeChangeBtn {
+#applyNodeChangeBtn,
+#applyAddServerBtn {
   background: linear-gradient(135deg, #8e43c7, #7636af);
 }
 
 #applyEditBtn:hover,
-#applyNodeChangeBtn:hover {
+#applyNodeChangeBtn:hover,
+#applyAddServerBtn:hover {
   box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
 }
 
 #cancelEditBtn,
-#cancelNodeChangeBtn {
+#cancelNodeChangeBtn,
+#cancelAddServerBtn {
   background: linear-gradient(135deg, #a19c9c, #a2a2a2);
 }
 
 #cancelEditBtn:hover,
-#cancelNodeChangeBtn:hover {
+#cancelNodeChangeBtn:hover,
+#cancelAddServerBtn:hover {
   box-shadow: 0 15px 25px rgba(207, 204, 213, 0.3);
 }
 
@@ -591,7 +598,7 @@ body {
 }
 
 .sidebar-links .delete-btn:hover {
-  color: #F13434;
+  color: #f13434;
   box-shadow: 0 5px 10px rgba(220, 38, 38, 0.3);
 }
 
@@ -605,6 +612,15 @@ body {
 
 .sidebar-overlay.active {
   display: block;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 /* ============================================================
@@ -627,7 +643,8 @@ body {
 }
 
 #editOverlay,
-#changeNodeOverlay {
+#changeNodeOverlay,
+#addServerOverlay {
   position: fixed;
   top: 38%;
   left: 50%;
@@ -694,7 +711,8 @@ body {
   box-shadow: 0 0 0 3px rgba(142, 67, 199, 0.2);
 }
 
-#errorText {
+#errorText,
+#addServerErrorText {
   color: var(--offline-red);
   font-size: 0.85rem;
   margin-top: 10px;
@@ -739,11 +757,11 @@ body {
   transition: all 0.2s ease;
 }
 
-.custom-checkbox:hover input~.checkmark {
+.custom-checkbox:hover input ~ .checkmark {
   box-shadow: 0 8px 10px rgba(124, 58, 237, 0.3);
 }
 
-.custom-checkbox input:checked~.checkmark {
+.custom-checkbox input:checked ~ .checkmark {
   background-color: var(--text-muted);
   border-color: var(--text-muted-bright);
 }
@@ -754,7 +772,7 @@ body {
   display: none;
 }
 
-.custom-checkbox input:checked~.checkmark::after {
+.custom-checkbox input:checked ~ .checkmark::after {
   display: block;
 }
 
@@ -942,9 +960,11 @@ body {
 }
 
 .footer-logo {
-  background: linear-gradient(147deg,
-      rgba(115, 12, 156, 1) 0%,
-      rgba(166, 78, 217, 1) 82%);
+  background: linear-gradient(
+    147deg,
+    rgba(115, 12, 156, 1) 0%,
+    rgba(166, 78, 217, 1) 82%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -1011,7 +1031,7 @@ body {
     width: calc(100% - 40px);
     margin: 20px auto;
   }
-  
+
   .server-ip-section {
     flex-direction: column;
     padding: 25px 15px;
@@ -1019,40 +1039,40 @@ body {
     width: calc(100% - 40px);
     margin: 20px auto;
   }
-  
+
   .stats-row {
     width: 100%;
     justify-content: space-evenly;
   }
-  
+
   .status-card {
     flex: 1 1 120px;
     min-width: 100px;
   }
-  
+
   .container {
     flex-direction: column;
     text-align: center;
   }
-  
+
   #serverIconImg {
     width: 70px;
   }
-  
+
   #statusText {
     justify-content: center;
   }
-  
+
   .actions,
   .btn-primary {
     width: 100%;
   }
-  
+
   #editOverlay {
     top: 50%;
     max-width: 300px;
   }
-  
+
   .node-actions {
     flex-direction: column;
   }
@@ -1063,22 +1083,22 @@ body {
     flex-direction: row;
     justify-content: space-between;
   }
-  
+
   .nodeStatus .stats-row {
     flex-wrap: nowrap;
   }
-  
+
   .nodeStatus .status-card {
     flex: 1 1 0;
     min-width: 0;
     max-width: none;
   }
-  
+
   .node-actions {
     flex-direction: column;
     align-self: center;
   }
-  
+
   .node-actions .btn-primary {
     width: 100%;
     white-space: nowrap;
@@ -1091,11 +1111,11 @@ body {
     padding: 25px 20px;
     gap: 20px;
   }
-  
+
   .bottom-container {
     flex-direction: column;
   }
-  
+
   .server-ip-section {
     width: 100%;
     max-width: 100%;
