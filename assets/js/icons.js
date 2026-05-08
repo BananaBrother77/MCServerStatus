@@ -10,6 +10,9 @@ lucide.createIcons({
     MemoryStick: lucide.MemoryStick,
     HardDrive: lucide.HardDrive,
     ChevronDown: lucide.ChevronDown,
-    Trash2: lucide.Trash2
+    Trash2: lucide.Trash2,
+    Copy: lucide.Copy,
+    Pencil: lucide.Pencil,
+    X: lucide.X,
   },
 });
