@@ -1156,6 +1156,11 @@ body {
     overflow-y: auto;
   }
 
+  .img-container img {
+    height: 150px;
+    width: auto;
+  }
+
   .player-info-wrapper {
     flex-direction: column;
     align-items: center;
