@@ -82,8 +82,9 @@ const playerInfoEls = {
   uuid: document.getElementById('playerInfoUUIDText'),
   avatar: document.getElementById('playerInfoAvatar'),
   closeBtn: document.getElementById('closePlayerInfoBtn'),
-  copyNameBtn: document.getElementById('copyPlayerNameBtn'), 
+  copyNameBtn: document.getElementById('copyPlayerNameBtn'),
   copyUUIDBtn: document.getElementById('copyPlayerUUIDBtn'),
+  nameMCBtn: document.getElementById('nameMCBtn'),
 };
 
 const headsContainer = document.getElementById('playerHeadsContainer');
@@ -101,7 +102,9 @@ const addServerIpInput = document.getElementById('addServerIpInput');
 const errorText = document.getElementById('errorText');
 const addServerErrorText = document.getElementById('addServerErrorText');
 const addToListCheckbox = document.getElementById('addToServerListCheckBox');
-const connectToServerNowCheckBox = document.getElementById('connectToServerNowCheckBox');
+const connectToServerNowCheckBox = document.getElementById(
+  'connectToServerNowCheckBox',
+);
 const changeNodeBtn = document.getElementById('changeNodeBtn');
 const setNodeBtn = document.getElementById('setNodeBtn');
 const selectOptions = document.getElementById('selectOptions');
@@ -330,7 +333,9 @@ function getOnlinePlayers() {
 function displayPlayerInfo(playerName, playerUUID) {
   showOverlay(overlayEls.playerInfo);
 
-  const rawUUID = playerUUID.replaceAll('-', '');
+  // const rawUUID = playerUUID.replaceAll('-', '');
+
+  nameMCBtn.href = `https://namemc.com/profile/${playerName}`;
 
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
@@ -419,8 +424,10 @@ function updateNodeUI(node) {
 
   nodeEls.cpu.textContent = node.load != null ? `${node.load}%` : '--';
   nodeEls.memory.textContent = node.memory != null ? `${node.memory}%` : '--';
-  nodeEls.storage.textContent = node.storage != null ? `${node.storage}%` : '--';
-  nodeEls.latency.textContent = node.latency != null ? `${node.latency} ms` : '--';
+  nodeEls.storage.textContent =
+    node.storage != null ? `${node.storage}%` : '--';
+  nodeEls.latency.textContent =
+    node.latency != null ? `${node.latency} ms` : '--';
   nodeEls.uptime.textContent =
     node.uptimeOverall != null ? `${node.uptimeOverall}` : '--';
 
