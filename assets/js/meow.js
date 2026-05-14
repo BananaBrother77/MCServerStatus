@@ -82,6 +82,8 @@ const playerInfoEls = {
   uuid: document.getElementById('playerInfoUUIDText'),
   avatar: document.getElementById('playerInfoAvatar'),
   closeBtn: document.getElementById('closePlayerInfoBtn'),
+  copyNameBtn: document.getElementById('copyPlayerNameBtn'), 
+  copyUUIDBtn: document.getElementById('copyPlayerUUIDBtn'),
 };
 
 const headsContainer = document.getElementById('playerHeadsContainer');
@@ -439,6 +441,30 @@ copyIpBtn.addEventListener('click', () => {
   updateIcons();
   setTimeout(() => {
     copyIpBtn.innerHTML = `<i data-lucide="copy"></i> Copy IP`;
+    updateIcons();
+  }, 800);
+});
+
+// ============================================================
+// COPY PLAYER INFO
+// ============================================================
+
+copyNameBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(playerInfoEls.name.textContent);
+  copyNameBtn.innerHTML = `<i data-lucide="check"></i>`;
+  updateIcons();
+  setTimeout(() => {
+    copyNameBtn.innerHTML = `<i data-lucide="copy"></i>`;
+    updateIcons();
+  }, 800);
+});
+
+copyUUIDBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(playerInfoEls.uuid.textContent);
+  copyUUIDBtn.innerHTML = `<i data-lucide="check"></i>`;
+  updateIcons();
+  setTimeout(() => {
+    copyUUIDBtn.innerHTML = `<i data-lucide="copy"></i>`;
     updateIcons();
   }, 800);
 });
