@@ -1,4 +1,4 @@
-import { fetchServerData, fetchNodeData } from './api.js';
+import { fetchServerData, fetchNodeData, fetchPlayerUUID } from './api.js';
 
 // ============================================================
 // STATE
@@ -38,57 +38,76 @@ updateUrl({ server: serverIP, name: serverName });
 // ELEMENT REFS
 // ============================================================
 
-const dot = document.getElementById('statusDot');
-const statusState = document.getElementById('statusState');
-const serverNameText = document.getElementById('serverName');
-const serverIconImg = document.getElementById('serverIconImg');
-const playersOnline = document.getElementById('playersOnline');
-const playerMax = document.getElementById('playersMax');
-const serverIpValue = document.getElementById('serverIpValue');
-const serverVersion = document.getElementById('serverVersion');
-const motdText = document.getElementById('motdText');
-const copyIpBtn = document.getElementById('copyIpBtn');
-const serverListBtn = document.querySelector('.serverList');
-const addToListCheckbox = document.getElementById('addToServerListCheckBox');
-const connectToServerNowCheckBox = document.getElementById(
-  'connectToServerNowCheckBox',
-);
-const sidebarLinks = document.querySelector('.sidebar-links');
-const closeServerListBtn = document.getElementById('closeServerListBtn');
-const sidebar = document.getElementById('sidebar');
-const overlay = document.getElementById('overlay');
-const darksidesmpBtn = document.getElementById('darksidesmpBtn');
-const nodeStatusDot = document.getElementById('nodeStatusDot');
-const nodeStatusState = document.getElementById('nodeStatusState');
-const nodeCPU = document.getElementById('nodeCPU');
-const nodeMemory = document.getElementById('nodeMemory');
-const nodeStorage = document.getElementById('nodeStorage');
-const nodeLatency = document.getElementById('nodeLatency');
-const nodeUptime = document.getElementById('nodeUptime');
-const nodeStatusSection = document.getElementById('nodeStatusSection');
-const setNodeBtn = document.getElementById('setNodeBtn');
+const serverEls = {
+  dot: document.getElementById('statusDot'),
+  state: document.getElementById('statusState'),
+  name: document.getElementById('serverName'),
+  icon: document.getElementById('serverIconImg'),
+  playersOnline: document.getElementById('playersOnline'),
+  playersMax: document.getElementById('playersMax'),
+  ip: document.getElementById('serverIpValue'),
+  version: document.getElementById('serverVersion'),
+  motd: document.getElementById('motdText'),
+};
 
-const editOverlay = document.getElementById('editOverlayBackdrop');
-const addServerOverlay = document.getElementById('addServerOverlayBackdrop');
-const changeNodeOverlay = document.getElementById('changeNodeOverlayBackdrop');
-const changeNodeBtn = document.getElementById('changeNodeBtn');
+const nodeEls = {
+  dot: document.getElementById('nodeStatusDot'),
+  state: document.getElementById('nodeStatusState'),
+  cpu: document.getElementById('nodeCPU'),
+  memory: document.getElementById('nodeMemory'),
+  storage: document.getElementById('nodeStorage'),
+  latency: document.getElementById('nodeLatency'),
+  uptime: document.getElementById('nodeUptime'),
+  section: document.getElementById('nodeStatusSection'),
+};
+
+const sidebarEls = {
+  sidebar: document.getElementById('sidebar'),
+  overlay: document.getElementById('overlay'),
+  links: document.querySelector('.sidebar-links'),
+  toggleBtn: document.querySelector('.serverList'),
+  serverListBtn: document.getElementById('serverListBtn'),
+  closeBtn: document.getElementById('closeServerListBtn'),
+};
+
+const overlayEls = {
+  edit: document.getElementById('editOverlayBackdrop'),
+  addServer: document.getElementById('addServerOverlayBackdrop'),
+  changeNode: document.getElementById('changeNodeOverlayBackdrop'),
+  playerInfo: document.getElementById('playerInfoOverlayBackdrop'),
+};
+
+const playerInfoEls = {
+  name: document.getElementById('playerInfoNameText'),
+  uuid: document.getElementById('playerInfoUUIDText'),
+  avatar: document.getElementById('playerInfoAvatar'),
+  closeBtn: document.getElementById('closePlayerInfoBtn'),
+};
+
+const headsContainer = document.getElementById('playerHeadsContainer');
+const copyIpBtn = document.getElementById('copyIpBtn');
 const editBtn = document.getElementById('editBtn');
 const addServerBtn = document.getElementById('addServerBtn');
-const applyAddServerBtn = document.getElementById('applyAddServerBtn');
-const applyEditBtn = document.getElementById('applyEditBtn');
-const applyNodeChangeBtn = document.getElementById('applyNodeChangeBtn');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
-const cancelNodeChangeBtn = document.getElementById('cancelNodeChangeBtn');
-const addServerErrorText = document.getElementById('addServerErrorText');
+const cancelAddServerBtn = document.getElementById('cancelAddServerBtn');
+const applyEditBtn = document.getElementById('applyEditBtn');
+const applyAddServerBtn = document.getElementById('applyAddServerBtn');
 const serverNameInput = document.getElementById('serverNameInput');
 const serverIpInput = document.getElementById('serverIpInput');
 const addServerNameInput = document.getElementById('addServerNameInput');
 const addServerIpInput = document.getElementById('addServerIpInput');
 const errorText = document.getElementById('errorText');
-
-const selectBtn = document.getElementById('selectBtn');
+const addServerErrorText = document.getElementById('addServerErrorText');
+const addToListCheckbox = document.getElementById('addToServerListCheckBox');
+const connectToServerNowCheckBox = document.getElementById('connectToServerNowCheckBox');
+const changeNodeBtn = document.getElementById('changeNodeBtn');
+const setNodeBtn = document.getElementById('setNodeBtn');
 const selectOptions = document.getElementById('selectOptions');
 const selectedText = document.getElementById('selectedOptionText');
+const cancelNodeChangeBtn = document.getElementById('cancelNodeChangeBtn');
+const selectBtn = document.getElementById('selectBtn');
+const applyNodeChangeBtn = document.getElementById('applyNodeChangeBtn');
+const darksidesmpBtn = document.getElementById('darksidesmpBtn');
 
 let pendingNodeValue = null;
 
@@ -103,7 +122,7 @@ document.addEventListener('DOMContentLoaded', loadServerList);
 // ============================================================
 
 function loadServerList() {
-  sidebarLinks.innerHTML = '';
+  sidebarEls.links.innerHTML = '';
 
   servers.forEach((server) => {
     const li = document.createElement('li');
@@ -115,7 +134,7 @@ function loadServerList() {
           <button class="serverBtn delete-btn" data-server="${server.ip}"><i data-lucide="Trash2"></i></button>
           </div>
       `;
-    sidebarLinks.appendChild(li);
+    sidebarEls.links.appendChild(li);
 
     li.querySelector('.serverBtn').addEventListener('click', () => {
       serverIP = server.ip;
@@ -138,9 +157,9 @@ function loadServerList() {
 // ============================================================
 
 async function getServerStatus() {
-  serverNameText.textContent = serverName;
-  dot.className = 'status-dot checking';
-  nodeStatusDot.className = 'status-dot checking';
+  serverEls.name.textContent = serverName;
+  serverEls.dot.className = 'status-dot checking';
+  nodeEls.dot.className = 'status-dot checking';
 
   try {
     const [serverResult, nodeResult] = await Promise.allSettled([
@@ -214,40 +233,38 @@ function displayServerStatus() {
 }
 
 function updateServerIcon() {
-  serverIconImg.src =
+  serverEls.icon.src =
     serverData.icon ||
     'https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg';
 }
 
 function updateOnlineStatus() {
-  dot.className = serverData.online
+  serverEls.dot.className = serverData.online
     ? 'status-dot online'
     : 'status-dot offline';
-  statusState.textContent = serverData.online ? 'Online' : 'Offline';
+  serverEls.state.textContent = serverData.online ? 'Online' : 'Offline';
 }
 
 function updateServerIpDisplay() {
-  serverIpValue.textContent = serverIP;
+  serverEls.ip.textContent = serverIP;
 }
 
 function updateServerDetails() {
   if (!serverData.online) {
-    playersOnline.textContent = '0';
-    playerMax.textContent = '--';
-    serverVersion.textContent = '--';
-    motdText.textContent = '--';
+    serverEls.playersOnline.textContent = '0';
+    serverEls.playersMax.textContent = '--';
+    serverEls.version.textContent = '--';
+    serverEls.motd.textContent = '--';
     return;
   }
 
-  playersOnline.textContent = serverData.players?.online ?? '0';
-  playerMax.textContent = serverData.players?.max ?? 'Unknown';
-  serverVersion.textContent = serverData.version?.name_clean
+  serverEls.playersOnline.textContent = serverData.players?.online ?? '0';
+  serverEls.playersMax.textContent = serverData.players?.max ?? 'Unknown';
+  serverEls.version.textContent = serverData.version?.name_clean
     ? serverData.version.name_clean.replace(/^\D+/, '')
     : 'Unknown';
-  motdText.textContent = serverData.motd?.clean || 'Unknown';
+  serverEls.motd.textContent = serverData.motd?.clean || 'Unknown';
 }
-
-const headsContainer = document.getElementById('playerHeadsContainer');
 
 function getOnlinePlayers() {
   headsContainer.innerHTML = '';
@@ -279,6 +296,25 @@ function getOnlinePlayers() {
       tag.appendChild(img);
       tag.appendChild(nameSpan);
       headsContainer.appendChild(tag);
+
+      tag.addEventListener('click', async () => {
+        if (player.name_raw.startsWith('.')) {
+          alert(
+            'Bedrock Players are currently not supported for detailed info.',
+          );
+          return;
+        }
+
+        try {
+          const uuidData = await fetchPlayerUUID(player.name_raw);
+          const uuid = uuidData.data.player.id;
+          console.log(`Player UUID of Player ${player.name_raw}: ${uuid}`);
+
+          displayPlayerInfo(player.name_raw, uuid);
+        } catch (error) {
+          console.error('Error fetching player data:', error);
+        }
+      });
     });
   } else if (serverData.players?.online > 0) {
     headsContainer.innerHTML =
@@ -289,21 +325,31 @@ function getOnlinePlayers() {
   }
 }
 
+function displayPlayerInfo(playerName, playerUUID) {
+  showOverlay(overlayEls.playerInfo);
+
+  const rawUUID = playerUUID.replaceAll('-', '');
+
+  playerInfoEls.name.textContent = playerName;
+  playerInfoEls.uuid.textContent = playerUUID;
+  playerInfoEls.avatar.src = `https://visage.surgeplay.com/full/212/${playerUUID}`;
+}
+
 // ============================================================
 // DISPLAY — MCSH Server Paused
 // ============================================================
 
 function displayMCSHPaused() {
-  dot.className = 'status-dot offline';
-  statusState.textContent = 'Paused';
-  serverIconImg.src = 'assets/img/mcshServerLogo.png';
+  serverEls.dot.className = 'status-dot offline';
+  serverEls.state.textContent = 'Paused';
+  serverEls.icon.src = 'assets/img/mcshServerLogo.png';
   headsContainer.innerHTML =
     '<span class="no-players-text">This server is currenlty Paused.</span>';
-  playersOnline.textContent = '0';
-  playerMax.textContent = '--';
-  serverVersion.textContent = '--';
-  motdText.textContent = `Join to auto-start ${serverName}`;
-  serverIpValue.textContent = serverIP;
+  serverEls.playersOnline.textContent = '0';
+  serverEls.playersMax.textContent = '--';
+  serverEls.version.textContent = '--';
+  serverEls.motd.textContent = `Join to auto-start ${serverName}`;
+  serverEls.ip.textContent = serverIP;
 }
 
 // ============================================================
@@ -314,17 +360,17 @@ function displayNodeStatus(targetName) {
   const nodeName = document.getElementById('nodeName');
 
   if (targetName === 'none') {
-    nodeStatusSection.style.display = 'none';
+    nodeEls.section.style.display = 'none';
     setNodeBtn.style.display = 'flex';
     return;
   }
 
-  nodeStatusSection.style.display = 'flex';
+  nodeEls.section.style.display = 'flex';
   setNodeBtn.style.display = 'none';
 
   if (!nodeData?.regions) {
-    nodeStatusDot.className = 'status-dot offline';
-    nodeStatusState.textContent = 'Unavailable';
+    nodeEls.dot.className = 'status-dot offline';
+    nodeEls.state.textContent = 'Unavailable';
     return;
   }
 
@@ -339,8 +385,8 @@ function displayNodeStatus(targetName) {
     }
   }
 
-  nodeStatusDot.className = 'status-dot offline';
-  nodeStatusState.textContent = 'Node not found';
+  nodeEls.dot.className = 'status-dot offline';
+  nodeEls.state.textContent = 'Node not found';
 }
 
 function getUsageClass(value, type) {
@@ -364,23 +410,23 @@ function getUsageClass(value, type) {
 function updateNodeUI(node) {
   if (!node) return;
 
-  nodeStatusDot.className = node.online
+  nodeEls.dot.className = node.online
     ? 'status-dot online'
     : 'status-dot offline';
-  nodeStatusState.textContent = node.online ? 'Online' : 'Offline';
+  nodeEls.state.textContent = node.online ? 'Online' : 'Offline';
 
-  nodeCPU.textContent = node.load != null ? `${node.load}%` : '--';
-  nodeMemory.textContent = node.memory != null ? `${node.memory}%` : '--';
-  nodeStorage.textContent = node.storage != null ? `${node.storage}%` : '--';
-  nodeLatency.textContent = node.latency != null ? `${node.latency} ms` : '--';
-  nodeUptime.textContent =
+  nodeEls.cpu.textContent = node.load != null ? `${node.load}%` : '--';
+  nodeEls.memory.textContent = node.memory != null ? `${node.memory}%` : '--';
+  nodeEls.storage.textContent = node.storage != null ? `${node.storage}%` : '--';
+  nodeEls.latency.textContent = node.latency != null ? `${node.latency} ms` : '--';
+  nodeEls.uptime.textContent =
     node.uptimeOverall != null ? `${node.uptimeOverall}` : '--';
 
-  nodeCPU.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
-  nodeMemory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
-  nodeStorage.className = `card-value ${getUsageClass(node.storage, 'mem')}`;
-  nodeLatency.className = `card-value ${getUsageClass(node.latency, 'latency')}`;
-  nodeUptime.className = `card-value ${getUsageClass(node.uptimeOverall, 'uptime')}`;
+  nodeEls.cpu.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
+  nodeEls.memory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
+  nodeEls.storage.className = `card-value ${getUsageClass(node.storage, 'mem')}`;
+  nodeEls.latency.className = `card-value ${getUsageClass(node.latency, 'latency')}`;
+  nodeEls.uptime.className = `card-value ${getUsageClass(node.uptimeOverall, 'uptime')}`;
 }
 
 // ============================================================
@@ -388,7 +434,7 @@ function updateNodeUI(node) {
 // ============================================================
 
 copyIpBtn.addEventListener('click', () => {
-  navigator.clipboard.writeText(serverIpValue.textContent);
+  navigator.clipboard.writeText(serverEls.ip.textContent);
   copyIpBtn.innerHTML = `<i data-lucide="check"></i> Copied`;
   updateIcons();
   setTimeout(() => {
@@ -401,12 +447,12 @@ copyIpBtn.addEventListener('click', () => {
 // EDIT SERVER OVERLAY
 // ============================================================
 
-editBtn.addEventListener('click', () => showOverlay(editOverlay));
-addServerBtn.addEventListener('click', () => showOverlay(addServerOverlay));
+editBtn.addEventListener('click', () => showOverlay(overlayEls.edit));
+addServerBtn.addEventListener('click', () => showOverlay(overlayEls.addServer));
 
-cancelEditBtn.addEventListener('click', () => closeOverlay(editOverlay));
+cancelEditBtn.addEventListener('click', () => closeOverlay(overlayEls.edit));
 cancelAddServerBtn.addEventListener('click', () =>
-  closeOverlay(addServerOverlay),
+  closeOverlay(overlayEls.addServer),
 );
 
 applyEditBtn.addEventListener('click', applyServerChanges);
@@ -428,11 +474,11 @@ addServerIpInput.addEventListener('keydown', (e) => {
 function showOverlay(target) {
   target.classList.add('show');
 
-  if (target === editOverlay) {
+  if (target === overlayEls.edit) {
     serverNameInput.value = serverName;
     serverIpInput.value = serverIP;
     errorText.textContent = '';
-  } else if (target === addServerOverlay) {
+  } else if (target === overlayEls.addServer) {
     closeServerList();
     addServerNameInput.value = '';
     addServerIpInput.value = '';
@@ -463,7 +509,7 @@ function addServer() {
   serverName = name;
 
   addServerErrorText.textContent = '';
-  closeOverlay(addServerOverlay);
+  closeOverlay(overlayEls.addServer);
   updateUrl({ server: serverIP, name: serverName });
 
   if (connectToServerNowCheckBox.checked) getServerStatus();
@@ -480,8 +526,8 @@ function applyServerChanges() {
 
   const foundServer = servers.find(
     (server) =>
-      server.ip === serverIpValue.textContent.trim() ||
-      server.name === serverNameText.textContent.trim(),
+      server.ip === serverEls.ip.textContent.trim() ||
+      server.name === serverEls.name.textContent.trim(),
   );
 
   if (!foundServer) return;
@@ -494,7 +540,7 @@ function applyServerChanges() {
   serverName = newName;
 
   errorText.textContent = '';
-  closeOverlay(editOverlay);
+  closeOverlay(overlayEls.edit);
   updateUrl({ server: serverIP, name: serverName });
   loadServerList();
   getServerStatus();
@@ -518,11 +564,15 @@ function openChangeNodeOverlay() {
   selectedText.textContent = match ? match.textContent : 'Choose node...';
   pendingNodeValue = current === 'none' ? 'none' : match ? current : null;
 
-  showOverlay(changeNodeOverlay);
+  showOverlay(overlayEls.changeNode);
 }
 
 cancelNodeChangeBtn.addEventListener('click', () =>
-  closeOverlay(changeNodeOverlay),
+  closeOverlay(overlayEls.changeNode),
+);
+
+playerInfoEls.closeBtn.addEventListener('click', () =>
+  closeOverlay(overlayEls.playerInfo),
 );
 
 selectBtn.addEventListener('click', () => {
@@ -544,15 +594,15 @@ applyNodeChangeBtn.addEventListener('click', () => {
 
     updateUrl({ server: serverIP, name: serverName, node: pendingNodeValue });
   }
-  closeOverlay(changeNodeOverlay);
+  closeOverlay(overlayEls.changeNode);
 });
 
 // ============================================================
 // SIDEBAR
 // ============================================================
 
-serverListBtn.addEventListener('click', openServerList);
-closeServerListBtn.addEventListener('click', closeServerList);
+sidebarEls.toggleBtn.addEventListener('click', openServerList);
+sidebarEls.closeBtn.addEventListener('click', closeServerList);
 
 darksidesmpBtn.addEventListener('click', () => {
   serverIP = 'darksidesmp.mcsh.io';
@@ -564,17 +614,17 @@ darksidesmpBtn.addEventListener('click', () => {
 });
 
 function openServerList() {
-  if (sidebar.classList.contains('active')) {
+  if (sidebarEls.sidebar.classList.contains('active')) {
     closeServerList();
     return;
   }
-  sidebar.classList.add('active');
-  overlay.classList.add('active');
+  sidebarEls.sidebar.classList.add('active');
+  sidebarEls.overlay.classList.add('active');
 }
 
 function closeServerList() {
-  sidebar.classList.remove('active');
-  overlay.classList.remove('active');
+  sidebarEls.sidebar.classList.remove('active');
+  sidebarEls.overlay.classList.remove('active');
 }
 
 function deleteServer(e) {
@@ -592,14 +642,14 @@ function deleteServer(e) {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    closeOverlay(editOverlay);
-    closeOverlay(addServerOverlay);
+    closeOverlay(overlayEls.edit);
+    closeOverlay(overlayEls.addServer);
     closeServerList();
   }
 
   if (
-    !editOverlay.classList.contains('show') &&
-    !addServerOverlay.classList.contains('show')
+    !overlayEls.edit.classList.contains('show') &&
+    !overlayEls.addServer.classList.contains('show')
   ) {
     if (e.key === 's') openServerList();
   }

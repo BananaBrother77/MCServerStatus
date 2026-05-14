@@ -10,3 +10,11 @@ export async function fetchNodeData() {
   if (!res.ok) throw new Error('Node API failed');
   return res.json();
 }
+
+export async function fetchPlayerUUID(playerName) {
+  const res = await fetch(
+    `https://playerdb.co/api/player/minecraft/${playerName}`,
+  );
+  if (!res.ok) throw new Error('UUID API failed');
+  return res.json();
+}
