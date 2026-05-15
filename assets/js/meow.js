@@ -1,4 +1,9 @@
-import { fetchServerData, fetchNodeData, fetchPlayerUUID } from './api.js';
+import {
+  fetchServerData,
+  fetchNodeData,
+  fetchPlayerUUID,
+  fetchPlayerSkin,
+} from './api.js';
 
 // ============================================================
 // STATE
@@ -84,6 +89,7 @@ const playerInfoEls = {
   closeBtn: document.getElementById('closePlayerInfoBtn'),
   copyNameBtn: document.getElementById('copyPlayerNameBtn'),
   copyUUIDBtn: document.getElementById('copyPlayerUUIDBtn'),
+  downloadSkinBtn: document.getElementById('downloadSkinBtn'),
   nameMCBtn: document.getElementById('nameMCBtn'),
 };
 
@@ -474,6 +480,22 @@ copyUUIDBtn.addEventListener('click', () => {
     copyUUIDBtn.innerHTML = `<i data-lucide="copy"></i>`;
     updateIcons();
   }, 800);
+});
+
+// ============================================================
+// DOWNLOAD PLAYER SKIN
+// ============================================================
+
+playerInfoEls.downloadSkinBtn.addEventListener('click', async () => {
+  const playerName = playerInfoEls.name.textContent;
+  const blobUrl = await fetchPlayerSkin(playerName);
+
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = `${playerName}_skin.png`;
+  a.click();
+
+  URL.revokeObjectURL(blobUrl);
 });
 
 // ============================================================

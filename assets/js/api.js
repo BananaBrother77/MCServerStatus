@@ -18,3 +18,12 @@ export async function fetchPlayerUUID(playerName) {
   if (!res.ok) throw new Error('UUID API failed');
   return res.json();
 }
+
+export async function fetchPlayerSkin(playerName) {
+  const res = await fetch(
+    `https://minotar.net/skin/${playerName}`,
+  );
+  if (!res.ok) throw new Error('Skin API failed');
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+}

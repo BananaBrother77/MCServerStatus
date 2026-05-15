@@ -15,5 +15,6 @@ lucide.createIcons({
     Pencil: lucide.Pencil,
     X: lucide.X,
     Check: lucide.Check,
+    Download: lucide.Download,
   },
 });

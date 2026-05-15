@@ -794,6 +794,20 @@ body {
   height: 16px;
 }
 
+.download-skin-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 2px 4px;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+.download-skin-btn:hover {
+  color: var(--text-muted-bright);
+}
+
 /* ============================================================
    CUSTOM CHECKBOX
    ============================================================ */
