@@ -146,7 +146,7 @@ function loadServerList() {
       </button>
       
       <div class="actions">
-        <button class="serverBtn delete-btn" id="deleteBtn">
+        <button class="serverBtn delete-btn" id="deleteBtn" data-server="${server.ip}">
           <i data-lucide="Trash2"></i>
         </button>
               <button
