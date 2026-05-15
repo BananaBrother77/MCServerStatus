@@ -577,6 +577,10 @@ function showOverlay(target) {
 
 function closeOverlay(target) {
   target.classList.remove('show');
+
+  if (target === overlayEls.playerInfo) {
+    playerInfoEls.playerInfoSearchInput.value = '';
+  }
 }
 
 function addServer() {
@@ -733,7 +737,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeOverlay(overlayEls.edit);
     closeOverlay(overlayEls.addServer);
-    closeOverlay(overlayEls.changeNode); 
+    closeOverlay(overlayEls.changeNode);
     closeOverlay(overlayEls.playerInfo);
     closeServerList();
   }

@@ -702,7 +702,9 @@ body {
   border: 1px solid var(--panel-border);
   border-radius: 12px;
   width: 90%;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .input-group:focus-within {
@@ -737,6 +739,26 @@ body {
 
 .input-btn:hover {
   color: var(--text-muted-bright);
+}
+
+.edit-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 12px 15px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px rgba(142, 67, 199, 0.2);
 }
 
 .form-input {
