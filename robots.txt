@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mcserverstatus.bananabrother77.online/sitemap.xml
