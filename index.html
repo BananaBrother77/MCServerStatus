@@ -32,9 +32,20 @@
             <button id="darksidesmpBtn" class="serverBtn">
               <i data-lucide="server"></i> DarksideSMP
             </button>
-            <button class="serverBtn delete-btn" id="deleteBtn">
-              <i data-lucide="Trash2"></i>
-            </button>
+            <div class="actions">
+              <button class="serverBtn delete-btn" id="deleteBtn">
+                <i data-lucide="Trash2"></i>
+              </button>
+              <button
+                class="serverBtn favourite-btn"
+                data-server="${server.ip}"
+              >
+                <i
+                  data-lucide="star"
+                  class="${server.favourite ? 'filled' : ''}"
+                ></i>
+              </button>
+            </div>
           </div>
         </li>
       </ul>

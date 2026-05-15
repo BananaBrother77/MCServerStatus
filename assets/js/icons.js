@@ -16,6 +16,8 @@ lucide.createIcons({
     X: lucide.X,
     Check: lucide.Check,
     Download: lucide.Download,
-    externalLink: lucide.ExternalLink,
+    ExternalLink: lucide.ExternalLink,
+    Search: lucide.Search,
+    Star: lucide.Star,
   },
 });

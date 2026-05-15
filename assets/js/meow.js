@@ -143,12 +143,27 @@ function loadServerList() {
     const li = document.createElement('li');
     li.innerHTML = `
     <div class="server-button-container">
-        <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
-          <i data-lucide="server"></i> <span>${server.name}</span>
+      <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
+        <i data-lucide="server"></i> 
+        <span>${server.name}</span>
+      </button>
+      
+      <div class="actions">
+        <button class="serverBtn delete-btn" id="deleteBtn">
+          <i data-lucide="Trash2"></i>
         </button>
-          <button class="serverBtn delete-btn" data-server="${server.ip}"><i data-lucide="Trash2"></i></button>
-          </div>
-      `;
+              <button
+                class="serverBtn favourite-btn"
+                data-server="${server.ip}"
+              >
+                <i
+                  data-lucide="star"
+                  class="${server.favourite ? 'filled' : ''}"
+                ></i>
+              </button>
+      </div>
+    </div>
+  `;
     sidebarEls.links.appendChild(li);
 
     li.querySelector('.serverBtn').addEventListener('click', () => {
@@ -162,6 +177,10 @@ function loadServerList() {
     });
 
     li.querySelector('.delete-btn').addEventListener('click', deleteServer);
+    li.querySelector('.favourite-btn').addEventListener(
+      'click',
+      addServerToFavourites,
+    );
 
     updateIcons();
   });
@@ -731,6 +750,19 @@ function deleteServer(e) {
   servers = servers.filter((server) => server.ip !== ipToDelete);
   localStorage.setItem('servers', JSON.stringify(servers));
 
+  loadServerList();
+}
+
+function addServerToFavourites(e) {
+  const btn = e.target.closest('.favourite-btn');
+  const ip = btn.dataset.server;
+  const server = servers.find((s) => s.ip === ip);
+  if (!server) return;
+
+  server.favourite = !server.favourite;
+  servers.sort((a, b) => (b.favourite ? 1 : 0) - (a.favourite ? 1 : 0));
+
+  localStorage.setItem('servers', JSON.stringify(servers));
   loadServerList();
 }
 

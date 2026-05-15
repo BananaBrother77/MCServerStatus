@@ -523,7 +523,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 280px;
+  width: 350px;
   height: 100%;
   background: var(--panel-bg);
   backdrop-filter: blur(15px);
@@ -545,6 +545,15 @@ body {
   align-items: center;
   margin-bottom: 30px;
   color: var(--text-main);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.filled {
+  fill: var(--text-muted);
 }
 
 #closeServerListBtn {
