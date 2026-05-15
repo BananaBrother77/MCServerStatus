@@ -330,6 +330,7 @@ function getOnlinePlayers() {
           displayPlayerInfo(player.name_raw, uuid);
         } catch (error) {
           console.error('Error fetching player data:', error);
+          playerInfoEls.playerInfoError.textContent = 'Player not found.';
         }
       });
     });
