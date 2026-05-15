@@ -11,17 +11,15 @@ import {
 
 const urlParams = new URLSearchParams(window.location.search);
 
-let servers = JSON.parse(localStorage.getItem('servers')) || [
-  { name: 'DarksideSMP', ip: 'darksidesmp.mcsh.io', showNode: 'Ares' },
-];
+let servers = JSON.parse(localStorage.getItem('servers')) || [];
 
 let serverIP =
   urlParams.get('server') ||
   localStorage.getItem('serverIP') ||
-  'darksidesmp.mcsh.io';
+  'mcsh.io';
 
 let serverName =
-  urlParams.get('name') || localStorage.getItem('serverName') || 'DarksideSMP';
+  urlParams.get('name') || localStorage.getItem('serverName') || 'MCServerHost';
 
 let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
 
@@ -121,7 +119,6 @@ const selectedText = document.getElementById('selectedOptionText');
 const cancelNodeChangeBtn = document.getElementById('cancelNodeChangeBtn');
 const selectBtn = document.getElementById('selectBtn');
 const applyNodeChangeBtn = document.getElementById('applyNodeChangeBtn');
-const darksidesmpBtn = document.getElementById('darksidesmpBtn');
 const playerLookupBtn = document.getElementById('playerLookupBtn');
 
 let pendingNodeValue = null;
@@ -720,15 +717,6 @@ applyNodeChangeBtn.addEventListener('click', () => {
 
 sidebarEls.toggleBtn.addEventListener('click', openServerList);
 sidebarEls.closeBtn.addEventListener('click', closeServerList);
-
-darksidesmpBtn.addEventListener('click', () => {
-  serverIP = 'darksidesmp.mcsh.io';
-  serverName = 'DarksideSMP';
-
-  updateUrl({ server: serverIP, name: serverName });
-  closeServerList();
-  getServerStatus();
-});
 
 function openServerList() {
   if (sidebarEls.sidebar.classList.contains('active')) {

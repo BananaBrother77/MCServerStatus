@@ -27,27 +27,6 @@
         <button id="closeServerListBtn">&times;</button>
       </div>
       <ul class="sidebar-links">
-        <li>
-          <div class="server-button-container">
-            <button id="darksidesmpBtn" class="serverBtn">
-              <i data-lucide="server"></i> DarksideSMP
-            </button>
-            <div class="actions">
-              <button class="serverBtn delete-btn" id="deleteBtn">
-                <i data-lucide="Trash2"></i>
-              </button>
-              <button
-                class="serverBtn favourite-btn"
-                data-server="${server.ip}"
-              >
-                <i
-                  data-lucide="star"
-                  class="${server.favourite ? 'filled' : ''}"
-                ></i>
-              </button>
-            </div>
-          </div>
-        </li>
       </ul>
 
       <div class="sidebar-footer">
@@ -70,7 +49,7 @@
             id="serverIconImg"
           />
           <div class="server-info">
-            <h1 id="serverName">DarksideSMP</h1>
+            <h1 id="serverName">MCServerHost</h1>
             <p id="statusText">
               <span class="status-dot" id="statusDot"></span>
               <span id="statusState">Pinging...</span>
