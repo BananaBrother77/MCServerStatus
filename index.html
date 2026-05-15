@@ -224,7 +224,7 @@
             name="Server IP"
             placeholder="Server IP..."
           />
-          <p id="errorText"></p>
+          <p class="error" id="errorText"></p>
           <button class="btn" id="applyEditBtn">Apply</button>
           <button class="btn" id="cancelEditBtn">Cancel</button>
         </div>
@@ -264,7 +264,7 @@
             <span class="checkmark"></span>
             Connect to server now
           </label>
-          <p id="addServerErrorText"></p>
+          <p class="error" id="addServerErrorText"></p>
           <button class="btn" id="applyAddServerBtn">Apply</button>
           <button class="btn" id="cancelAddServerBtn">Cancel</button>
         </div>
@@ -352,6 +352,7 @@
             <i data-lucide="search"></i>
           </button>
         </div>
+        <p class="error" id="playerInfoError"></p>
         <div class="player-info-wrapper">
           <div class="img-container">
             <img

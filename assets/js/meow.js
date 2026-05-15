@@ -93,6 +93,7 @@ const playerInfoEls = {
   nameMCBtn: document.getElementById('nameMCBtn'),
   playerInfoSearchInput: document.getElementById('playerInfoSearchInput'),
   playerInfoSearchBtn: document.getElementById('playerInfoSearchBtn'),
+  playerInfoError: document.getElementById('playerInfoError'),
 };
 
 const headsContainer = document.getElementById('playerHeadsContainer');
@@ -359,6 +360,8 @@ playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
   const playerName = playerInfoEls.playerInfoSearchInput.value.trim();
   if (!playerName) return;
 
+  playerInfoEls.playerInfoError.textContent = '';
+
   try {
     const uuidData = await fetchPlayerUUID(playerName);
     const uuid = uuidData.data.player.id;
@@ -367,6 +370,7 @@ playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
     displayPlayerInfo(playerName, uuid);
   } catch (error) {
     console.error('Error fetching player data:', error);
+    playerInfoEls.playerInfoError.textContent = 'Player not found.';
   }
 });
 
