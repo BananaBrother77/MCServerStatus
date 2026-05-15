@@ -107,6 +107,9 @@
                 <button id="editBtn" class="btn-primary">
                   <i data-lucide="pencil"></i> Edit
                 </button>
+                <!-- <button id="PlayerLookupBtn" class="btn-primary">
+                  <i data-lucide="search"></i> Player Lookup
+                </button> -->
 
                 <button
                   id="setNodeBtn"
@@ -127,6 +130,9 @@
             <div id="playerHeadsContainer" class="stats-row player-grid">
               <!-- Player avatars injected by script.js -->
             </div>
+            <button id="playerLookupBtn" class="btn-primary">
+              <i data-lucide="search"></i> Player Lookup
+            </button>
           </div>
         </section>
       </div>
@@ -327,13 +333,25 @@
       </div>
     </div>
 
-    <div class="overlayBackdrop" id="playerInfoOverlayBackdrop">
+    <!-- Player Info Modal -->
+    <div class="overlayBackdrop show" id="playerInfoOverlayBackdrop">
       <div id="playerInfoOverlay">
         <div class="edit-header">
           <h2 class="edit-title">Player Info</h2>
           <p class="edit-desc">Information about the player</p>
         </div>
         <div class="divider"></div>
+        <div class="input-group">
+          <input
+            class="form-input"
+            type="text"
+            placeholder="Enter player name..."
+            id="playerInfoSearchInput"
+          />
+          <button class="input-btn" id="playerInfoSearchBtn">
+            <i data-lucide="search"></i>
+          </button>
+        </div>
         <div class="player-info-wrapper">
           <div class="img-container">
             <img
@@ -359,7 +377,7 @@
               <div class="player-info-title">
                 UUID:<br />
                 <span class="player-info-text" id="playerInfoUUIDText"
-                  >61bd7ef7...</span
+                  >61bd7ef7-73bc-4d42-8171-ee7b29141664</span
                 >
                 <button class="copy-inline-btn" id="copyUUIDBtn">
                   <i data-lucide="copy"></i>

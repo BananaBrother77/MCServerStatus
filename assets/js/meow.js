@@ -91,6 +91,8 @@ const playerInfoEls = {
   copyUUIDBtn: document.getElementById('copyPlayerUUIDBtn'),
   downloadSkinBtn: document.getElementById('downloadSkinBtn'),
   nameMCBtn: document.getElementById('nameMCBtn'),
+  playerInfoSearchInput: document.getElementById('playerInfoSearchInput'),
+  playerInfoSearchBtn: document.getElementById('playerInfoSearchBtn'),
 };
 
 const headsContainer = document.getElementById('playerHeadsContainer');
@@ -119,6 +121,7 @@ const cancelNodeChangeBtn = document.getElementById('cancelNodeChangeBtn');
 const selectBtn = document.getElementById('selectBtn');
 const applyNodeChangeBtn = document.getElementById('applyNodeChangeBtn');
 const darksidesmpBtn = document.getElementById('darksidesmpBtn');
+const playerLookupBtn = document.getElementById('playerLookupBtn');
 
 let pendingNodeValue = null;
 
@@ -316,6 +319,8 @@ function getOnlinePlayers() {
           return;
         }
 
+        showOverlay(overlayEls.playerInfo);
+
         try {
           const uuidData = await fetchPlayerUUID(player.name_raw);
           const uuid = uuidData.data.player.id;
@@ -336,9 +341,11 @@ function getOnlinePlayers() {
   }
 }
 
-function displayPlayerInfo(playerName, playerUUID) {
+playerLookupBtn.addEventListener('click', () => {
   showOverlay(overlayEls.playerInfo);
+});
 
+function displayPlayerInfo(playerName, playerUUID) {
   // const rawUUID = playerUUID.replaceAll('-', '');
 
   nameMCBtn.href = `https://namemc.com/profile/${playerName}`;
@@ -347,6 +354,33 @@ function displayPlayerInfo(playerName, playerUUID) {
   playerInfoEls.uuid.textContent = playerUUID;
   playerInfoEls.avatar.src = `https://visage.surgeplay.com/full/212/${playerUUID}`;
 }
+
+playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
+  const playerName = playerInfoEls.playerInfoSearchInput.value.trim();
+  if (!playerName) return;
+
+  try {
+    const uuidData = await fetchPlayerUUID(playerName);
+    const uuid = uuidData.data.player.id;
+    console.log(`Player UUID of Player ${playerName}: ${uuid}`);
+
+    displayPlayerInfo(playerName, uuid);
+  } catch (error) {
+    console.error('Error fetching player data:', error);
+  }
+});
+
+playerInfoEls.playerInfoSearchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    playerInfoEls.playerInfoSearchBtn.click();
+  }
+});
+
+// ============================================================
+// SEARCH PLAYER INFO
+// ============================================================
+
+playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {});
 
 // ============================================================
 // DISPLAY — MCSH Server Paused
@@ -699,12 +733,15 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeOverlay(overlayEls.edit);
     closeOverlay(overlayEls.addServer);
+    closeOverlay(overlayEls.changeNode); 
+    closeOverlay(overlayEls.playerInfo);
     closeServerList();
   }
 
   if (
     !overlayEls.edit.classList.contains('show') &&
-    !overlayEls.addServer.classList.contains('show')
+    !overlayEls.addServer.classList.contains('show') &&
+    !playerInfoEls.playerInfoSearchInput.contains(document.activeElement)
   ) {
     if (e.key === 's') openServerList();
   }
