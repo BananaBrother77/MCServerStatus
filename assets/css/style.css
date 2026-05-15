@@ -490,13 +490,16 @@ body {
    ============================================================ */
 
 .serverListWrapper {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 20px;
   left: 20px;
   z-index: 100;
+  gap: 8px;
 }
 
-.serverList {
+.menu-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -514,7 +517,7 @@ body {
     background 0.2s ease;
 }
 
-.serverList:hover {
+.menu-btn:hover {
   transform: scale(1.03);
   background: rgba(255, 255, 255, 0.1);
 }

@@ -19,5 +19,6 @@ lucide.createIcons({
     ExternalLink: lucide.ExternalLink,
     Search: lucide.Search,
     Star: lucide.Star,
+    SquareArrowUpRight: lucide.SquareArrowUpRight,
   },
 });

@@ -14,9 +14,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let servers = JSON.parse(localStorage.getItem('servers')) || [];
 
 let serverIP =
-  urlParams.get('server') ||
-  localStorage.getItem('serverIP') ||
-  'mcsh.io';
+  urlParams.get('server') || localStorage.getItem('serverIP') || 'mcsh.io';
 
 let serverName =
   urlParams.get('name') || localStorage.getItem('serverName') || 'MCServerHost';
@@ -68,7 +66,8 @@ const sidebarEls = {
   sidebar: document.getElementById('sidebar'),
   overlay: document.getElementById('overlay'),
   links: document.querySelector('.sidebar-links'),
-  toggleBtn: document.querySelector('.serverList'),
+  toggleBtn: document.getElementById('serverListBtn'),
+  shareBtn: document.getElementById('shareServerBtn'),
   serverListBtn: document.getElementById('serverListBtn'),
   closeBtn: document.getElementById('closeServerListBtn'),
 };
@@ -741,6 +740,32 @@ function deleteServer(e) {
   loadServerList();
 }
 
+// ============================================================
+// SHARE SERVER
+// ============================================================
+
+sidebarEls.shareBtn.addEventListener('click', shareLink);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
+    e.preventDefault();
+    shareLink();
+  }
+});
+
+function shareLink() {
+  if (navigator.share) {
+    navigator.share({
+      title: serverName,
+      text: `Check out the status of ${serverName}!`,
+      url: window.location.href,
+    });
+  } else {
+    alert(
+      'Sharing is not supported in this browser. The link got copied to the clipboard instead.',
+    );
+  }
+}
+
 function addServerToFavourites(e) {
   const btn = e.target.closest('.favourite-btn');
   const ip = btn.dataset.server;
@@ -772,7 +797,9 @@ document.addEventListener('keydown', (e) => {
     !overlayEls.addServer.classList.contains('show') &&
     !playerInfoEls.playerInfoSearchInput.contains(document.activeElement)
   ) {
-    if (e.key === 's') openServerList();
+    if (e.key === 's' && !(e.metaKey || e.ctrlKey)) {
+      openServerList();
+    }
   }
 });
 
