@@ -352,7 +352,7 @@ function displayPlayerInfo(playerName, playerUUID) {
 
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
-  playerInfoEls.avatar.src = `https://visage.surgeplay.com/full/212/${playerUUID}`;
+  playerInfoEls.avatar.src = `https://vzge.me/full/212/${playerUUID}?t=${Date.now()}`;
 }
 
 playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
