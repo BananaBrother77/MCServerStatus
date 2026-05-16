@@ -5,6 +5,12 @@ export async function fetchServerData(serverIP) {
   return res.json();
 }
 
+export async function fetchBedrockServerData(serverIP) {
+  const res = await fetch(`https://api.mcstatus.io/v2/status/bedrock/${serverIP}`);
+  if (!res.ok) throw new Error('MC API failed');
+  return res.json();
+}
+
 export async function fetchNodeData() {
   const res = await fetch('https://api.maximerix.dev/mcsh/outages/data');
   if (!res.ok) throw new Error('Node API failed');

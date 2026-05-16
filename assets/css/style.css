@@ -794,30 +794,28 @@ body {
 
 .overlayBackdrop.show {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 #editOverlay,
 #changeNodeOverlay,
-#addServerOverlay {
-  position: fixed;
-  top: 38%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
+#addServerOverlay,
+#playerInfoOverlay {
+  position: relative;
+  top: unset;
+  left: unset;
+  transform: unset;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: clamp(20px, 5vw, 50px);
   background: var(--bg-purple);
   border: 1px solid var(--panel-border);
   border-radius: 20px;
-  padding: 30px 50px;
   box-shadow: 0 10px 30px var(--shadow-md);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 500px;
-  min-height: 500px;
 }
 
 .edit-title {
@@ -1416,18 +1414,8 @@ body {
     width: 100%;
   }
 
-  #editOverlay {
-    top: 50%;
-    max-width: 300px;
-  }
-
   .node-actions {
     flex-direction: column;
-  }
-
-  #playerInfoOverlay {
-    max-height: 90vh;
-    overflow-y: auto;
   }
 
   .img-container img {

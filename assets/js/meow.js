@@ -1,5 +1,6 @@
 import {
   fetchServerData,
+  fetchBedrockServerData,
   fetchNodeData,
   fetchPlayerUUID,
   fetchPlayerSkin,
@@ -19,21 +20,27 @@ let serverIP =
 let serverName =
   urlParams.get('name') || localStorage.getItem('serverName') || 'MCServerHost';
 
+let isBedrock = urlParams.get('bedrock') === 'true';
+if (!urlParams.has('bedrock')) {
+  const savedServer = servers.find(s => s.ip === serverIP);
+  isBedrock = savedServer?.isBedrock ?? false;
+}
+
 let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
 
 const urlNode = urlParams.get('node');
 if (urlNode) {
   nodeSettings[serverIP] = urlNode;
-  updateUrl({ server: serverIP, name: serverName, node: urlNode });
+  updateUrl({ server: serverIP, name: serverName, node: urlNode, bedrock: isBedrock });
 } else {
-  updateUrl({ server: serverIP, name: serverName, node: getSavedNode() });
+  updateUrl({ server: serverIP, name: serverName, node: getSavedNode(), bedrock: isBedrock });
 }
 
 let serverData;
 let nodeData;
 let statusTimeout;
 
-updateUrl({ server: serverIP, name: serverName });
+updateUrl({ server: serverIP, name: serverName, bedrock: isBedrock });
 
 // ============================================================
 // THEME
@@ -137,6 +144,8 @@ const addToListCheckbox = document.getElementById('addToServerListCheckBox');
 const connectToServerNowCheckBox = document.getElementById(
   'connectToServerNowCheckBox',
 );
+const bedrockServerCheckBox = document.getElementById('bedrockServerCheckBox');
+const editBedrockCheckBox = document.getElementById('editBedrockCheckBox');
 const changeNodeBtn = document.getElementById('changeNodeBtn');
 const setNodeBtn = document.getElementById('setNodeBtn');
 const selectOptions = document.getElementById('selectOptions');
@@ -165,9 +174,9 @@ function loadServerList() {
     const li = document.createElement('li');
     li.innerHTML = `
     <div class="server-button-container">
-      <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}">
+      <button class="serverBtn" data-ip="${server.ip}" data-name="${server.name}" data-is-bedrock="${server.isBedrock || false}">
         <i data-lucide="server"></i> 
-        <span>${server.name}</span>
+        <span>${server.name}${server.isBedrock ? ' (Bedrock)' : ''}</span>
       </button>
       
       <div class="actions">
@@ -191,9 +200,10 @@ function loadServerList() {
     li.querySelector('.serverBtn').addEventListener('click', () => {
       serverIP = server.ip;
       serverName = server.name;
+      isBedrock = server.isBedrock ?? false;
       const currentNode = getSavedNode();
 
-      updateUrl({ server: serverIP, name: serverName, node: currentNode });
+      updateUrl({ server: serverIP, name: serverName, node: currentNode, bedrock: isBedrock });
       closeServerList();
       getServerStatus();
     });
@@ -219,7 +229,7 @@ async function getServerStatus() {
 
   try {
     const [serverResult, nodeResult] = await Promise.allSettled([
-      fetchServerData(serverIP),
+      isBedrock ? fetchBedrockServerData(serverIP) : fetchServerData(serverIP),
       fetchNodeData(),
     ]);
 
@@ -594,6 +604,8 @@ function showOverlay(target) {
     serverNameInput.value = serverName;
     serverIpInput.value = serverIP;
     errorText.textContent = '';
+    const currentServer = servers.find(s => s.ip === serverIP);
+    editBedrockCheckBox.checked = currentServer?.isBedrock ?? false;
   } else if (target === overlayEls.addServer) {
     closeServerList();
     addServerNameInput.value = '';
@@ -620,17 +632,18 @@ function addServer() {
   }
 
   if (addToListCheckbox.checked && !servers.some((s) => s.ip === ip)) {
-    servers.push({ name: name, ip: ip });
+    servers.push({ name: name, ip: ip, isBedrock: bedrockServerCheckBox.checked });
     localStorage.setItem('servers', JSON.stringify(servers));
     loadServerList();
   }
 
   serverIP = ip;
   serverName = name;
+  isBedrock = bedrockServerCheckBox.checked;
 
   addServerErrorText.textContent = '';
   closeOverlay(overlayEls.addServer);
-  updateUrl({ server: serverIP, name: serverName });
+  updateUrl({ server: serverIP, name: serverName, bedrock: isBedrock });
 
   if (connectToServerNowCheckBox.checked) getServerStatus();
 }
@@ -654,14 +667,16 @@ function applyServerChanges() {
 
   foundServer.ip = newIP;
   foundServer.name = newName;
+  foundServer.isBedrock = editBedrockCheckBox.checked;
   localStorage.setItem('servers', JSON.stringify(servers));
 
   serverIP = newIP;
   serverName = newName;
+  isBedrock = editBedrockCheckBox.checked;
 
   errorText.textContent = '';
   closeOverlay(overlayEls.edit);
-  updateUrl({ server: serverIP, name: serverName });
+  updateUrl({ server: serverIP, name: serverName, bedrock: isBedrock });
   loadServerList();
   getServerStatus();
 }
