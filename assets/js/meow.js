@@ -39,7 +39,7 @@ updateUrl({ server: serverIP, name: serverName });
 // THEME
 // ============================================================
 
-const themes = ['none', 'red', 'blue', 'yellow'];
+const themes = ['none', 'green', 'red', 'blue', 'yellow'];
 let currentTheme = localStorage.getItem('theme') || 'none';
 
 if (currentTheme !== 'none') {

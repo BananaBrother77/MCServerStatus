@@ -6,14 +6,14 @@
 
 :root {
   /* Backgrounds */
-  --bg-purple: #390c4d;
-  --bg-purple-light: #611681;
-  --bg-gradient-2: #5a1185;
-  --bg-gradient-3: #7b2eb3;
+  --bg-purple: #0a0a0a;
+  --bg-purple-light: #111111;
+  --bg-gradient-2: #141414;
+  --bg-gradient-3: #1a1a1a;
 
   /* Panels */
-  --panel-bg: rgba(255, 255, 255, 0.05);
-  --panel-border: rgba(255, 255, 255, 0.1);
+  --panel-bg: rgba(255, 255, 255, 0.03);
+  --panel-border: rgba(255, 255, 255, 0.08);
 
   /* Status colours */
   --online-green: #50fa7b;
@@ -23,21 +23,21 @@
 
   /* Text */
   --text-main: #f8f8f2;
-  --text-muted: #bd93f9;
-  --text-muted-bright: #cbaafb;
+  --text-muted: #9d7ee0;
+  --text-muted-bright: #b49cec;
 
   /* Gradient text (headings, logo) */
-  --grad-text-start: #730c9c;
-  --grad-text-end: #a64ed9;
+  --grad-text-start: #7c58cc;
+  --grad-text-end: #9d7ee0;
 
   /* Modal title gradient */
-  --grad-title-start: #7b11a5;
+  --grad-title-start: #7c58cc;
 
   /* Accent */
-  --accent-purple: #8e43c7;
-  --accent-purple-dark: #7636af;
-  --accent-bright-shadow: rgba(124, 58, 237, 0.3);
-  --accent-focus-ring: rgba(142, 67, 199, 0.2);
+  --accent-purple: #7c58cc;
+  --accent-purple-dark: #6a47b8;
+  --accent-bright-shadow: rgba(124, 88, 204, 0.3);
+  --accent-focus-ring: rgba(124, 88, 204, 0.18);
 
   /* Cancel button */
   --cancel-bg: #a19c9c;
@@ -45,9 +45,9 @@
   --cancel-shadow: rgba(207, 204, 213, 0.3);
 
   /* Select dropdown */
-  --select-start: #923ad6;
-  --select-end: #502278;
-  --select-border: #444;
+  --select-start: #7c58cc;
+  --select-end: #3d2488;
+  --select-border: #222;
 
   /* Delete hover */
   --delete-hover: #f13434;
@@ -58,24 +58,43 @@
   --btn-text: #ffffff;
 
   /* Shadows */
-  --shadow-sm: rgba(0, 0, 0, 0.2);
-  --shadow-md: rgba(0, 0, 0, 0.3);
-  --shadow-lg: rgba(0, 0, 0, 0.4);
-  --shadow-xl: rgba(0, 0, 0, 0.5);
+  --shadow-sm: rgba(0, 0, 0, 0.4);
+  --shadow-md: rgba(0, 0, 0, 0.5);
+  --shadow-lg: rgba(0, 0, 0, 0.6);
+  --shadow-xl: rgba(0, 0, 0, 0.7);
 
   /* Interactivity */
-  --hover-bg: rgba(255, 255, 255, 0.1);
-  --focus-bg: rgba(255, 255, 255, 0.08);
-  --focus-ring: rgba(210, 168, 247, 0.18);
-  --border-light: rgba(255, 255, 255, 0.2);
-  --input-bg: rgba(0, 0, 0, 0.3);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --focus-bg: rgba(255, 255, 255, 0.06);
+  --focus-ring: rgba(124, 88, 204, 0.18);
+  --border-light: rgba(255, 255, 255, 0.15);
+  --input-bg: rgba(255, 255, 255, 0.04);
+}
+
+.theme-green {
+  --bg-purple: #0a0a0a;
+  --bg-purple-light: #111111;
+  --bg-gradient-2: #141414;
+  --bg-gradient-3: #1a1a1a;
+  --text-muted: #1ad76f;
+  --text-muted-bright: #34d399;
+  --grad-text-start: #1ad76f;
+  --grad-text-end: #34d399;
+  --grad-title-start: #1ad76f;
+  --accent-purple: #1ad76f;
+  --accent-purple-dark: #16b85e;
+  --accent-bright-shadow: rgba(26, 215, 111, 0.3);
+  --accent-focus-ring: rgba(26, 215, 111, 0.18);
+  --select-start: #1ad76f;
+  --select-end: #112418;
+  --focus-ring: rgba(74, 222, 128, 0.25);
 }
 
 .theme-red {
-  --bg-purple: #4d0c0c;
-  --bg-purple-light: #811616;
-  --bg-gradient-2: #851116;
-  --bg-gradient-3: #b32e2e;
+  --bg-purple: #0a0a0a;
+  --bg-purple-light: #111111;
+  --bg-gradient-2: #141414;
+  --bg-gradient-3: #1a1a1a;
   --text-muted: #f99393;
   --text-muted-bright: #fbaaaa;
   --grad-text-start: #9c0c0c;
@@ -91,10 +110,10 @@
 }
 
 .theme-yellow {
-  --bg-purple: #4d3a0c;
-  --bg-purple-light: #816116;
-  --bg-gradient-2: #856111;
-  --bg-gradient-3: #b3892e;
+  --bg-purple: #0a0a0a;
+  --bg-purple-light: #111111;
+  --bg-gradient-2: #141414;
+  --bg-gradient-3: #1a1a1a;
   --text-muted: #f9d993;
   --text-muted-bright: #fbe8aa;
   --grad-text-start: #9c7a0c;
@@ -110,10 +129,10 @@
 }
 
 .theme-blue {
-  --bg-purple: #0c1f4d;
-  --bg-purple-light: #163481;
-  --bg-gradient-2: #113485;
-  --bg-gradient-3: #2e5ab3;
+  --bg-purple: #0a0a0a;
+  --bg-purple-light: #111111;
+  --bg-gradient-2: #141414;
+  --bg-gradient-3: #1a1a1a;
   --text-muted: #93b8f9;
   --text-muted-bright: #aacafb;
   --grad-text-start: #0c4a9c;
@@ -1242,9 +1261,9 @@ body {
 
 .site-footer {
   width: 100%;
-  max-width: 1140px;
+  max-width: 1300px;
   padding: 25px 30px;
-  margin-top: 10px;
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
