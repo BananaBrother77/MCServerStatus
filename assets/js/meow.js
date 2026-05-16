@@ -46,10 +46,6 @@ if (currentTheme !== 'none') {
   document.body.classList.add(`theme-${currentTheme}`);
 }
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 't') toggleTheme();
-});
-
 document
   .getElementById('themeToggleBtn')
   .addEventListener('click', toggleTheme);
@@ -420,12 +416,6 @@ playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
   }
 });
 
-playerInfoEls.playerInfoSearchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    playerInfoEls.playerInfoSearchBtn.click();
-  }
-});
-
 // ============================================================
 // SEARCH PLAYER INFO
 // ============================================================
@@ -597,19 +587,6 @@ cancelAddServerBtn.addEventListener('click', () =>
 applyEditBtn.addEventListener('click', applyServerChanges);
 applyAddServerBtn.addEventListener('click', addServer);
 
-serverNameInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') applyServerChanges();
-});
-serverIpInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') applyServerChanges();
-});
-addServerNameInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') addServer();
-});
-addServerIpInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') addServer();
-});
-
 function showOverlay(target) {
   target.classList.add('show');
 
@@ -775,12 +752,6 @@ function deleteServer(e) {
 // ============================================================
 
 sidebarEls.shareBtn.addEventListener('click', shareLink);
-document.addEventListener('keydown', (e) => {
-  if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
-    e.preventDefault();
-    shareLink();
-  }
-});
 
 function shareLink() {
   if (navigator.share) {
@@ -817,6 +788,15 @@ function addServerToFavourites(e) {
 // KEYBOARD SHORTCUTS
 // ============================================================
 
+function noOverlayOpen() {
+  return (
+    !overlayEls.edit.classList.contains('show') &&
+    !overlayEls.addServer.classList.contains('show') &&
+    !overlayEls.changeNode.classList.contains('show') &&
+    !overlayEls.playerInfo.classList.contains('show')
+  );
+}
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeOverlay(overlayEls.edit);
@@ -824,17 +804,34 @@ document.addEventListener('keydown', (e) => {
     closeOverlay(overlayEls.changeNode);
     closeOverlay(overlayEls.playerInfo);
     closeServerList();
+    return;
   }
 
-  if (
-    !overlayEls.edit.classList.contains('show') &&
-    !overlayEls.addServer.classList.contains('show') &&
-    !playerInfoEls.playerInfoSearchInput.contains(document.activeElement)
-  ) {
-    if (e.key === 's' && !(e.metaKey || e.ctrlKey)) {
-      openServerList();
+  if (e.key === 'Enter') {
+    if (e.target === serverNameInput || e.target === serverIpInput) {
+      applyServerChanges();
+    } else if (
+      e.target === addServerNameInput ||
+      e.target === addServerIpInput
+    ) {
+      addServer();
+    } else if (e.target === playerInfoEls.playerInfoSearchInput) {
+      playerInfoEls.playerInfoSearchBtn.click();
     }
+    return;
   }
+
+  if (e.key === 's') {
+    if (e.metaKey || e.ctrlKey) {
+      e.preventDefault();
+      shareLink();
+      return;
+    }
+
+    if (noOverlayOpen()) openServerList();
+  }
+
+  if (e.key === 't' && noOverlayOpen()) toggleTheme();
 });
 
 // ============================================================
