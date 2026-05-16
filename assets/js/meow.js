@@ -36,6 +36,29 @@ let statusTimeout;
 updateUrl({ server: serverIP, name: serverName });
 
 // ============================================================
+// THEME
+// ============================================================
+
+const themes = ['none', 'red', 'blue', 'yellow'];
+let currentTheme = localStorage.getItem('theme') || 'none';
+
+if (currentTheme !== 'none') {
+  document.body.classList.add(`theme-${currentTheme}`);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 't') {
+    document.body.classList.remove(`theme-${currentTheme}`);
+    
+    const nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
+    currentTheme = themes[nextIndex];
+    
+    if (currentTheme !== 'none') document.body.classList.add(`theme-${currentTheme}`);
+    localStorage.setItem('theme', currentTheme);
+  }
+});
+
+// ============================================================
 // ELEMENT REFS
 // ============================================================
 
