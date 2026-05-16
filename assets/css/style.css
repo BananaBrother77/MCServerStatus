@@ -8,6 +8,8 @@
   /* Backgrounds */
   --bg-purple: #390c4d;
   --bg-purple-light: #611681;
+  --bg-gradient-2: #5a1185;
+  --bg-gradient-3: #7b2eb3;
 
   /* Panels */
   --panel-bg: rgba(255, 255, 255, 0.05);
@@ -23,6 +25,107 @@
   --text-main: #f8f8f2;
   --text-muted: #bd93f9;
   --text-muted-bright: #cbaafb;
+
+  /* Gradient text (headings, logo) */
+  --grad-text-start: #730c9c;
+  --grad-text-end: #a64ed9;
+
+  /* Modal title gradient */
+  --grad-title-start: #7b11a5;
+
+  /* Accent */
+  --accent-purple: #8e43c7;
+  --accent-purple-dark: #7636af;
+  --accent-bright-shadow: rgba(124, 58, 237, 0.3);
+  --accent-focus-ring: rgba(142, 67, 199, 0.2);
+
+  /* Cancel button */
+  --cancel-bg: #a19c9c;
+  --cancel-bg-end: #a2a2a2;
+  --cancel-shadow: rgba(207, 204, 213, 0.3);
+
+  /* Select dropdown */
+  --select-start: #923ad6;
+  --select-end: #502278;
+  --select-border: #444;
+
+  /* Delete hover */
+  --delete-hover: #f13434;
+  --delete-hover-shadow: rgba(220, 38, 38, 0.3);
+
+  /* Misc */
+  --heart: #ff4d4d;
+  --btn-text: #ffffff;
+
+  /* Shadows */
+  --shadow-sm: rgba(0, 0, 0, 0.2);
+  --shadow-md: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.4);
+  --shadow-xl: rgba(0, 0, 0, 0.5);
+
+  /* Interactivity */
+  --hover-bg: rgba(255, 255, 255, 0.1);
+  --focus-bg: rgba(255, 255, 255, 0.08);
+  --focus-ring: rgba(210, 168, 247, 0.18);
+  --border-light: rgba(255, 255, 255, 0.2);
+  --input-bg: rgba(0, 0, 0, 0.3);
+}
+
+.theme-red {
+  --bg-purple: #4d0c0c;
+  --bg-purple-light: #811616;
+  --bg-gradient-2: #851116;
+  --bg-gradient-3: #b32e2e;
+  --text-muted: #f99393;
+  --text-muted-bright: #fbaaaa;
+  --grad-text-start: #9c0c0c;
+  --grad-text-end: #d94e4e;
+  --grad-title-start: #a51111;
+  --accent-purple: #c74343;
+  --accent-purple-dark: #af3636;
+  --accent-bright-shadow: rgba(237, 58, 58, 0.3);
+  --accent-focus-ring: rgba(199, 67, 67, 0.2);
+  --select-start: #d63a3a;
+  --select-end: #782222;
+  --focus-ring: rgba(247, 168, 168, 0.18);
+}
+
+.theme-yellow {
+  --bg-purple: #4d3a0c;
+  --bg-purple-light: #816116;
+  --bg-gradient-2: #856111;
+  --bg-gradient-3: #b3892e;
+  --text-muted: #f9d993;
+  --text-muted-bright: #fbe8aa;
+  --grad-text-start: #9c7a0c;
+  --grad-text-end: #d9a84e;
+  --grad-title-start: #a59011;
+  --accent-purple: #c7a043;
+  --accent-purple-dark: #af8836;
+  --accent-bright-shadow: rgba(237, 180, 58, 0.3);
+  --accent-focus-ring: rgba(199, 160, 67, 0.2);
+  --select-start: #d6a43a;
+  --select-end: #785a22;
+  --focus-ring: rgba(247, 220, 168, 0.18);
+}
+
+.theme-blue {
+  --bg-purple: #0c1f4d;
+  --bg-purple-light: #163481;
+  --bg-gradient-2: #113485;
+  --bg-gradient-3: #2e5ab3;
+  --text-muted: #93b8f9;
+  --text-muted-bright: #aacafb;
+  --grad-text-start: #0c4a9c;
+  --grad-text-end: #4e84d9;
+  --grad-title-start: #1155a5;
+  --accent-purple: #4372c7;
+  --accent-purple-dark: #3660af;
+  --accent-bright-shadow: rgba(58, 120, 237, 0.3);
+  --accent-focus-ring: rgba(67, 114, 199, 0.2);
+  --select-start: #3a72d6;
+  --select-end: #223c78;
+  --focus-ring: rgba(168, 200, 247, 0.18);
 }
 
 /* ============================================================
@@ -40,9 +143,9 @@ body {
   min-height: 100vh;
   background: linear-gradient(
     125deg,
-    rgba(57, 12, 77, 1) 0%,
-    rgba(90, 17, 133, 1) 35%,
-    rgba(123, 46, 179, 1) 100%
+    var(--bg-purple) 0%,
+    var(--bg-gradient-2) 35%,
+    var(--bg-gradient-3) 100%
   );
   color: var(--text-main);
   display: flex;
@@ -64,7 +167,7 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid var(--panel-border);
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px var(--shadow-md);
 }
 
 /* ============================================================
@@ -164,7 +267,7 @@ body {
   border-radius: 15px;
   padding: 10px;
   backdrop-filter: blur(5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px var(--shadow-md);
   flex-shrink: 0;
 }
 
@@ -172,8 +275,8 @@ body {
 #nodeName {
   background: linear-gradient(
     147deg,
-    rgba(115, 12, 156, 1) 0%,
-    rgba(166, 78, 217, 1) 82%
+    var(--grad-text-start) 0%,
+    var(--grad-text-end) 82%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -371,7 +474,7 @@ body {
 
 .player-tag:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-bg);
   cursor: pointer;
 }
 
@@ -399,9 +502,13 @@ body {
    ============================================================ */
 
 .btn-primary {
-  background: linear-gradient(135deg, #8e43c7, #7636af);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    var(--accent-purple),
+    var(--accent-purple-dark)
+  );
+  border: 1px solid var(--border-light);
+  color: var(--btn-text);
   padding: 10px;
   border-radius: 12px;
   font-family: inherit;
@@ -414,7 +521,7 @@ body {
   justify-content: center;
   gap: 8px;
   text-decoration: none;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px var(--shadow-sm);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -428,7 +535,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 15px 25px var(--accent-bright-shadow);
   filter: brightness(1.1);
 }
 
@@ -437,8 +544,8 @@ body {
 }
 
 .btn {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  border: 1px solid var(--border-light);
+  color: var(--btn-text);
   padding: 12px;
   border-radius: 12px;
   font-family: inherit;
@@ -447,7 +554,7 @@ body {
   cursor: pointer;
   width: 100%;
   margin-top: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px var(--shadow-sm);
   transition:
     transform 0.2s,
     box-shadow 0.2s,
@@ -462,27 +569,31 @@ body {
 #applyEditBtn,
 #applyNodeChangeBtn,
 #applyAddServerBtn {
-  background: linear-gradient(135deg, #8e43c7, #7636af);
+  background: linear-gradient(
+    135deg,
+    var(--accent-purple),
+    var(--accent-purple-dark)
+  );
 }
 
 #applyEditBtn:hover,
 #applyNodeChangeBtn:hover,
 #applyAddServerBtn:hover {
-  box-shadow: 0 15px 25px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 15px 25px var(--accent-bright-shadow);
 }
 
 #cancelEditBtn,
 #cancelNodeChangeBtn,
 #cancelAddServerBtn,
 #closePlayerInfoBtn {
-  background: linear-gradient(135deg, #a19c9c, #a2a2a2);
+  background: linear-gradient(135deg, var(--cancel-bg), var(--cancel-bg-end));
 }
 
 #cancelEditBtn:hover,
 #cancelNodeChangeBtn:hover,
 #cancelAddServerBtn:hover,
 #closePlayerInfoBtn:hover {
-  box-shadow: 0 15px 25px rgba(207, 204, 213, 0.3);
+  box-shadow: 0 15px 25px var(--cancel-shadow);
 }
 
 /* ============================================================
@@ -510,7 +621,7 @@ body {
   border: 1px solid var(--panel-border);
   border-radius: 14px;
   padding: 10px 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px var(--shadow-lg);
   cursor: pointer;
   transition:
     transform 0.2s ease,
@@ -519,7 +630,7 @@ body {
 
 .menu-btn:hover {
   transform: scale(1.03);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--hover-bg);
 }
 
 .sidebar {
@@ -533,7 +644,7 @@ body {
   border-right: 1px solid var(--panel-border);
   z-index: 10001;
   padding: 20px;
-  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 0 30px var(--shadow-xl);
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
 }
@@ -594,7 +705,7 @@ body {
   border: 1px solid var(--panel-border);
   border-radius: 14px;
   padding: 10px 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px var(--shadow-lg);
   cursor: pointer;
   text-decoration: none;
   transition:
@@ -609,19 +720,19 @@ body {
 .sidebar-links .serverBtn:hover {
   transform: translateY(-3px);
   color: var(--text-muted-bright);
-  box-shadow: 0 5px 10px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 5px 10px var(--accent-bright-shadow);
   filter: brightness(1.1);
 }
 
 .sidebar-links .delete-btn:hover {
-  color: #f13434;
-  box-shadow: 0 5px 10px rgba(220, 38, 38, 0.3);
+  color: var(--delete-hover);
+  box-shadow: 0 5px 10px var(--delete-hover-shadow);
 }
 
 .sidebar-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--shadow-xl);
   display: none;
   z-index: 10000;
 }
@@ -649,7 +760,7 @@ body {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--shadow-lg);
   backdrop-filter: blur(10px);
   z-index: 9998;
 }
@@ -670,7 +781,7 @@ body {
   border: 1px solid var(--panel-border);
   border-radius: 20px;
   padding: 30px 50px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px var(--shadow-md);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -686,7 +797,11 @@ body {
   font-weight: 800;
   font-size: 3rem;
   margin-bottom: 10px;
-  background: linear-gradient(147deg, #7b11a5 0%, #a64ed9 82%);
+  background: linear-gradient(
+    147deg,
+    var(--grad-title-start) 0%,
+    var(--grad-text-end) 82%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -721,8 +836,8 @@ body {
 
 .input-group:focus-within {
   border-color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(210, 168, 247, 0.18);
+  background: var(--focus-bg);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .input-group .form-input {
@@ -755,7 +870,7 @@ body {
 
 .edit-input {
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--input-bg);
   border: 1px solid var(--panel-border);
   border-radius: 12px;
   padding: 12px 15px;
@@ -770,7 +885,7 @@ body {
 .edit-input:focus {
   outline: none;
   border-color: var(--accent-purple);
-  box-shadow: 0 0 0 3px rgba(142, 67, 199, 0.2);
+  box-shadow: 0 0 0 3px var(--accent-focus-ring);
 }
 
 .form-input {
@@ -791,8 +906,8 @@ body {
 
 .form-input:focus {
   border-color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(210, 168, 247, 0.18);
+  background: var(--focus-bg);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 ::-webkit-scrollbar {
@@ -826,7 +941,7 @@ body {
   border: 1px solid var(--panel-border);
   border-radius: 20px;
   padding: 25px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px var(--shadow-md);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -860,7 +975,11 @@ body {
   font-weight: 800;
   font-size: 1.6rem;
   margin-bottom: 10px;
-  background: linear-gradient(147deg, #7b11a5 0%, #a64ed9 82%);
+  background: linear-gradient(
+    147deg,
+    var(--grad-title-start) 0%,
+    var(--grad-text-end) 82%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -939,7 +1058,7 @@ body {
 }
 
 .custom-checkbox:hover input ~ .checkmark {
-  box-shadow: 0 8px 10px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 8px 10px var(--accent-bright-shadow);
 }
 
 .custom-checkbox input:checked ~ .checkmark {
@@ -980,10 +1099,10 @@ body {
 .select-button {
   width: 100%;
   padding: 10px 15px;
-  background: linear-gradient(135deg, #923ad6, #502278);
-  border: 1px solid #444;
+  background: linear-gradient(135deg, var(--select-start), var(--select-end));
+  border: 1px solid var(--select-border);
   border-radius: 8px;
-  color: white;
+  color: var(--btn-text);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1004,7 +1123,7 @@ body {
   padding: 5px;
   display: none;
   z-index: 1000;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 16px var(--shadow-lg);
   max-height: 250px;
   overflow-y: scroll;
 }
@@ -1106,8 +1225,8 @@ body {
 
 .glass-input:focus {
   border-color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(210, 168, 247, 0.18);
+  background: var(--focus-bg);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .login-error {
@@ -1143,8 +1262,8 @@ body {
 .footer-logo {
   background: linear-gradient(
     147deg,
-    rgba(115, 12, 156, 1) 0%,
-    rgba(166, 78, 217, 1) 82%
+    var(--grad-text-start) 0%,
+    var(--grad-text-end) 82%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -1193,7 +1312,7 @@ body {
 }
 
 .text-heart {
-  color: #ff4d4d;
+  color: var(--heart);
 }
 
 .text-code-muted {

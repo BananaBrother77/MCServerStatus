@@ -766,6 +766,10 @@ function shareLink() {
   }
 }
 
+// ============================================================
+// ADD SERVER TO FAVOURITES
+// ============================================================
+
 function addServerToFavourites(e) {
   const btn = e.target.closest('.favourite-btn');
   const ip = btn.dataset.server;
