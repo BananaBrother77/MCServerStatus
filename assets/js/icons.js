@@ -20,5 +20,6 @@ lucide.createIcons({
     Search: lucide.Search,
     Star: lucide.Star,
     SquareArrowUpRight: lucide.SquareArrowUpRight,
+    Palette: lucide.Palette,
   },
 });

@@ -47,16 +47,23 @@ if (currentTheme !== 'none') {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 't') {
-    document.body.classList.remove(`theme-${currentTheme}`);
-    
-    const nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
-    currentTheme = themes[nextIndex];
-    
-    if (currentTheme !== 'none') document.body.classList.add(`theme-${currentTheme}`);
-    localStorage.setItem('theme', currentTheme);
-  }
+  if (e.key === 't') toggleTheme;
 });
+
+document
+  .getElementById('themeToggleBtn')
+  .addEventListener('click', toggleTheme);
+
+function toggleTheme() {
+  document.body.classList.remove(`theme-${currentTheme}`);
+
+  const nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
+  currentTheme = themes[nextIndex];
+
+  if (currentTheme !== 'none')
+    document.body.classList.add(`theme-${currentTheme}`);
+  localStorage.setItem('theme', currentTheme);
+}
 
 // ============================================================
 // ELEMENT REFS
