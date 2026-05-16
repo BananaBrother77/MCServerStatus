@@ -521,11 +521,11 @@ function updateNodeUI(node) {
   nodeEls.uptime.textContent =
     node.uptimeOverall != null ? `${node.uptimeOverall}` : '--';
 
-  nodeEls.cpu.className = `card-value ${getUsageClass(node.load, 'cpu')}`;
-  nodeEls.memory.className = `card-value ${getUsageClass(node.memory, 'mem')}`;
-  nodeEls.storage.className = `card-value ${getUsageClass(node.storage, 'mem')}`;
-  nodeEls.latency.className = `card-value ${getUsageClass(node.latency, 'latency')}`;
-  nodeEls.uptime.className = `card-value ${getUsageClass(node.uptimeOverall, 'uptime')}`;
+  nodeEls.cpu.className = `card-value ${!node.online && node.load == 0 ? 'usage-high' : getUsageClass(node.load, 'cpu')}`;
+  nodeEls.memory.className = `card-value ${!node.online && node.memory == 0 ? 'usage-high' : getUsageClass(node.memory, 'mem')}`;
+  nodeEls.storage.className = `card-value ${!node.online && node.storage == 0 ? 'usage-high' : getUsageClass(node.storage, 'mem')}`;
+  nodeEls.latency.className = `card-value ${!node.online && node.latency == 0 ? 'usage-high' : getUsageClass(node.latency, 'latency')}`;
+  nodeEls.uptime.className = `card-value ${!node.online && node.uptimeOverall == 0 ? 'usage-high' : getUsageClass(node.uptimeOverall, 'uptime')}`;
 }
 
 // ============================================================
