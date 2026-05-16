@@ -47,7 +47,7 @@ if (currentTheme !== 'none') {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 't') toggleTheme;
+  if (e.key === 't') toggleTheme();
 });
 
 document
