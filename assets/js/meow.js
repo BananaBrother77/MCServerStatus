@@ -329,7 +329,7 @@ function updateServerDetails() {
   serverEls.version.textContent = serverData.version?.name_clean
     ? serverData.version.name_clean.replace(/^\D+/, '')
     : 'Unknown';
-  serverEls.motd.textContent = serverData.motd?.clean || 'Unknown';
+  serverEls.motd.innerHTML = serverData.motd?.html || 'Unknown';
 }
 
 function getOnlinePlayers() {
