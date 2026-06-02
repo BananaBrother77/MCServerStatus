@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,8 @@
   },
   "homepage": "https://github.com/BananaBrother77/MCServerStatus#readme",
   "devDependencies": {
-    "vite": "^8.0.16"
+    "@cloudflare/vite-plugin": "^1.0.0",
+    "vite": "^8.0.16",
+    "wrangler": "^4.0.0"
   }
 }
