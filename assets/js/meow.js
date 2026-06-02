@@ -40,6 +40,8 @@ let serverData;
 let nodeData;
 let statusTimeout;
 
+const serverCache = { data: null, timestamp: 0 };
+
 updateUrl({ server: serverIP, name: serverName, bedrock: isBedrock });
 
 // ============================================================
@@ -224,6 +226,11 @@ function loadServerList() {
 
 async function getServerStatus() {
   serverEls.name.textContent = serverName;
+
+  if (serverCache.data) {
+    serverData = serverCache.data;
+    displayServerStatus();
+  }
   serverEls.dot.className = 'status-dot checking';
   nodeEls.dot.className = 'status-dot checking';
 
@@ -233,10 +240,20 @@ async function getServerStatus() {
       fetchNodeData(),
     ]);
 
+    let finalResult = serverResult;
+
+    if (serverResult.status === 'rejected') {
+      await new Promise(r => setTimeout(r, 3000));
+      const [retryResult] = await Promise.allSettled([
+        isBedrock ? fetchBedrockServerData(serverIP) : fetchServerData(serverIP),
+      ]);
+      finalResult = retryResult;
+    }
+
     serverData =
-      serverResult.status === 'fulfilled'
-        ? serverResult.value
-        : { online: false };
+      finalResult.status === 'fulfilled'
+        ? finalResult.value
+        : serverCache.data ?? { online: false };
 
     nodeData =
       nodeResult.status === 'fulfilled' ? nodeResult.value : { online: false };
@@ -244,12 +261,17 @@ async function getServerStatus() {
     console.log('MC Server Data:', serverData);
     console.log('Node Data:', nodeData);
 
+    if (finalResult.status === 'fulfilled') {
+      serverCache.data = serverData;
+      serverCache.timestamp = Date.now();
+    }
+
     displayServerStatus();
     displayNodeStatus(getSavedNode());
     saveServerInfo();
   } catch (error) {
     console.error('Critical Fetch Error:', error);
-    serverData = { online: false };
+    serverData = serverCache.data ?? { online: false };
     displayServerStatus();
   }
 }
@@ -425,12 +447,6 @@ playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
     playerInfoEls.playerInfoError.textContent = 'Player not found.';
   }
 });
-
-// ============================================================
-// SEARCH PLAYER INFO
-// ============================================================
-
-playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {});
 
 // ============================================================
 // DISPLAY — MCSH Server Paused
@@ -873,5 +889,13 @@ function updateIcons() {
 // ============================================================
 // BOOT
 // ============================================================
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    clearTimeout(statusTimeout);
+  } else {
+    getServerStatus();
+  }
+});
 
 getServerStatus();
