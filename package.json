@@ -1,7 +1,7 @@
 {
-  "name": "mcserverstatus",
+  "name": "mctoolkit",
   "version": "1.0.0",
-  "description": "",
+  "description": "Minecraft server status, Modrinth browser, and more tools.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
