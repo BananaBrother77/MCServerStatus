@@ -813,40 +813,41 @@ function noOverlayOpen() {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeOverlay(overlayEls.edit);
-    closeOverlay(overlayEls.addServer);
-    closeOverlay(overlayEls.changeNode);
-    closeOverlay(overlayEls.playerInfo);
-    closeServerList();
-    return;
+  switch (e.key) {
+    case 'Escape':
+      closeOverlay(overlayEls.edit);
+      closeOverlay(overlayEls.addServer);
+      closeOverlay(overlayEls.changeNode);
+      closeOverlay(overlayEls.playerInfo);
+      closeServerList();
+      break;
+
+    case 'Enter':
+      if (e.target === serverNameInput || e.target === serverIpInput) {
+        applyServerChanges();
+      } else if (
+        e.target === addServerNameInput ||
+        e.target === addServerIpInput
+      ) {
+        addServer();
+      } else if (e.target === playerInfoEls.playerInfoSearchInput) {
+        playerInfoEls.playerInfoSearchBtn.click();
+      }
+      break;
+
+    case 's':
+      if (e.metaKey || e.ctrlKey) {
+        e.preventDefault();
+        shareLink();
+        break;
+      }
+      if (noOverlayOpen()) openServerList();
+      break;
+
+    case 't':
+      if (noOverlayOpen()) toggleTheme();
+      break;
   }
-
-  if (e.key === 'Enter') {
-    if (e.target === serverNameInput || e.target === serverIpInput) {
-      applyServerChanges();
-    } else if (
-      e.target === addServerNameInput ||
-      e.target === addServerIpInput
-    ) {
-      addServer();
-    } else if (e.target === playerInfoEls.playerInfoSearchInput) {
-      playerInfoEls.playerInfoSearchBtn.click();
-    }
-    return;
-  }
-
-  if (e.key === 's') {
-    if (e.metaKey || e.ctrlKey) {
-      e.preventDefault();
-      shareLink();
-      return;
-    }
-
-    if (noOverlayOpen()) openServerList();
-  }
-
-  if (e.key === 't' && noOverlayOpen()) toggleTheme();
 });
 
 // ============================================================
