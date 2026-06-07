@@ -1,12 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mcserverstatus",
+  "name": "mctoolkit",
   "compatibility_date": "2026-06-02",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    "directory": "."
   },
   "compatibility_flags": [
     "nodejs_compat"
