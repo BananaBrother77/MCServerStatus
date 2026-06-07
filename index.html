@@ -5,436 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Check the live status of Minecraft servers, browse Modrinth mods and resource packs, and more. MCToolkit by BananaBrother77."
+      content="MCToolkit - Your Minecraft Hub. Check server status, browse Modrinth content, and more."
     />
-    <meta property="og:title" content="Server Status - MCToolkit | BananaBrother77" />
+    <meta property="og:title" content="MCToolkit | BananaBrother77" />
     <meta
       property="og:description"
-      content="Check the live status of any Minecraft server - online players, version, MOTD, and more."
+      content="Your Minecraft Hub - server status, content browser, and more."
     />
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://mctoolkit.bananabrother77.online/server-status"
+      content="https://mctoolkit.bananabrother77.online/"
     />
     <meta
       property="og:image"
       content="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
     />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Server Status - MCToolkit | BananaBrother77" />
+    <meta name="twitter:title" content="MCToolkit | BananaBrother77" />
     <meta
       name="twitter:description"
-      content="Check the live status of any Minecraft server -online players, version, MOTD, and more."
+      content="Your Minecraft Hub - server status, content browser, and more."
     />
     <meta
       name="twitter:image"
       content="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
     />
-    <link
-      rel="canonical"
-      href="https://mctoolkit.bananabrother77.online/server-status"
-    />
+    <link rel="canonical" href="https://mctoolkit.bananabrother77.online/" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <title>Server Status - MCToolkit | BananaBrother77</title>
+    <title>MCToolkit | BananaBrother77</title>
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/landing.css" />
   </head>
 
   <body class="">
     <!-- ============================================================
-         SIDEBAR TOGGLE BUTTON
+         HERO
          ============================================================ -->
-    <div class="serverListWrapper">
-      <div class="menu-btn" id="serverListBtn">
-        <i data-lucide="server" width="35" height="35"></i>
-      </div>
-      <div class="menu-btn" id="shareServerBtn">
-        <i data-lucide="square-arrow-up-right" width="35" height="35"></i>
-      </div>
-      <div class="menu-btn" id="themeToggleBtn">
-        <i data-lucide="palette" width="35" height="35"></i>
-      </div>
-    </div>
-
-    <!-- ============================================================
-         SIDEBAR
-         ============================================================ -->
-    <aside id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-        <h3>Servers</h3>
-        <button id="closeServerListBtn">&times;</button>
-      </div>
-      <ul class="sidebar-links"></ul>
-
-      <div class="sidebar-footer">
-        <button id="addServerBtn" class="btn-primary">Add Server</button>
-      </div>
-    </aside>
-
-    <div id="overlay" class="sidebar-overlay"></div>
-
-    <!-- ============================================================
-         MAIN CONTENT
-         ============================================================ -->
-    <main class="app-wrapper">
-      <!-- Server Header -->
-      <section class="serverStatus">
-        <div class="container">
-          <img
-            src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
-            alt="Server Icon"
-            id="serverIconImg"
-          />
-          <div class="server-info">
-            <h1 id="serverName">MCServerHost</h1>
-            <p id="statusText">
-              <span class="status-dot" id="statusDot"></span>
-              <span id="statusState">Pinging...</span>
-            </p>
-          </div>
-        </div>
-
-        <div class="stats-row">
-          <div class="status-card">
-            <i data-lucide="users"></i>
-            <span class="card-label">Online</span>
-            <span id="playersOnline" class="card-value">0</span>
-            <div class="divider"></div>
-            <span id="playersMax" class="card-value">0</span>
-          </div>
-
-          <div class="status-card">
-            <i data-lucide="info"></i>
-            <span class="card-label">Version</span>
-            <div class="divider"></div>
-            <span id="serverVersion" class="card-value">1.20.1</span>
-          </div>
-
-          <div class="status-card motd-card">
-            <i data-lucide="message-square"></i>
-            <span class="card-label">Message</span>
-            <div class="divider"></div>
-            <span id="motdText" class="card-value">Nothing to see here</span>
-          </div>
+    <main class="landing-wrapper">
+      <section class="landing-hero">
+        <h1>MCToolkit</h1>
+        <p>
+          <span class="sub-dot">//</span>
+          Your Minecraft Hub
+          <span class="sub-dot">//</span>
+        </p>
+        <div class="tagline-accent">
+          Server Status &middot; Content Browser &middot; More
         </div>
       </section>
 
-      <!-- Server IP + Online Players -->
-      <div class="stats-row bottom-container">
-        <section class="server-ip-section">
-          <div class="actions">
-            <div>
-              <span class="card-label">Server IP:</span>
-              <span id="serverIpValue" class="card-value"></span>
-              <div class="divider"></div>
-              <div class="buttons">
-                <button id="copyIpBtn" class="btn-primary">
-                  <i data-lucide="copy"></i> Copy IP
-                </button>
-                <button id="editBtn" class="btn-primary">
-                  <i data-lucide="pencil"></i> Edit
-                </button>
-                <!-- <button id="PlayerLookupBtn" class="btn-primary">
-                  <i data-lucide="search"></i> Player Lookup
-                </button> -->
+      <!-- ============================================================
+           TOOL CARDS
+           ============================================================ -->
+      <section class="tool-grid">
+        <a href="server-status.html" class="tool-card" id="serverStatusCard">
+          <i data-lucide="server" width="40" height="40"></i>
+          <h2>Server Status</h2>
+          <p>
+            Check the live status of any Minecraft server - online
+            players, version, MOTD, and more.
+          </p>
+        </a>
 
-                <button
-                  id="setNodeBtn"
-                  class="btn-primary"
-                  style="display: none"
-                >
-                  <i data-lucide="server"></i> Set Node
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="online-players-section serverStatus">
-          <div class="serverInfo">
-            <span class="card-label">Online Players</span>
-            <div class="divider"></div>
-            <div id="playerHeadsContainer" class="stats-row player-grid">
-              <!-- Player avatars injected by script.js -->
-            </div>
-            <button id="playerLookupBtn" class="btn-primary">
-              <i data-lucide="search"></i> Player Lookup
-            </button>
-          </div>
-        </section>
-      </div>
-
-      <!-- Node Status -->
-      <section id="nodeStatusSection" class="serverStatus nodeStatus">
-        <div class="container">
-          <div class="server-info">
-            <span class="card-label">MCServerHost Node Status</span>
-            <h1 id="nodeName">Ares</h1>
-            <p id="nodeStatusText">
-              <span class="status-dot" id="nodeStatusDot"></span>
-              <span id="nodeStatusState">Checking...</span>
-            </p>
-          </div>
+        <div class="tool-card" id="contentBrowserCard">
+          <i data-lucide="package" width="40" height="40"></i>
+          <h2>Content Browser</h2>
+          <p>
+            Browse Modrinth mods, resource packs, and plugins to enhance your
+            gameplay.
+          </p>
         </div>
 
-        <div class="stats-row">
-          <div class="status-card">
-            <i data-lucide="activity"></i>
-            <span class="card-label">Latency</span>
-            <div class="divider"></div>
-            <span id="nodeLatency" class="card-value">--</span>
-          </div>
-          <div class="status-card">
-            <i data-lucide="clock"></i>
-            <span class="card-label">Uptime</span>
-            <div class="divider"></div>
-            <span id="nodeUptime" class="card-value">--</span>
-            <div id="nodeUptimeBars" class="uptime-bars"></div>
-          </div>
-          <div class="status-card">
-            <i data-lucide="cpu"></i>
-            <span class="card-label">CPU Usage</span>
-            <div class="divider"></div>
-            <span id="nodeCPU" class="card-value">--</span>
-          </div>
-          <div class="status-card">
-            <i data-lucide="memory-stick"></i>
-            <span class="card-label">Memory Usage</span>
-            <div class="divider"></div>
-            <span id="nodeMemory" class="card-value">--</span>
-          </div>
-          <div class="status-card">
-            <i data-lucide="hard-drive"></i>
-            <span class="card-label">Storage Usage</span>
-            <div class="divider"></div>
-            <span id="nodeStorage" class="card-value">--</span>
-          </div>
-        </div>
-
-        <div class="node-actions">
-          <a
-            href="https://maximerix.dev/mcsh/status/"
-            target="_blank"
-            class="btn-primary"
-          >
-            All Nodes
-          </a>
-          <button id="changeNodeBtn" class="btn-primary">Change</button>
+        <div class="tool-card" id="comingSoonCard">
+          <i data-lucide="sparkles" width="40" height="40"></i>
+          <h2>More Coming Soon</h2>
+          <p>
+            New tools are in the works. Stay tuned for updates and
+            improvements!
+          </p>
+          <span class="card-coming-badge">Soon</span>
         </div>
       </section>
     </main>
-
-    <!-- ============================================================
-         MODALS
-         ============================================================ -->
-
-    <!-- Edit Server Modal -->
-    <div class="overlayBackdrop" id="editOverlayBackdrop">
-      <div id="editOverlay">
-        <div class="edit-header">
-          <h2 class="edit-title">Edit Server</h2>
-          <p class="edit-desc">Choose what server status you want to see</p>
-        </div>
-        <div class="divider"></div>
-        <div class="edit-content">
-          <input
-            type="text"
-            id="serverNameInput"
-            class="edit-input"
-            name="Server Name"
-            placeholder="Server Name..."
-          />
-          <input
-            type="text"
-            id="serverIpInput"
-            class="edit-input"
-            name="Server IP"
-            placeholder="Server IP..."
-          />
-          <label class="custom-checkbox">
-            <input type="checkbox" id="editBedrockCheckBox" />
-            <span class="checkmark"></span>
-            Bedrock Server
-          </label>
-          <p class="error" id="errorText"></p>
-          <button class="btn" id="applyEditBtn">Apply</button>
-          <button class="btn" id="cancelEditBtn">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Add Server Modal -->
-    <div class="overlayBackdrop" id="addServerOverlayBackdrop">
-      <div id="addServerOverlay">
-        <div class="edit-header">
-          <h2 class="edit-title">Add Server</h2>
-          <p class="edit-desc">Choose what server status you want to see</p>
-        </div>
-        <div class="divider"></div>
-        <div class="edit-content">
-          <input
-            type="text"
-            id="addServerNameInput"
-            class="edit-input"
-            name="Server Name"
-            placeholder="Server Name..."
-          />
-          <input
-            type="text"
-            id="addServerIpInput"
-            class="edit-input"
-            name="Server IP"
-            placeholder="Server IP..."
-          />
-          <label class="custom-checkbox">
-            <input type="checkbox" id="addToServerListCheckBox" checked />
-            <span class="checkmark"></span>
-            Add to server list
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" id="connectToServerNowCheckBox" checked />
-            <span class="checkmark"></span>
-            Connect to server now
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" id="bedrockServerCheckBox" />
-            <span class="checkmark"></span>
-            Bedrock Server
-          </label>
-          <p class="error" id="addServerErrorText"></p>
-          <button class="btn" id="applyAddServerBtn">Apply</button>
-          <button class="btn" id="cancelAddServerBtn">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Change Node Modal -->
-    <div class="overlayBackdrop" id="changeNodeOverlayBackdrop">
-      <div id="changeNodeOverlay">
-        <div class="edit-header">
-          <h2 class="edit-title">Change Node</h2>
-          <p class="edit-desc">Choose which node status you want to see</p>
-        </div>
-        <div class="divider"></div>
-        <div class="edit-content">
-          <div class="node-select-container">
-            <button id="selectBtn" class="select-button">
-              <span id="selectedOptionText">Choose node...</span>
-              <i data-lucide="chevron-down"></i>
-            </button>
-            <ul id="selectOptions" class="select-options">
-              <li data-value="none">None</li>
-
-              <li class="select-group-label">— London —</li>
-              <li data-value="adonis">Adonis</li>
-              <li data-value="aglaea">Aglaea</li>
-              <li data-value="ajax">Ajax</li>
-              <li data-value="alcyone">Alcyone</li>
-              <li data-value="anteros">Anteros</li>
-              <li data-value="ares">Ares</li>
-              <li data-value="atlas">Atlas</li>
-              <li data-value="artemis">Artemis</li>
-              <li data-value="apollo">Apollo</li>
-              <li data-value="athena">Athena</li>
-              <li data-value="achilles">Achilles</li>
-              <li data-value="aphrodite">Aphrodite</li>
-              <li data-value="aeolus">Aeolus</li>
-              <li data-value="aether">Aether</li>
-              <li data-value="asclepius">Asclepius</li>
-              <li data-value="atreus">Atreus</li>
-
-              <li class="select-group-label">— New York —</li>
-              <li data-value="cronus">Cronus</li>
-              <li data-value="ceres">Ceres</li>
-              <li data-value="dryas">Dryas</li>
-              <li data-value="deimos">Deimos</li>
-
-              <li class="select-group-label">— Singapore —</li>
-              <li data-value="ceto">Ceto</li>
-              <li data-value="cybele">Cybele</li>
-              <li data-value="calliope">Calliope</li>
-              <li data-value="castor">Castor</li>
-              <li data-value="clio">Clio</li>
-              <li data-value="cratos">Cratos</li>
-              <li data-value="caelus">Caelus</li>
-              <li data-value="cassiopeia">Cassiopeia</li>
-              <li data-value="chiron">Chiron</li>
-              <li data-value="calypso">Calypso</li>
-              <li data-value="cerberus">Cerberus</li>
-              <li data-value="circe">Circe</li>
-            </ul>
-          </div>
-          <button class="btn" id="applyNodeChangeBtn">Apply</button>
-          <button class="btn" id="cancelNodeChangeBtn">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Player Info Modal -->
-    <div class="overlayBackdrop" id="playerInfoOverlayBackdrop">
-      <div id="playerInfoOverlay">
-        <div class="edit-header">
-          <h2 class="edit-title">Player Info</h2>
-          <p class="edit-desc">Information about the player</p>
-        </div>
-        <div class="divider"></div>
-        <div class="input-group">
-          <input
-            class="form-input"
-            type="text"
-            placeholder="Enter player name..."
-            id="playerInfoSearchInput"
-          />
-          <button class="input-btn" id="playerInfoSearchBtn">
-            <i data-lucide="search"></i>
-          </button>
-        </div>
-        <p class="error" id="playerInfoError"></p>
-        <div class="player-info-wrapper">
-          <div class="img-container">
-            <img
-              src="https://vzge.me/full/212/X-Ghost"
-              alt="Player Avatar"
-              id="playerInfoAvatar"
-            />
-            <button id="downloadSkinBtn" class="download-skin-btn">
-              <i data-lucide="download"></i>
-            </button>
-          </div>
-          <div class="edit-content">
-            <div class="player-info">
-              <h3 class="player-info-title">
-                Player Name:<br />
-                <span class="player-info-text" id="playerInfoNameText"
-                  >Dummy</span
-                >
-                <button class="copy-inline-btn" id="copyNameBtn">
-                  <i data-lucide="copy"></i>
-                </button>
-              </h3>
-              <div class="player-info-title">
-                UUID:<br />
-                <span class="player-info-text" id="playerInfoUUIDText"
-                  >61bd7ef7...</span
-                >
-                <button class="copy-inline-btn" id="copyUUIDBtn">
-                  <i data-lucide="copy"></i>
-                </button>
-              </div>
-            </div>
-            <a
-              id="nameMCBtn"
-              href="https://namemc.com/profile/Dummy"
-              target="_blank"
-              class="btn btn-primary"
-            >
-              <i data-lucide="external-link"></i> NameMC
-            </a>
-            <button class="btn" id="closePlayerInfoBtn">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- ============================================================
          FOOTER
@@ -502,17 +155,16 @@
       </div>
       <div class="footer-bottom">
         <span>Made with</span>
-        <span class="text-heart">❤</span>
+        <span class="text-heart">&hearts;</span>
         <span>and</span>
         <span class="text-code-muted">code</span>
-        <span>— All rights reserved.</span>
+        <span>- All rights reserved.</span>
       </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script type="module" src="/assets/js/meow.js"></script>
-    <script type="module" src="/assets/js/api.js"></script>
-    <script type="module" src="/assets/js/icons.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>
