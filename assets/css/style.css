@@ -643,6 +643,7 @@ body {
   align-items: center;
   text-align: center;
   color: var(--text-muted);
+  text-decoration: none;
   background: var(--panel-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--panel-border);
