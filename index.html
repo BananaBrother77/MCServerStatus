@@ -43,7 +43,7 @@
          HERO
          ============================================================ -->
     <main class="landing-wrapper">
-      <section class="landing-hero">
+      <section class="landing-hero reveal">
         <h1>MCToolkit</h1>
         <p>
           <span class="sub-dot">//</span>
@@ -59,32 +59,38 @@
            TOOL CARDS
            ============================================================ -->
       <section class="tool-grid">
-        <a href="server-status.html" class="tool-card" id="serverStatusCard">
-          <i data-lucide="server" width="40" height="40"></i>
-          <h2>Server Status</h2>
-          <p>
-            Check the live status of any Minecraft server - online
-            players, version, MOTD, and more.
-          </p>
-        </a>
-
-        <div class="tool-card" id="contentBrowserCard">
-          <i data-lucide="package" width="40" height="40"></i>
-          <h2>Content Browser</h2>
-          <p>
-            Browse Modrinth mods, resource packs, and plugins to enhance your
-            gameplay.
-          </p>
+        <div class="reveal">
+          <a href="server-status.html" class="tool-card" id="serverStatusCard">
+            <i data-lucide="server" width="40" height="40"></i>
+            <h2>Server Status</h2>
+            <p>
+              Check the live status of any Minecraft server - online
+              players, version, MOTD, and more.
+            </p>
+          </a>
         </div>
 
-        <div class="tool-card" id="comingSoonCard">
-          <i data-lucide="sparkles" width="40" height="40"></i>
-          <h2>More Coming Soon</h2>
-          <p>
-            New tools are in the works. Stay tuned for updates and
-            improvements!
-          </p>
-          <span class="card-coming-badge">Soon</span>
+        <div class="reveal">
+          <div class="tool-card" id="contentBrowserCard">
+            <i data-lucide="package" width="40" height="40"></i>
+            <h2>Content Browser</h2>
+            <p>
+              Browse Modrinth mods, resource packs, and plugins to enhance your
+              gameplay.
+            </p>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="tool-card" id="comingSoonCard">
+            <i data-lucide="sparkles" width="40" height="40"></i>
+            <h2>More Coming Soon</h2>
+            <p>
+              New tools are in the works. Stay tuned for updates and
+              improvements!
+            </p>
+            <span class="card-coming-badge">Soon</span>
+          </div>
         </div>
       </section>
     </main>
@@ -92,7 +98,7 @@
     <!-- ============================================================
          FOOTER
          ============================================================ -->
-    <footer class="site-footer">
+    <footer class="site-footer reveal">
       <div class="footer-content">
         <div class="footer-brand">
           <h2 class="footer-logo">BananaBrother77</h2>
@@ -164,5 +170,6 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/assets/js/icons.js"></script>
+    <script type="module" src="/assets/js/reveal.js"></script>
   </body>
 </html>

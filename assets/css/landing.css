@@ -74,10 +74,18 @@
   width: 100%;
 }
 
-.tool-card {
+.tool-grid > .reveal {
   flex: 1 1 280px;
   max-width: 360px;
   min-width: 240px;
+}
+
+.tool-grid .reveal .tool-card {
+  height: 100%;
+  width: 100%;
+}
+
+.tool-card {
   padding: 35px 25px;
   display: flex;
   flex-direction: column;
@@ -154,9 +162,12 @@
     padding: 30px 20px;
   }
 
-  .tool-card {
+  .tool-grid > .reveal {
     flex: 1 1 100%;
     max-width: 100%;
+  }
+
+  .tool-card {
     padding: 28px 20px;
   }
 }

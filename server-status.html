@@ -81,7 +81,7 @@
          ============================================================ -->
     <main class="app-wrapper">
       <!-- Server Header -->
-      <section class="serverStatus">
+      <section class="serverStatus reveal">
         <div class="container">
           <img
             src="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
@@ -98,7 +98,7 @@
         </div>
 
         <div class="stats-row">
-          <div class="status-card">
+          <div class="status-card reveal">
             <i data-lucide="users"></i>
             <span class="card-label">Online</span>
             <span id="playersOnline" class="card-value">0</span>
@@ -106,14 +106,14 @@
             <span id="playersMax" class="card-value">0</span>
           </div>
 
-          <div class="status-card">
+          <div class="status-card reveal">
             <i data-lucide="info"></i>
             <span class="card-label">Version</span>
             <div class="divider"></div>
             <span id="serverVersion" class="card-value">1.20.1</span>
           </div>
 
-          <div class="status-card motd-card">
+          <div class="status-card motd-card reveal">
             <i data-lucide="message-square"></i>
             <span class="card-label">Message</span>
             <div class="divider"></div>
@@ -124,7 +124,7 @@
 
       <!-- Server IP + Online Players -->
       <div class="stats-row bottom-container">
-        <section class="server-ip-section">
+        <section class="server-ip-section reveal">
           <div class="actions">
             <div>
               <span class="card-label">Server IP:</span>
@@ -153,7 +153,7 @@
           </div>
         </section>
 
-        <section class="online-players-section serverStatus">
+        <section class="online-players-section serverStatus reveal">
           <div class="serverInfo">
             <span class="card-label">Online Players</span>
             <div class="divider"></div>
@@ -168,7 +168,7 @@
       </div>
 
       <!-- Node Status -->
-      <section id="nodeStatusSection" class="serverStatus nodeStatus">
+      <section id="nodeStatusSection" class="serverStatus nodeStatus reveal">
         <div class="container">
           <div class="server-info">
             <span class="card-label">MCServerHost Node Status</span>
@@ -181,32 +181,32 @@
         </div>
 
         <div class="stats-row">
-          <div class="status-card">
+          <div class="status-card reveal">
             <i data-lucide="activity"></i>
             <span class="card-label">Latency</span>
             <div class="divider"></div>
             <span id="nodeLatency" class="card-value">--</span>
           </div>
-          <div class="status-card">
+          <div class="status-card reveal">
             <i data-lucide="clock"></i>
             <span class="card-label">Uptime</span>
             <div class="divider"></div>
             <span id="nodeUptime" class="card-value">--</span>
             <div id="nodeUptimeBars" class="uptime-bars"></div>
           </div>
-          <div class="status-card">
+          <div class="status-card reveal">
             <i data-lucide="cpu"></i>
             <span class="card-label">CPU Usage</span>
             <div class="divider"></div>
             <span id="nodeCPU" class="card-value">--</span>
           </div>
-          <div class="status-card">
+          <div class="status-card reveal">
             <i data-lucide="memory-stick"></i>
             <span class="card-label">Memory Usage</span>
             <div class="divider"></div>
             <span id="nodeMemory" class="card-value">--</span>
           </div>
-          <div class="status-card">
+          <div class="status-card reveal">
             <i data-lucide="hard-drive"></i>
             <span class="card-label">Storage Usage</span>
             <div class="divider"></div>
@@ -405,7 +405,7 @@
     <!-- ============================================================
          FOOTER
          ============================================================ -->
-    <footer class="site-footer">
+    <footer class="site-footer reveal">
       <div class="footer-content">
         <div class="footer-brand">
           <h2 class="footer-logo">BananaBrother77</h2>
@@ -479,6 +479,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/assets/js/meow.js"></script>
     <script type="module" src="/assets/js/api.js"></script>
+    <script type="module" src="/assets/js/reveal.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
   </body>
 </html>
