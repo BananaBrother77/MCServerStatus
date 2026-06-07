@@ -154,6 +154,7 @@ const selectOptions = document.getElementById('selectOptions');
 const selectedText = document.getElementById('selectedOptionText');
 const cancelNodeChangeBtn = document.getElementById('cancelNodeChangeBtn');
 const selectBtn = document.getElementById('selectBtn');
+const selectBackdrop = document.getElementById('selectBackdrop');
 const applyNodeChangeBtn = document.getElementById('applyNodeChangeBtn');
 const playerLookupBtn = document.getElementById('playerLookupBtn');
 
@@ -257,6 +258,8 @@ async function getServerStatus() {
 
     nodeData =
       nodeResult.status === 'fulfilled' ? nodeResult.value : { online: false };
+
+    buildNodeDropdown();
 
     console.log('MC Server Data:', serverData);
     console.log('Node Data:', nodeData);
@@ -633,6 +636,10 @@ function showOverlay(target) {
 function closeOverlay(target) {
   target.classList.remove('show');
 
+  if (target === overlayEls.changeNode) {
+    closeNodeDropdown();
+  }
+
   if (target === overlayEls.playerInfo) {
     playerInfoEls.playerInfoSearchInput.value = '';
   }
@@ -704,8 +711,49 @@ function applyServerChanges() {
 changeNodeBtn.addEventListener('click', openChangeNodeOverlay);
 setNodeBtn.addEventListener('click', openChangeNodeOverlay);
 
+function buildNodeDropdown() {
+  const existing = selectOptions.querySelectorAll('li[data-value], li.select-group-label');
+  for (const li of existing) {
+    if (li.getAttribute('data-value') === 'none') continue;
+    li.remove();
+  }
+
+  if (!nodeData?.regions) return;
+
+  for (const region of nodeData.regions) {
+    const label = document.createElement('li');
+    label.className = 'select-group-label';
+    label.textContent = `- ${region.name} -`;
+    selectOptions.appendChild(label);
+
+    for (const node of region.nodes) {
+      const li = document.createElement('li');
+      li.setAttribute('data-value', node.name.toLowerCase());
+      li.textContent = node.name;
+      selectOptions.appendChild(li);
+    }
+  }
+}
+
 function openChangeNodeOverlay() {
-  // Pre-select the dropdown to the currently saved node for this server
+  if (!nodeData?.regions) {
+    selectedText.textContent = 'Loading...';
+    fetchNodeData().then((data) => {
+      nodeData = data;
+      buildNodeDropdown();
+      preselectNode();
+    }).catch(() => {
+      selectedText.textContent = 'Choose node...';
+    });
+  } else {
+    buildNodeDropdown();
+    preselectNode();
+  }
+
+  showOverlay(overlayEls.changeNode);
+}
+
+function preselectNode() {
   const current = getSavedNode();
   const match = [...selectOptions.querySelectorAll('li[data-value]')].find(
     (li) =>
@@ -714,8 +762,6 @@ function openChangeNodeOverlay() {
 
   selectedText.textContent = match ? match.textContent : 'Choose node...';
   pendingNodeValue = current === 'none' ? 'none' : match ? current : null;
-
-  showOverlay(overlayEls.changeNode);
 }
 
 cancelNodeChangeBtn.addEventListener('click', () =>
@@ -726,17 +772,38 @@ playerInfoEls.closeBtn.addEventListener('click', () =>
   closeOverlay(overlayEls.playerInfo),
 );
 
-selectBtn.addEventListener('click', () => {
-  selectOptions.classList.toggle('show-menu');
+selectBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+
+  if (selectOptions.classList.contains('show-menu')) {
+    closeNodeDropdown();
+    return;
+  }
+
+  const rect = selectBtn.getBoundingClientRect();
+  selectOptions.style.top = (rect.bottom + 5) + 'px';
+  selectOptions.style.left = rect.left + 'px';
+  selectOptions.style.width = rect.width + 'px';
+
+  selectOptions.classList.add('show-menu');
+  selectBackdrop.classList.add('show-menu');
 });
 
-selectOptions.querySelectorAll('li[data-value]').forEach((option) => {
-  option.addEventListener('click', () => {
-    pendingNodeValue = option.getAttribute('data-value');
-    selectedText.textContent = option.textContent;
-    selectOptions.classList.remove('show-menu');
-  });
+selectOptions.addEventListener('click', (e) => {
+  const option = e.target.closest('li[data-value]');
+  if (!option) return;
+
+  pendingNodeValue = option.getAttribute('data-value');
+  selectedText.textContent = option.textContent;
+  closeNodeDropdown();
 });
+
+selectBackdrop.addEventListener('click', closeNodeDropdown);
+
+function closeNodeDropdown() {
+  selectOptions.classList.remove('show-menu');
+  selectBackdrop.classList.remove('show-menu');
+}
 
 applyNodeChangeBtn.addEventListener('click', () => {
   if (pendingNodeValue !== null) {
