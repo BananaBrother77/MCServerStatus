@@ -7,7 +7,10 @@
       name="description"
       content="Check the live status of Minecraft servers, browse Modrinth mods and resource packs, and more. MCToolkit by BananaBrother77."
     />
-    <meta property="og:title" content="Server Status - MCToolkit | BananaBrother77" />
+    <meta
+      property="og:title"
+      content="Server Status - MCToolkit | BananaBrother77"
+    />
     <meta
       property="og:description"
       content="Check the live status of any Minecraft server - online players, version, MOTD, and more."
@@ -22,7 +25,10 @@
       content="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
     />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Server Status - MCToolkit | BananaBrother77" />
+    <meta
+      name="twitter:title"
+      content="Server Status - MCToolkit | BananaBrother77"
+    />
     <meta
       name="twitter:description"
       content="Check the live status of any Minecraft server -online players, version, MOTD, and more."
@@ -358,11 +364,7 @@
         <p class="error" id="playerInfoError"></p>
         <div class="player-info-wrapper">
           <div class="img-container">
-            <img
-              src="https://vzge.me/full/212/X-Ghost"
-              alt="Player Avatar"
-              id="playerInfoAvatar"
-            />
+            <canvas id="skinContainer"></canvas>
             <button id="downloadSkinBtn" class="download-skin-btn">
               <i data-lucide="download"></i>
             </button>
@@ -372,7 +374,7 @@
               <h3 class="player-info-title">
                 Player Name:<br />
                 <span class="player-info-text" id="playerInfoNameText"
-                  >Dummy</span
+                  >BananaBrother77</span
                 >
                 <button class="copy-inline-btn" id="copyNameBtn">
                   <i data-lucide="copy"></i>
@@ -390,7 +392,7 @@
             </div>
             <a
               id="nameMCBtn"
-              href="https://namemc.com/profile/Dummy"
+              href="https://namemc.com/profile/BananaBrother77"
               target="_blank"
               class="btn btn-primary"
             >
@@ -479,6 +481,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/assets/js/meow.js"></script>
     <script type="module" src="/assets/js/api.js"></script>
+    <script type="module" src="/assets/js/skin-render.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
   </body>

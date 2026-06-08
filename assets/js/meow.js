@@ -5,6 +5,7 @@ import {
   fetchPlayerUUID,
   fetchPlayerSkin,
 } from './api.js';
+import { renderSkin, disposeSkinViewer } from './skin-render.js';
 
 // ============================================================
 // STATE
@@ -22,7 +23,7 @@ let serverName =
 
 let isBedrock = urlParams.get('bedrock') === 'true';
 if (!urlParams.has('bedrock')) {
-  const savedServer = servers.find(s => s.ip === serverIP);
+  const savedServer = servers.find((s) => s.ip === serverIP);
   isBedrock = savedServer?.isBedrock ?? false;
 }
 
@@ -31,9 +32,19 @@ let nodeSettings = JSON.parse(localStorage.getItem('nodeSettings')) || {};
 const urlNode = urlParams.get('node');
 if (urlNode) {
   nodeSettings[serverIP] = urlNode;
-  updateUrl({ server: serverIP, name: serverName, node: urlNode, bedrock: isBedrock });
+  updateUrl({
+    server: serverIP,
+    name: serverName,
+    node: urlNode,
+    bedrock: isBedrock,
+  });
 } else {
-  updateUrl({ server: serverIP, name: serverName, node: getSavedNode(), bedrock: isBedrock });
+  updateUrl({
+    server: serverIP,
+    name: serverName,
+    node: getSavedNode(),
+    bedrock: isBedrock,
+  });
 }
 
 let serverData;
@@ -117,10 +128,9 @@ const overlayEls = {
 const playerInfoEls = {
   name: document.getElementById('playerInfoNameText'),
   uuid: document.getElementById('playerInfoUUIDText'),
-  avatar: document.getElementById('playerInfoAvatar'),
   closeBtn: document.getElementById('closePlayerInfoBtn'),
-  copyNameBtn: document.getElementById('copyPlayerNameBtn'),
-  copyUUIDBtn: document.getElementById('copyPlayerUUIDBtn'),
+  copyNameBtn: document.getElementById('copyNameBtn'),
+  copyUUIDBtn: document.getElementById('copyUUIDBtn'),
   downloadSkinBtn: document.getElementById('downloadSkinBtn'),
   nameMCBtn: document.getElementById('nameMCBtn'),
   playerInfoSearchInput: document.getElementById('playerInfoSearchInput'),
@@ -206,7 +216,12 @@ function loadServerList() {
       isBedrock = server.isBedrock ?? false;
       const currentNode = getSavedNode();
 
-      updateUrl({ server: serverIP, name: serverName, node: currentNode, bedrock: isBedrock });
+      updateUrl({
+        server: serverIP,
+        name: serverName,
+        node: currentNode,
+        bedrock: isBedrock,
+      });
       closeServerList();
       getServerStatus();
     });
@@ -244,9 +259,11 @@ async function getServerStatus() {
     let finalResult = serverResult;
 
     if (serverResult.status === 'rejected') {
-      await new Promise(r => setTimeout(r, 3000));
+      await new Promise((r) => setTimeout(r, 3000));
       const [retryResult] = await Promise.allSettled([
-        isBedrock ? fetchBedrockServerData(serverIP) : fetchServerData(serverIP),
+        isBedrock
+          ? fetchBedrockServerData(serverIP)
+          : fetchServerData(serverIP),
       ]);
       finalResult = retryResult;
     }
@@ -254,7 +271,7 @@ async function getServerStatus() {
     serverData =
       finalResult.status === 'fulfilled'
         ? finalResult.value
-        : serverCache.data ?? { online: false };
+        : (serverCache.data ?? { online: false });
 
     nodeData =
       nodeResult.status === 'fulfilled' ? nodeResult.value : { online: false };
@@ -401,9 +418,10 @@ function getOnlinePlayers() {
         try {
           const uuidData = await fetchPlayerUUID(player.name_raw);
           const uuid = uuidData.data.player.id;
+          const capeUrl = uuidData.data.player.cape_texture || null;
           console.log(`Player UUID of Player ${player.name_raw}: ${uuid}`);
 
-          displayPlayerInfo(player.name_raw, uuid);
+          displayPlayerInfo(player.name_raw, uuid, capeUrl);
         } catch (error) {
           console.error('Error fetching player data:', error);
           playerInfoEls.playerInfoError.textContent = 'Player not found.';
@@ -421,16 +439,20 @@ function getOnlinePlayers() {
 
 playerLookupBtn.addEventListener('click', () => {
   showOverlay(overlayEls.playerInfo);
+  playerInfoEls.playerInfoSearchInput.value = 'BananaBrother77';
+  playerInfoEls.playerInfoSearchBtn.click();
 });
 
-function displayPlayerInfo(playerName, playerUUID) {
-  // const rawUUID = playerUUID.replaceAll('-', '');
-
-  nameMCBtn.href = `https://namemc.com/profile/${playerName}`;
+async function displayPlayerInfo(playerName, playerUUID, capeUrl) {
+  playerInfoEls.nameMCBtn.href = `https://namemc.com/profile/${playerName}`;
 
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
-  playerInfoEls.avatar.src = `https://vzge.me/full/212/${playerUUID}?t=${Date.now()}`;
+
+  await renderSkin(
+    `https://minotar.net/skin/${playerName}.png`,
+    capeUrl,
+  );
 }
 
 playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
@@ -441,10 +463,12 @@ playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
 
   try {
     const uuidData = await fetchPlayerUUID(playerName);
-    const uuid = uuidData.data.player.id;
+    const playerData = uuidData.data.player;
+    const uuid = playerData.id;
+    const capeUrl = playerData.cape_texture || null;
     console.log(`Player UUID of Player ${playerName}: ${uuid}`);
 
-    displayPlayerInfo(playerName, uuid);
+    await displayPlayerInfo(playerName, uuid, capeUrl);
   } catch (error) {
     console.error('Error fetching player data:', error);
     playerInfoEls.playerInfoError.textContent = 'Player not found.';
@@ -562,25 +586,44 @@ copyIpBtn.addEventListener('click', () => {
 });
 
 // ============================================================
+// COPY TO CLIPBOARD (with fallback for HTTP)
+// ============================================================
+
+function copyToClipboard(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text);
+  } else {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
+}
+
+// ============================================================
 // COPY PLAYER INFO
 // ============================================================
 
-copyNameBtn.addEventListener('click', () => {
-  navigator.clipboard.writeText(playerInfoEls.name.textContent);
-  copyNameBtn.innerHTML = `<i data-lucide="check"></i>`;
+playerInfoEls.copyNameBtn.addEventListener('click', () => {
+  copyToClipboard(playerInfoEls.name.textContent);
+  playerInfoEls.copyNameBtn.innerHTML = `<i data-lucide="check"></i>`;
   updateIcons();
   setTimeout(() => {
-    copyNameBtn.innerHTML = `<i data-lucide="copy"></i>`;
+    playerInfoEls.copyNameBtn.innerHTML = `<i data-lucide="copy"></i>`;
     updateIcons();
   }, 800);
 });
 
-copyUUIDBtn.addEventListener('click', () => {
-  navigator.clipboard.writeText(playerInfoEls.uuid.textContent);
-  copyUUIDBtn.innerHTML = `<i data-lucide="check"></i>`;
+playerInfoEls.copyUUIDBtn.addEventListener('click', () => {
+  copyToClipboard(playerInfoEls.uuid.textContent);
+  playerInfoEls.copyUUIDBtn.innerHTML = `<i data-lucide="check"></i>`;
   updateIcons();
   setTimeout(() => {
-    copyUUIDBtn.innerHTML = `<i data-lucide="copy"></i>`;
+    playerInfoEls.copyUUIDBtn.innerHTML = `<i data-lucide="copy"></i>`;
     updateIcons();
   }, 800);
 });
@@ -623,7 +666,7 @@ function showOverlay(target) {
     serverNameInput.value = serverName;
     serverIpInput.value = serverIP;
     errorText.textContent = '';
-    const currentServer = servers.find(s => s.ip === serverIP);
+    const currentServer = servers.find((s) => s.ip === serverIP);
     editBedrockCheckBox.checked = currentServer?.isBedrock ?? false;
   } else if (target === overlayEls.addServer) {
     closeServerList();
@@ -642,6 +685,7 @@ function closeOverlay(target) {
 
   if (target === overlayEls.playerInfo) {
     playerInfoEls.playerInfoSearchInput.value = '';
+    disposeSkinViewer();
   }
 }
 
@@ -655,7 +699,11 @@ function addServer() {
   }
 
   if (addToListCheckbox.checked && !servers.some((s) => s.ip === ip)) {
-    servers.push({ name: name, ip: ip, isBedrock: bedrockServerCheckBox.checked });
+    servers.push({
+      name: name,
+      ip: ip,
+      isBedrock: bedrockServerCheckBox.checked,
+    });
     localStorage.setItem('servers', JSON.stringify(servers));
     loadServerList();
   }
@@ -712,7 +760,9 @@ changeNodeBtn.addEventListener('click', openChangeNodeOverlay);
 setNodeBtn.addEventListener('click', openChangeNodeOverlay);
 
 function buildNodeDropdown() {
-  const existing = selectOptions.querySelectorAll('li[data-value], li.select-group-label');
+  const existing = selectOptions.querySelectorAll(
+    'li[data-value], li.select-group-label',
+  );
   for (const li of existing) {
     if (li.getAttribute('data-value') === 'none') continue;
     li.remove();
@@ -738,13 +788,15 @@ function buildNodeDropdown() {
 function openChangeNodeOverlay() {
   if (!nodeData?.regions) {
     selectedText.textContent = 'Loading...';
-    fetchNodeData().then((data) => {
-      nodeData = data;
-      buildNodeDropdown();
-      preselectNode();
-    }).catch(() => {
-      selectedText.textContent = 'Choose node...';
-    });
+    fetchNodeData()
+      .then((data) => {
+        nodeData = data;
+        buildNodeDropdown();
+        preselectNode();
+      })
+      .catch(() => {
+        selectedText.textContent = 'Choose node...';
+      });
   } else {
     buildNodeDropdown();
     preselectNode();
@@ -781,7 +833,7 @@ selectBtn.addEventListener('click', (e) => {
   }
 
   const rect = selectBtn.getBoundingClientRect();
-  selectOptions.style.top = (rect.bottom + 5) + 'px';
+  selectOptions.style.top = rect.bottom + 5 + 'px';
   selectOptions.style.left = rect.left + 'px';
   selectOptions.style.width = rect.width + 'px';
 

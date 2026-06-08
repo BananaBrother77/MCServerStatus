@@ -24,5 +24,8 @@
     "@cloudflare/vite-plugin": "^1.0.0",
     "vite": "^8.0.16",
     "wrangler": "^4.98.0"
+  },
+  "dependencies": {
+    "skinview3d": "^3.4.2"
   }
 }
