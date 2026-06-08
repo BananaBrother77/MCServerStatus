@@ -39,11 +39,6 @@
   --accent-bright-shadow: rgba(124, 88, 204, 0.3);
   --accent-focus-ring: rgba(124, 88, 204, 0.18);
 
-  /* Cancel button */
-  --cancel-bg: #a19c9c;
-  --cancel-bg-end: #a2a2a2;
-  --cancel-shadow: rgba(207, 204, 213, 0.3);
-
   /* Select dropdown */
   --select-start: #7c58cc;
   --select-end: #3d2488;
@@ -594,14 +589,20 @@ body {
 #cancelNodeChangeBtn,
 #cancelAddServerBtn,
 #closePlayerInfoBtn {
-  background: linear-gradient(135deg, var(--cancel-bg), var(--cancel-bg-end));
+  background: transparent;
+  border: 1px solid var(--accent-purple);
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 #cancelEditBtn:hover,
 #cancelNodeChangeBtn:hover,
 #cancelAddServerBtn:hover,
 #closePlayerInfoBtn:hover {
-  box-shadow: 0 15px 25px var(--cancel-shadow);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--text-muted);
 }
 
 /* ============================================================
@@ -1054,6 +1055,12 @@ body {
   color: var(--text-muted-bright);
 }
 
+.player-info-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
 /* ============================================================
    CUSTOM CHECKBOX
    ============================================================ */
@@ -1371,16 +1378,53 @@ body {
   }
 
   .player-info-wrapper {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  #playerInfoOverlay {
+    padding: 15px;
+    gap: 10px;
+  }
+
+  #skinContainer {
+    max-width: 100px;
+    max-height: 160px;
+  }
+
+  .skin-section {
+    flex-shrink: 0;
+  }
+
+  .player-info-wrapper .edit-content {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .player-info-actions {
     flex-direction: column;
-    align-items: center;
+    gap: 6px;
+  }
+
+  .player-info-actions .btn {
+    margin-top: 0;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .input-group {
+    width: 100%;
   }
 
   .player-info-title {
-    font-size: 1.4rem;
+    font-size: 1rem;
+    word-break: break-all;
   }
 
   .player-info-text {
-    font-size: 1.3rem;
+    font-size: 0.9rem;
+    word-break: break-all;
   }
 }
 
