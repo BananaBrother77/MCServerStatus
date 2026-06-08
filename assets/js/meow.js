@@ -51,7 +51,7 @@ let serverData;
 let nodeData;
 let statusTimeout;
 
-const serverCache = { data: null, timestamp: 0 };
+const serverCache = { data: null };
 
 updateUrl({ server: serverIP, name: serverName, bedrock: isBedrock });
 
@@ -114,7 +114,7 @@ const sidebarEls = {
   links: document.querySelector('.sidebar-links'),
   toggleBtn: document.getElementById('serverListBtn'),
   shareBtn: document.getElementById('shareServerBtn'),
-  serverListBtn: document.getElementById('serverListBtn'),
+  
   closeBtn: document.getElementById('closeServerListBtn'),
 };
 
@@ -278,12 +278,8 @@ async function getServerStatus() {
 
     buildNodeDropdown();
 
-    console.log('MC Server Data:', serverData);
-    console.log('Node Data:', nodeData);
-
     if (finalResult.status === 'fulfilled') {
       serverCache.data = serverData;
-      serverCache.timestamp = Date.now();
     }
 
     displayServerStatus();
@@ -419,7 +415,6 @@ function getOnlinePlayers() {
           const uuidData = await fetchPlayerUUID(player.name_raw);
           const uuid = uuidData.data.player.id;
           const capeUrl = uuidData.data.player.cape_texture || null;
-          console.log(`Player UUID of Player ${player.name_raw}: ${uuid}`);
 
           displayPlayerInfo(player.name_raw, uuid, capeUrl);
         } catch (error) {
@@ -466,7 +461,6 @@ playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
     const playerData = uuidData.data.player;
     const uuid = playerData.id;
     const capeUrl = playerData.cape_texture || null;
-    console.log(`Player UUID of Player ${playerName}: ${uuid}`);
 
     await displayPlayerInfo(playerName, uuid, capeUrl);
   } catch (error) {
@@ -576,7 +570,7 @@ function updateNodeUI(node) {
 // ============================================================
 
 copyIpBtn.addEventListener('click', () => {
-  navigator.clipboard.writeText(serverEls.ip.textContent);
+  copyToClipboard(serverEls.ip.textContent);
   copyIpBtn.innerHTML = `<i data-lucide="check"></i> Copied`;
   updateIcons();
   setTimeout(() => {
@@ -586,7 +580,7 @@ copyIpBtn.addEventListener('click', () => {
 });
 
 // ============================================================
-// COPY TO CLIPBOARD (with fallback for HTTP)
+// COPY TO CLIPBOARD
 // ============================================================
 
 function copyToClipboard(text) {

@@ -372,25 +372,6 @@ body {
   max-width: 350px;
 }
 
-/* ============================================================
-   UPTIME BARS
-   ============================================================ */
-
-.bar {
-  flex: 1;
-  border-radius: 2px;
-  min-height: 4px;
-  background: var(--online-green);
-}
-
-.bar.warn {
-  background: var(--warn-yellow);
-}
-
-.bar.down {
-  background: var(--offline-red);
-}
-
 .usage-low {
   color: var(--online-green);
 }
@@ -1203,62 +1184,6 @@ body {
 
 .show-menu {
   display: block;
-}
-
-/* ============================================================
-   LOGIN
-   ============================================================ */
-
-.login-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 450px;
-  margin-top: 10vh;
-  padding: 40px;
-  gap: 20px;
-  text-align: center;
-}
-
-.login-panel #serverName {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.login-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.glass-input {
-  background: var(--panel-bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 12px;
-  padding: 15px;
-  color: var(--text-main);
-  font-family: inherit;
-  font-size: 1rem;
-  width: 100%;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.glass-input:focus {
-  border-color: var(--text-muted);
-  background: var(--focus-bg);
-  box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-.login-error {
-  color: var(--offline-red) !important;
-  text-align: center;
-  height: 1.2rem;
-  font-weight: 500;
 }
 
 /* ============================================================

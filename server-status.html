@@ -143,9 +143,6 @@
                 <button id="editBtn" class="btn-primary">
                   <i data-lucide="pencil"></i> Edit
                 </button>
-                <!-- <button id="PlayerLookupBtn" class="btn-primary">
-                  <i data-lucide="search"></i> Player Lookup
-                </button> -->
 
                 <button
                   id="setNodeBtn"
@@ -179,7 +176,7 @@
           <div class="server-info">
             <span class="card-label">MCServerHost Node Status</span>
             <h1 id="nodeName">Ares</h1>
-            <p id="nodeStatusText">
+            <p>
               <span class="status-dot" id="nodeStatusDot"></span>
               <span id="nodeStatusState">Checking...</span>
             </p>
@@ -198,7 +195,6 @@
             <span class="card-label">Uptime</span>
             <div class="divider"></div>
             <span id="nodeUptime" class="card-value">--</span>
-            <div id="nodeUptimeBars" class="uptime-bars"></div>
           </div>
           <div class="status-card reveal">
             <i data-lucide="cpu"></i>
@@ -240,7 +236,7 @@
     <!-- Edit Server Modal -->
     <div class="overlayBackdrop" id="editOverlayBackdrop">
       <div id="editOverlay">
-        <div class="edit-header">
+        <div>
           <h2 class="edit-title">Edit Server</h2>
           <p class="edit-desc">Choose what server status you want to see</p>
         </div>
@@ -275,7 +271,7 @@
     <!-- Add Server Modal -->
     <div class="overlayBackdrop" id="addServerOverlayBackdrop">
       <div id="addServerOverlay">
-        <div class="edit-header">
+        <div>
           <h2 class="edit-title">Add Server</h2>
           <p class="edit-desc">Choose what server status you want to see</p>
         </div>
@@ -320,7 +316,7 @@
     <!-- Change Node Modal -->
     <div class="overlayBackdrop" id="changeNodeOverlayBackdrop">
       <div id="changeNodeOverlay">
-        <div class="edit-header">
+        <div>
           <h2 class="edit-title">Change Node</h2>
           <p class="edit-desc">Choose which node status you want to see</p>
         </div>
@@ -345,7 +341,7 @@
     <!-- Player Info Modal -->
     <div class="overlayBackdrop" id="playerInfoOverlayBackdrop">
       <div id="playerInfoOverlay">
-        <div class="edit-header">
+        <div>
           <h2 class="edit-title">Player Info</h2>
           <p class="edit-desc">Information about the player</p>
         </div>
@@ -370,7 +366,7 @@
             </button>
           </div>
           <div class="edit-content">
-            <div class="player-info">
+            <div>
               <h3 class="player-info-title">
                 Player Name:<br />
                 <span class="player-info-text" id="playerInfoNameText"
@@ -409,7 +405,7 @@
          ============================================================ -->
     <footer class="site-footer reveal">
       <div class="footer-content">
-        <div class="footer-brand">
+        <div>
           <h2 class="footer-logo">BananaBrother77</h2>
         </div>
         <div class="footer-social">
@@ -480,8 +476,6 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/assets/js/meow.js"></script>
-    <script type="module" src="/assets/js/api.js"></script>
-    <script type="module" src="/assets/js/skin-render.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
   </body>
