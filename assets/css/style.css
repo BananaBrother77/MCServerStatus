@@ -226,12 +226,6 @@ body {
   gap: 12px;
 }
 
-.actions {
-  display: flex;
-  justify-content: center;
-  width: auto;
-}
-
 .buttons {
   display: flex;
   justify-content: center;
@@ -276,6 +270,8 @@ body {
 }
 
 #statusText {
+  display: flex;
+  align-items: center;
   margin-top: 8px;
   margin-left: 5px;
   font-size: 0.9rem;
@@ -673,11 +669,8 @@ body {
 
 .actions {
   display: flex;
+  justify-content: center;
   gap: 10px;
-}
-
-.filled {
-  fill: var(--text-muted);
 }
 
 #closeServerListBtn {
@@ -784,8 +777,7 @@ body {
 
 #editOverlay,
 #changeNodeOverlay,
-#addServerOverlay,
-#playerInfoOverlay {
+#addServerOverlay {
   position: relative;
   top: unset;
   left: unset;
@@ -1055,10 +1047,17 @@ body {
   color: var(--text-muted-bright);
 }
 
-.player-info-actions {
+.player-info-actions,
+.modal-actions {
   display: flex;
   gap: 12px;
   margin-top: 10px;
+}
+
+.modal-actions > *,
+.player-info-actions > * {
+  flex: 1;
+  margin-top: 0;
 }
 
 /* ============================================================
@@ -1402,12 +1401,14 @@ body {
     text-align: left;
   }
 
-  .player-info-actions {
+  .player-info-actions,
+  .modal-actions {
     flex-direction: column;
     gap: 6px;
   }
 
-  .player-info-actions .btn {
+  .player-info-actions .btn,
+  .modal-actions .btn {
     margin-top: 0;
     padding: 8px 12px;
     font-size: 0.85rem;
@@ -1476,7 +1477,7 @@ body {
 }
 
 /* ============================================================
-   REVEAL — scroll-triggered fade-in (portfolio consistency)
+   REVEAL — scroll-triggered fade-in
    ============================================================ */
 
 .reveal {
