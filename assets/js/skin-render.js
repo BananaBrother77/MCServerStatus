@@ -19,6 +19,8 @@ export async function renderSkin(skinUrl, capeUrl) {
   }
 
   viewer.animation = new WalkingAnimation();
+  viewer.animation.speed = 0.6;
+  viewer.animation.headBobbing = false;
 }
 
 export function disposeSkinViewer() {
