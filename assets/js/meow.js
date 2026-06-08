@@ -5,7 +5,11 @@ import {
   fetchPlayerUUID,
   fetchPlayerSkin,
 } from './api.js';
-import { renderSkin, disposeSkinViewer } from './skin-render.js';
+import {
+  renderSkin,
+  disposeSkinViewer,
+  toggleAnimation,
+} from './skin-render.js';
 
 // ============================================================
 // STATE
@@ -82,7 +86,7 @@ function toggleTheme() {
 }
 
 // ============================================================
-// ELEMENT REFS
+// ELEMENTS
 // ============================================================
 
 const serverEls = {
@@ -114,7 +118,7 @@ const sidebarEls = {
   links: document.querySelector('.sidebar-links'),
   toggleBtn: document.getElementById('serverListBtn'),
   shareBtn: document.getElementById('shareServerBtn'),
-  
+
   closeBtn: document.getElementById('closeServerListBtn'),
 };
 
@@ -132,6 +136,7 @@ const playerInfoEls = {
   copyNameBtn: document.getElementById('copyNameBtn'),
   copyUUIDBtn: document.getElementById('copyUUIDBtn'),
   downloadSkinBtn: document.getElementById('downloadSkinBtn'),
+  animationBtn: document.getElementById('animationBtn'),
   nameMCBtn: document.getElementById('nameMCBtn'),
   playerInfoSearchInput: document.getElementById('playerInfoSearchInput'),
   playerInfoSearchBtn: document.getElementById('playerInfoSearchBtn'),
@@ -444,10 +449,7 @@ async function displayPlayerInfo(playerName, playerUUID, capeUrl) {
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
 
-  await renderSkin(
-    `https://minotar.net/skin/${playerName}.png`,
-    capeUrl,
-  );
+  await renderSkin(`https://minotar.net/skin/${playerName}.png`, capeUrl);
 }
 
 playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
@@ -636,6 +638,18 @@ playerInfoEls.downloadSkinBtn.addEventListener('click', async () => {
   a.click();
 
   URL.revokeObjectURL(blobUrl);
+});
+
+// ============================================================
+// ANIMATION TOGGLE
+// ===========================================================
+
+playerInfoEls.animationBtn.addEventListener('click', () => {
+  const isPlaying = toggleAnimation();
+  playerInfoEls.animationBtn.innerHTML = isPlaying
+    ? `<i data-lucide="pause"></i>`
+    : `<i data-lucide="play"></i>`;
+  updateIcons();
 });
 
 // ============================================================

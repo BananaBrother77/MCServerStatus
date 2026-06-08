@@ -27,3 +27,11 @@ export function disposeSkinViewer() {
     viewer = null;
   }
 }
+
+export function toggleAnimation() {
+  if (viewer?.animation) {
+    viewer.animation.paused = !viewer.animation.paused;
+    return !viewer.animation.paused;
+  }
+  return false;
+}
