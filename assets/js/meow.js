@@ -60,30 +60,40 @@ const serverCache = { data: null };
 updateUrl({ server: serverIP, name: serverName, bedrock: isBedrock });
 
 // ============================================================
-// THEME
+// SETTINGS MODAL & THEME
 // ============================================================
 
-const themes = ['none', 'green', 'red', 'blue', 'yellow'];
-let currentTheme = localStorage.getItem('theme') || 'none';
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsModal = document.getElementById('settingsModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const themeBtns = document.querySelectorAll('.theme-btn');
 
-if (currentTheme !== 'none') {
-  document.body.classList.add(`theme-${currentTheme}`);
+settingsBtn.addEventListener('click', () => {
+  settingsModal.classList.add('show');
+});
+
+closeModalBtn.addEventListener('click', closeSettingsModal);
+
+function closeSettingsModal() {
+  settingsModal.classList.remove('show');
 }
 
-document
-  .getElementById('themeToggleBtn')
-  .addEventListener('click', toggleTheme);
+const savedTheme = localStorage.getItem('theme') || 'none';
 
-function toggleTheme() {
-  document.body.classList.remove(`theme-${currentTheme}`);
-
-  const nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
-  currentTheme = themes[nextIndex];
-
-  if (currentTheme !== 'none')
-    document.body.classList.add(`theme-${currentTheme}`);
-  localStorage.setItem('theme', currentTheme);
+function applyTheme(theme) {
+  document.body.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue');
+  if (theme !== 'none') document.body.classList.add(`theme-${theme}`);
+  localStorage.setItem('theme', theme);
+  themeBtns.forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.theme === theme);
+  });
 }
+
+applyTheme(savedTheme);
+
+themeBtns.forEach((btn) => {
+  btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+});
 
 // ============================================================
 // ELEMENTS
@@ -948,6 +958,7 @@ function addServerToFavourites(e) {
 
 function noOverlayOpen() {
   return (
+    !settingsModal.classList.contains('show') &&
     !overlayEls.edit.classList.contains('show') &&
     !overlayEls.addServer.classList.contains('show') &&
     !overlayEls.changeNode.classList.contains('show') &&
@@ -958,6 +969,7 @@ function noOverlayOpen() {
 document.addEventListener('keydown', (e) => {
   switch (e.key) {
     case 'Escape':
+      closeSettingsModal();
       closeOverlay(overlayEls.edit);
       closeOverlay(overlayEls.addServer);
       closeOverlay(overlayEls.changeNode);
@@ -984,11 +996,13 @@ document.addEventListener('keydown', (e) => {
         shareLink();
         break;
       }
-      if (noOverlayOpen()) openServerList();
-      break;
-
-    case 't':
-      if (noOverlayOpen()) toggleTheme();
+      if (noOverlayOpen()) {
+        if (settingsModal.classList.contains('show')) {
+          closeSettingsModal();
+        } else {
+          openServerList();
+        }
+      }
       break;
   }
 });

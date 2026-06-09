@@ -60,8 +60,8 @@
       <div class="menu-btn" id="shareServerBtn">
         <i data-lucide="square-arrow-up-right" width="35" height="35"></i>
       </div>
-      <div class="menu-btn" id="themeToggleBtn">
-        <i data-lucide="palette" width="35" height="35"></i>
+      <div class="menu-btn" id="settingsBtn">
+        <i data-lucide="settings" width="35" height="35"></i>
       </div>
     </div>
 
@@ -487,6 +487,28 @@
         <span>- All rights reserved.</span>
       </div>
     </footer>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title">Settings</h2>
+          <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h3 class="settings-section-title">Theme</h3>
+            <div class="theme-grid">
+              <button class="theme-btn theme-btn--default active" data-theme="none">Purple</button>
+              <button class="theme-btn theme-btn--green" data-theme="green">Green</button>
+              <button class="theme-btn theme-btn--red" data-theme="red">Red</button>
+              <button class="theme-btn theme-btn--yellow" data-theme="yellow">Yellow</button>
+              <button class="theme-btn theme-btn--blue" data-theme="blue">Blue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
