@@ -44,6 +44,13 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <title>Server Status - MCToolkit | BananaBrother77</title>
     <link rel="stylesheet" href="assets/css/style.css" />
+    <script>
+      (function () {
+        var t = localStorage.getItem('theme');
+        if (t && t !== 'none')
+          document.documentElement.classList.add('theme-' + t);
+      })();
+    </script>
   </head>
 
   <body class="">
@@ -499,11 +506,24 @@
           <div class="settings-section">
             <h3 class="settings-section-title">Theme</h3>
             <div class="theme-grid">
-              <button class="theme-btn theme-btn--default active" data-theme="none">Purple</button>
-              <button class="theme-btn theme-btn--green" data-theme="green">Green</button>
-              <button class="theme-btn theme-btn--red" data-theme="red">Red</button>
-              <button class="theme-btn theme-btn--yellow" data-theme="yellow">Yellow</button>
-              <button class="theme-btn theme-btn--blue" data-theme="blue">Blue</button>
+              <button
+                class="theme-btn theme-btn--default active"
+                data-theme="none"
+              >
+                Purple
+              </button>
+              <button class="theme-btn theme-btn--green" data-theme="green">
+                Green
+              </button>
+              <button class="theme-btn theme-btn--red" data-theme="red">
+                Red
+              </button>
+              <button class="theme-btn theme-btn--yellow" data-theme="yellow">
+                Yellow
+              </button>
+              <button class="theme-btn theme-btn--blue" data-theme="blue">
+                Blue
+              </button>
             </div>
           </div>
         </div>
@@ -512,6 +532,7 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/assets/js/theme.js"></script>
     <script type="module" src="/assets/js/meow.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>

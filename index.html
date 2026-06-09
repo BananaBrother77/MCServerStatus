@@ -36,6 +36,13 @@
     <title>MCToolkit | BananaBrother77</title>
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/landing.css" />
+    <script>
+      (function () {
+        var t = localStorage.getItem('theme');
+        if (t && t !== 'none')
+          document.documentElement.classList.add('theme-' + t);
+      })();
+    </script>
   </head>
 
   <body class="">
@@ -169,6 +176,7 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/assets/js/theme.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
   </body>

@@ -5,6 +5,7 @@ import {
   fetchPlayerUUID,
   fetchPlayerSkin,
 } from './api.js';
+import { applyTheme } from './theme.js';
 import {
   renderSkin,
   disposeSkinViewer,
@@ -74,19 +75,10 @@ settingsBtn.addEventListener('click', () => {
 
 closeModalBtn.addEventListener('click', closeSettingsModal);
 
-function closeSettingsModal() {
-  settingsModal.classList.remove('show');
-}
-
 const savedTheme = localStorage.getItem('theme') || 'none';
 
-function applyTheme(theme) {
-  document.body.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue');
-  if (theme !== 'none') document.body.classList.add(`theme-${theme}`);
-  localStorage.setItem('theme', theme);
-  themeBtns.forEach((btn) => {
-    btn.classList.toggle('active', btn.dataset.theme === theme);
-  });
+function closeSettingsModal() {
+  settingsModal.classList.remove('show');
 }
 
 applyTheme(savedTheme);
