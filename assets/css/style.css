@@ -1695,6 +1695,57 @@ body {
   text-align: left;
 }
 
+.sync-checkbox {
+  margin-top: 16px;
+}
+
+.sync-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hint-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.hint-icon:hover,
+.hint-icon:focus {
+  color: var(--text-main);
+}
+
+.hint-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-bg);
+  color: var(--text-main);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 100;
+  max-width: 300px;
+  white-space: normal;
+}
+
+.hint-icon:hover .hint-tooltip,
+.hint-icon:focus .hint-tooltip,
+.hint-icon.show .hint-tooltip {
+  opacity: 1;
+}
+
 /* ============================================================
    REVEAL — scroll-triggered fade-in
    ============================================================ */

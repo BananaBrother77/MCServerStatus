@@ -24,7 +24,7 @@ export function updateIcons() {
 }
 
 // ============================================================
-// KEYBOARD SHORTCUTS — shared across pages
+// KEYBOARD SHORTCUTS
 // ============================================================
 
 document.addEventListener('keydown', (e) => {
@@ -42,5 +42,19 @@ document.addEventListener('keydown', (e) => {
         toggleLanguage();
       }
       break;
+  }
+});
+
+// ============================================================
+// TOOLTIP TOGGLE
+// ============================================================
+
+document.addEventListener('click', (e) => {
+  const icon = e.target.closest('.hint-icon');
+  document.querySelectorAll('.hint-icon.show').forEach((el) => {
+    if (el !== icon) el.classList.remove('show');
+  });
+  if (icon) {
+    icon.classList.toggle('show');
   }
 });
