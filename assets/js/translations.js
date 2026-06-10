@@ -71,6 +71,11 @@ const translations = {
     tool_coming_soon_desc:
       'New tools are in the works. Stay tuned for updates and improvements!',
     badge_soon: 'Soon',
+    e404_heading: '- Page Not Found',
+    '404_subtitle': 'Where are you trying to go? What are you looking for? I, of course, don\'t know that, but I know that you won\'t find it here.',
+    '404_btn_home': 'Go Home',
+    '404_btn_reload': 'Reload (Won\'t help)',
+    '404_protip': 'Pro Tip: I don\'t know, what did you expect?',
     lang_name: 'English',
     lang_flag: '\ud83c\uddfa\ud83c\uddf8',
     language_switch_target: 'German',
@@ -147,6 +152,11 @@ const translations = {
     tool_coming_soon_desc:
       'Neue Tools sind in Arbeit. Bleib dran f\u00fcr Updates und Verbesserungen!',
     badge_soon: 'Bald',
+    e404_heading: '- Seite nicht gefunden',
+    '404_subtitle': 'Wo willst du hin? Was suchst du? Ich wei\u00df es nat\u00fcrlich nicht, aber ich wei\u00df, dass du es hier nicht finden wirst.',
+    '404_btn_home': 'Zur Startseite',
+    '404_btn_reload': 'Neu laden (Hilft nicht)',
+    '404_protip': 'Pro-Tipp: Keine Ahnung. Was hast du erwartet?',
     lang_name: 'Deutsch',
     lang_flag: '\ud83c\udde9\ud83c\uddea',
     language_switch_target: 'English',

@@ -11,6 +11,7 @@ export default defineConfig({
       input: {
         main: 'index.html',
         'server-status': 'server-status.html',
+        '404': '404.html',
       },
     },
   },

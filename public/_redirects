@@ -1,0 +1,4 @@
+/github https://github.com/BananaBrother77 301
+/maxim https://maximerix.dev/ 301
+/humans /humans.txt 200
+/* /index.html 200
