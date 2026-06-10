@@ -44,13 +44,6 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <title>Server Status - MCToolkit | BananaBrother77</title>
     <link rel="stylesheet" href="assets/css/style.css" />
-    <script>
-      (function () {
-        var t = localStorage.getItem('theme');
-        if (t && t !== 'none')
-          document.documentElement.classList.add('theme-' + t);
-      })();
-    </script>
   </head>
 
   <body class="">
@@ -58,7 +51,7 @@
          SIDEBAR TOGGLE BUTTON
          ============================================================ -->
     <div class="serverListWrapper">
-      <a href="index.html" class="menu-btn" title="Back to Home">
+      <a href="index.html" class="menu-btn" data-i18n-title="back_home" title="Back to Home">
         <i data-lucide="home" width="35" height="35"></i>
       </a>
       <div class="menu-btn" id="serverListBtn">
@@ -77,13 +70,13 @@
          ============================================================ -->
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
-        <h3>Servers</h3>
+        <h3 data-i18n="sidebar_title">Servers</h3>
         <button id="closeServerListBtn">&times;</button>
       </div>
       <ul class="sidebar-links"></ul>
 
       <div class="sidebar-footer">
-        <button id="addServerBtn" class="btn-primary">Add Server</button>
+        <button id="addServerBtn" class="btn-primary" data-i18n="btn_add_server">Add Server</button>
       </div>
     </aside>
 
@@ -113,7 +106,7 @@
         <div class="stats-row">
           <div class="status-card reveal">
             <i data-lucide="users"></i>
-            <span class="card-label">Online</span>
+            <span class="card-label" data-i18n="label_online">Online</span>
             <span id="playersOnline" class="card-value">0</span>
             <div class="divider"></div>
             <span id="playersMax" class="card-value">0</span>
@@ -121,14 +114,14 @@
 
           <div class="status-card reveal">
             <i data-lucide="info"></i>
-            <span class="card-label">Version</span>
+            <span class="card-label" data-i18n="label_version">Version</span>
             <div class="divider"></div>
             <span id="serverVersion" class="card-value">1.20.1</span>
           </div>
 
           <div class="status-card motd-card reveal">
             <i data-lucide="message-square"></i>
-            <span class="card-label">Message</span>
+            <span class="card-label" data-i18n="label_message">Message</span>
             <div class="divider"></div>
             <span id="motdText" class="card-value">Nothing to see here</span>
           </div>
@@ -140,14 +133,14 @@
         <section class="server-ip-section reveal">
           <div class="actions">
             <div>
-              <span class="card-label">Server IP:</span>
+              <span class="card-label" data-i18n="label_server_ip">Server IP:</span>
               <span id="serverIpValue" class="card-value"></span>
               <div class="divider"></div>
               <div class="buttons">
-                <button id="copyIpBtn" class="btn-primary">
+                <button id="copyIpBtn" class="btn-primary" data-i18n="btn_copy_ip">
                   <i data-lucide="copy"></i> Copy IP
                 </button>
-                <button id="editBtn" class="btn-primary">
+                <button id="editBtn" class="btn-primary" data-i18n="btn_edit">
                   <i data-lucide="pencil"></i> Edit
                 </button>
 
@@ -155,6 +148,7 @@
                   id="setNodeBtn"
                   class="btn-primary"
                   style="display: none"
+                  data-i18n="btn_set_node"
                 >
                   <i data-lucide="server"></i> Set Node
                 </button>
@@ -165,12 +159,12 @@
 
         <section class="online-players-section serverStatus reveal">
           <div class="serverInfo">
-            <span class="card-label">Online Players</span>
+            <span class="card-label" data-i18n="label_online_players">Online Players</span>
             <div class="divider"></div>
             <div id="playerHeadsContainer" class="stats-row player-grid">
               <!-- Player avatars injected by script.js -->
             </div>
-            <button id="playerLookupBtn" class="btn-primary">
+            <button id="playerLookupBtn" class="btn-primary" data-i18n="btn_player_lookup">
               <i data-lucide="search"></i> Player Lookup
             </button>
           </div>
@@ -181,11 +175,11 @@
       <section id="nodeStatusSection" class="serverStatus nodeStatus reveal">
         <div class="container">
           <div class="server-info">
-            <span class="card-label">MCServerHost Node Status</span>
+            <span class="card-label" data-i18n="mcsh_node_status">MCServerHost Node Status</span>
             <h1 id="nodeName">Ares</h1>
             <p>
               <span class="status-dot" id="nodeStatusDot"></span>
-              <span id="nodeStatusState">Checking...</span>
+              <span id="nodeStatusState" data-i18n="status_checking">Checking...</span>
             </p>
           </div>
         </div>
@@ -193,31 +187,31 @@
         <div class="stats-row">
           <div class="status-card reveal">
             <i data-lucide="activity"></i>
-            <span class="card-label">Latency</span>
+            <span class="card-label" data-i18n="label_latency">Latency</span>
             <div class="divider"></div>
             <span id="nodeLatency" class="card-value">--</span>
           </div>
           <div class="status-card reveal">
             <i data-lucide="clock"></i>
-            <span class="card-label">Uptime</span>
+            <span class="card-label" data-i18n="label_uptime">Uptime</span>
             <div class="divider"></div>
             <span id="nodeUptime" class="card-value">--</span>
           </div>
           <div class="status-card reveal">
             <i data-lucide="cpu"></i>
-            <span class="card-label">CPU Usage</span>
+            <span class="card-label" data-i18n="label_cpu">CPU Usage</span>
             <div class="divider"></div>
             <span id="nodeCPU" class="card-value">--</span>
           </div>
           <div class="status-card reveal">
             <i data-lucide="memory-stick"></i>
-            <span class="card-label">Memory Usage</span>
+            <span class="card-label" data-i18n="label_memory">Memory Usage</span>
             <div class="divider"></div>
             <span id="nodeMemory" class="card-value">--</span>
           </div>
           <div class="status-card reveal">
             <i data-lucide="hard-drive"></i>
-            <span class="card-label">Storage Usage</span>
+            <span class="card-label" data-i18n="label_storage">Storage Usage</span>
             <div class="divider"></div>
             <span id="nodeStorage" class="card-value">--</span>
           </div>
@@ -227,11 +221,11 @@
           <a
             href="https://maximerix.dev/mcsh/status/"
             target="_blank"
-            class="btn-primary"
+            class="btn-primary" data-i18n="btn_all_nodes"
           >
             All Nodes
           </a>
-          <button id="changeNodeBtn" class="btn-primary">Change</button>
+          <button id="changeNodeBtn" class="btn-primary" data-i18n="btn_change">Change</button>
         </div>
       </section>
     </main>
@@ -244,8 +238,8 @@
     <div class="overlayBackdrop" id="editOverlayBackdrop">
       <div id="editOverlay">
         <div>
-          <h2 class="edit-title">Edit Server</h2>
-          <p class="edit-desc">Choose what server status you want to see</p>
+          <h2 class="edit-title" data-i18n="edit_title">Edit Server</h2>
+          <p class="edit-desc" data-i18n="edit_desc">Choose what server status you want to see</p>
         </div>
         <div class="divider"></div>
         <div class="edit-content">
@@ -255,6 +249,7 @@
             class="edit-input"
             name="Server Name"
             placeholder="Server Name..."
+            data-i18n-placeholder="placeholder_name"
           />
           <input
             type="text"
@@ -262,16 +257,17 @@
             class="edit-input"
             name="Server IP"
             placeholder="Server IP..."
+            data-i18n-placeholder="placeholder_ip"
           />
           <label class="custom-checkbox">
             <input type="checkbox" id="editBedrockCheckBox" />
             <span class="checkmark"></span>
-            Bedrock Server
+            <span data-i18n="label_bedrock">Bedrock Server</span>
           </label>
           <p class="error" id="errorText"></p>
           <div class="modal-actions">
-            <button class="btn" id="applyEditBtn">Apply</button>
-            <button class="btn" id="cancelEditBtn">Cancel</button>
+            <button class="btn" id="applyEditBtn" data-i18n="btn_apply">Apply</button>
+            <button class="btn" id="cancelEditBtn" data-i18n="btn_cancel">Cancel</button>
           </div>
         </div>
       </div>
@@ -281,8 +277,8 @@
     <div class="overlayBackdrop" id="addServerOverlayBackdrop">
       <div id="addServerOverlay">
         <div>
-          <h2 class="edit-title">Add Server</h2>
-          <p class="edit-desc">Choose what server status you want to see</p>
+          <h2 class="edit-title" data-i18n="add_title">Add Server</h2>
+          <p class="edit-desc" data-i18n="edit_desc">Choose what server status you want to see</p>
         </div>
         <div class="divider"></div>
         <div class="edit-content">
@@ -292,6 +288,7 @@
             class="edit-input"
             name="Server Name"
             placeholder="Server Name..."
+            data-i18n-placeholder="placeholder_name"
           />
           <input
             type="text"
@@ -299,26 +296,27 @@
             class="edit-input"
             name="Server IP"
             placeholder="Server IP..."
+            data-i18n-placeholder="placeholder_ip"
           />
           <label class="custom-checkbox">
             <input type="checkbox" id="addToServerListCheckBox" checked />
             <span class="checkmark"></span>
-            Add to server list
+            <span data-i18n="label_add_to_list">Add to server list</span>
           </label>
           <label class="custom-checkbox">
             <input type="checkbox" id="connectToServerNowCheckBox" checked />
             <span class="checkmark"></span>
-            Connect to server now
+            <span data-i18n="label_connect_now">Connect to server now</span>
           </label>
           <label class="custom-checkbox">
             <input type="checkbox" id="bedrockServerCheckBox" />
             <span class="checkmark"></span>
-            Bedrock Server
+            <span data-i18n="label_bedrock">Bedrock Server</span>
           </label>
           <p class="error" id="addServerErrorText"></p>
           <div class="modal-actions">
-            <button class="btn" id="applyAddServerBtn">Apply</button>
-            <button class="btn" id="cancelAddServerBtn">Cancel</button>
+            <button class="btn" id="applyAddServerBtn" data-i18n="btn_apply">Apply</button>
+            <button class="btn" id="cancelAddServerBtn" data-i18n="btn_cancel">Cancel</button>
           </div>
         </div>
       </div>
@@ -328,24 +326,24 @@
     <div class="overlayBackdrop" id="changeNodeOverlayBackdrop">
       <div id="changeNodeOverlay">
         <div>
-          <h2 class="edit-title">Change Node</h2>
-          <p class="edit-desc">Choose which node status you want to see</p>
+          <h2 class="edit-title" data-i18n="node_title">Change Node</h2>
+          <p class="edit-desc" data-i18n="node_desc">Choose which node status you want to see</p>
         </div>
         <div class="divider"></div>
         <div class="edit-content">
           <div class="node-select-container">
             <button id="selectBtn" class="select-button">
-              <span id="selectedOptionText">Choose node...</span>
+              <span id="selectedOptionText" data-i18n="node_placeholder">Choose node...</span>
               <i data-lucide="chevron-down"></i>
             </button>
             <ul id="selectOptions" class="select-options">
-              <li data-value="none">None</li>
+              <li data-value="none" data-i18n="node_none">None</li>
             </ul>
             <div class="select-backdrop" id="selectBackdrop"></div>
           </div>
           <div class="modal-actions">
-            <button class="btn" id="applyNodeChangeBtn">Apply</button>
-            <button class="btn" id="cancelNodeChangeBtn">Cancel</button>
+            <button class="btn" id="applyNodeChangeBtn" data-i18n="btn_apply">Apply</button>
+            <button class="btn" id="cancelNodeChangeBtn" data-i18n="btn_cancel">Cancel</button>
           </div>
         </div>
       </div>
@@ -355,14 +353,15 @@
     <div class="overlayBackdrop" id="playerInfoOverlayBackdrop">
       <div id="playerInfoOverlay">
         <div>
-          <h2 class="edit-title">Player Info</h2>
-          <p class="edit-desc">Information about the player</p>
+          <h2 class="edit-title" data-i18n="player_title">Player Info</h2>
+          <p class="edit-desc" data-i18n="player_desc">Information about the player</p>
         </div>
         <div class="divider"></div>
         <div class="input-group">
           <input
             class="form-input"
             type="text"
+            data-i18n-placeholder="player_placeholder"
             placeholder="Enter player name..."
             id="playerInfoSearchInput"
           />
@@ -387,7 +386,7 @@
           </div>
           <div class="edit-content">
             <div>
-              <h3 class="player-info-title">
+              <h3 class="player-info-title" data-i18n="player_name_label">
                 Player Name:<br />
                 <span class="player-info-text" id="playerInfoNameText"
                   >BananaBrother77</span
@@ -396,7 +395,7 @@
                   <i data-lucide="copy"></i>
                 </button>
               </h3>
-              <div class="player-info-title">
+              <div class="player-info-title" data-i18n="player_uuid_label">
                 UUID:<br />
                 <span class="player-info-text" id="playerInfoUUIDText"
                   >61bd7ef7...</span
@@ -413,9 +412,9 @@
                 target="_blank"
                 class="btn btn-primary"
               >
-                <i data-lucide="external-link"></i> NameMC
+                <i data-lucide="external-link"></i> <span data-i18n="btn_namemc">NameMC</span>
               </a>
-              <button class="btn" id="closePlayerInfoBtn">Close</button>
+              <button class="btn" id="closePlayerInfoBtn" data-i18n="btn_close">Close</button>
             </div>
           </div>
         </div>
@@ -437,6 +436,7 @@
             rel="noopener noreferrer"
             class="social-link"
             title="Website"
+            data-i18n-title="website_title"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -456,6 +456,7 @@
             rel="noopener noreferrer"
             class="social-link"
             title="Discord"
+            data-i18n-title="discord_title"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -473,6 +474,7 @@
             rel="noopener noreferrer"
             class="social-link"
             title="GitHub"
+            data-i18n-title="github_title"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -487,11 +489,11 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Made with</span>
+        <span data-i18n="footer_made">Made with</span>
         <span class="text-heart">❤</span>
-        <span>and</span>
-        <span class="text-code-muted">code</span>
-        <span>- All rights reserved.</span>
+        <span data-i18n="footer_and">and</span>
+        <span class="text-code-muted" data-i18n="footer_code">code</span>
+        <span data-i18n="footer_rights">- All rights reserved.</span>
       </div>
     </footer>
 
@@ -499,31 +501,39 @@
     <div class="settings-modal" id="settingsModal">
       <div class="modal">
         <div class="modal-header">
-          <h2 class="modal-title">Settings</h2>
+          <h2 class="modal-title" data-i18n="settings_title">Settings</h2>
           <button class="modal-close" id="closeModalBtn">&times;</button>
         </div>
         <div class="modal-body">
           <div class="settings-section">
-            <h3 class="settings-section-title">Theme</h3>
+            <h3 class="settings-section-title" data-i18n="settings_theme">Theme</h3>
             <div class="theme-grid">
               <button
                 class="theme-btn theme-btn--default active"
-                data-theme="none"
+                data-theme="purple"
+                data-i18n="theme_purple"
               >
                 Purple
               </button>
-              <button class="theme-btn theme-btn--green" data-theme="green">
+              <button class="theme-btn theme-btn--green" data-theme="green" data-i18n="theme_green">
                 Green
               </button>
-              <button class="theme-btn theme-btn--red" data-theme="red">
+              <button class="theme-btn theme-btn--red" data-theme="red" data-i18n="theme_red">
                 Red
               </button>
-              <button class="theme-btn theme-btn--yellow" data-theme="yellow">
+              <button class="theme-btn theme-btn--yellow" data-theme="yellow" data-i18n="theme_yellow">
                 Yellow
               </button>
-              <button class="theme-btn theme-btn--blue" data-theme="blue">
+              <button class="theme-btn theme-btn--blue" data-theme="blue" data-i18n="theme_blue">
                 Blue
               </button>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h3 class="settings-section-title" data-i18n="settings_lang">Language</h3>
+            <button class="lang-btn" id="langSwitchBtn">
+              <span class="lang-name" data-i18n="lang_name">English</span>
+            </button>
             </div>
           </div>
         </div>
@@ -532,8 +542,10 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/assets/js/translations.js"></script>
     <script type="module" src="/assets/js/theme.js"></script>
     <script type="module" src="/assets/js/meow.js"></script>
+    <script type="module" src="/assets/js/server-status.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
   </body>

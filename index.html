@@ -36,16 +36,15 @@
     <title>MCToolkit | BananaBrother77</title>
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/landing.css" />
-    <script>
-      (function () {
-        var t = localStorage.getItem('theme');
-        if (t && t !== 'none')
-          document.documentElement.classList.add('theme-' + t);
-      })();
-    </script>
   </head>
 
   <body class="">
+    <div class="serverListWrapper">
+      <div class="menu-btn" id="settingsBtn">
+        <i data-lucide="settings" width="35" height="35"></i>
+      </div>
+    </div>
+
     <!-- ============================================================
          HERO
          ============================================================ -->
@@ -54,10 +53,10 @@
         <h1>MCToolkit</h1>
         <p>
           <span class="sub-dot">//</span>
-          Your Minecraft Hub
+          <span data-i18n="hero_subtitle">Your Minecraft Hub</span>
           <span class="sub-dot">//</span>
         </p>
-        <div class="tagline-accent">
+        <div class="tagline-accent" data-i18n="tagline">
           Server Status &middot; Content Browser &middot; More
         </div>
       </section>
@@ -69,8 +68,8 @@
         <div class="reveal">
           <a href="server-status.html" class="tool-card" id="serverStatusCard">
             <i data-lucide="server" width="40" height="40"></i>
-            <h2>Server Status</h2>
-            <p>
+            <h2 data-i18n="tool_server_status">Server Status</h2>
+            <p data-i18n="tool_server_status_desc">
               Check the live status of any Minecraft server - online players,
               version, MOTD, and more.
             </p>
@@ -80,8 +79,8 @@
         <div class="reveal">
           <div class="tool-card" id="contentBrowserCard">
             <i data-lucide="package" width="40" height="40"></i>
-            <h2>Content Browser</h2>
-            <p>
+            <h2 data-i18n="tool_content_browser">Content Browser</h2>
+            <p data-i18n="tool_content_browser_desc">
               Browse Modrinth mods, resource packs, and plugins to enhance your
               gameplay.
             </p>
@@ -91,12 +90,12 @@
         <div class="reveal">
           <div class="tool-card" id="comingSoonCard">
             <i data-lucide="sparkles" width="40" height="40"></i>
-            <h2>More Coming Soon</h2>
-            <p>
+            <h2 data-i18n="tool_coming_soon">More Coming Soon</h2>
+            <p data-i18n="tool_coming_soon_desc">
               New tools are in the works. Stay tuned for updates and
               improvements!
             </p>
-            <span class="card-coming-badge">Soon</span>
+            <span class="card-coming-badge" data-i18n="badge_soon">Soon</span>
           </div>
         </div>
       </section>
@@ -117,6 +116,7 @@
             rel="noopener noreferrer"
             class="social-link"
             title="Website"
+            data-i18n-title="website_title"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,6 +136,7 @@
             rel="noopener noreferrer"
             class="social-link"
             title="Discord"
+            data-i18n-title="discord_title"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -153,6 +154,7 @@
             rel="noopener noreferrer"
             class="social-link"
             title="GitHub"
+            data-i18n-title="github_title"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -167,16 +169,46 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Made with</span>
+        <span data-i18n="footer_made">Made with</span>
         <span class="text-heart">&hearts;</span>
-        <span>and</span>
-        <span class="text-code-muted">code</span>
-        <span>- All rights reserved.</span>
+        <span data-i18n="footer_and">and</span>
+        <span class="text-code-muted" data-i18n="footer_code">code</span>
+        <span data-i18n="footer_rights">- All rights reserved.</span>
       </div>
     </footer>
 
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" data-i18n="settings_title">Settings</h2>
+          <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h3 class="settings-section-title" data-i18n="settings_theme">Theme</h3>
+            <div class="theme-grid">
+              <button class="theme-btn theme-btn--default active" data-theme="purple" data-i18n="theme_purple">Purple</button>
+              <button class="theme-btn theme-btn--green" data-theme="green" data-i18n="theme_green">Green</button>
+              <button class="theme-btn theme-btn--red" data-theme="red" data-i18n="theme_red">Red</button>
+              <button class="theme-btn theme-btn--yellow" data-theme="yellow" data-i18n="theme_yellow">Yellow</button>
+              <button class="theme-btn theme-btn--blue" data-theme="blue" data-i18n="theme_blue">Blue</button>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h3 class="settings-section-title" data-i18n="settings_lang">Language</h3>
+            <button class="lang-btn" id="langSwitchBtn">
+              <span class="lang-name" data-i18n="lang_name">English</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/assets/js/translations.js"></script>
     <script type="module" src="/assets/js/theme.js"></script>
+    <script type="module" src="/assets/js/meow.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
   </body>
