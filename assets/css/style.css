@@ -1767,6 +1767,18 @@ body {
    404 PAGE
    ============================================================ */
 
+.e404-profile {
+  margin-bottom: 24px;
+}
+
+.e404-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-purple);
+  object-fit: cover;
+}
+
 .e404-hero {
   display: flex;
   flex-direction: column;
