@@ -2,25 +2,23 @@ import { toggleLanguage } from './translations.js';
 
 const COOKIE_DOMAIN = '.bananabrother77.online';
 
-function getThemeCookie() {
-  const match = document.cookie.match(/(?:^|;\s*)theme=([^;]*)/);
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
   return match ? match[1] : null;
 }
 
-function setThemeCookie(theme) {
-  document.cookie = `theme=${theme}; domain=${COOKIE_DOMAIN}; path=/; max-age=31536000; SameSite=Lax`;
+function setCookie(name, value) {
+  document.cookie = `${name}=${value}; domain=${COOKIE_DOMAIN}; path=/; max-age=31536000; SameSite=Lax`;
 }
 
-function deleteThemeCookie() {
-  document.cookie = `theme=; domain=${COOKIE_DOMAIN}; path=/; max-age=0; SameSite=Lax`;
+function deleteCookie(name) {
+  document.cookie = `${name}=; domain=${COOKIE_DOMAIN}; path=/; max-age=0; SameSite=Lax`;
 }
 
 function shouldSyncTheme() {
+  const cookie = getCookie('syncTheme');
+  if (cookie !== null) return cookie === 'true';
   return localStorage.getItem('syncTheme') !== 'false';
-}
-
-function setSyncFlag(enabled) {
-  localStorage.setItem('syncTheme', enabled);
 }
 
 export function applyTheme(theme) {
@@ -32,7 +30,7 @@ export function applyTheme(theme) {
   }
   localStorage.setItem('theme', theme);
   if (shouldSyncTheme()) {
-    setThemeCookie(theme);
+    setCookie('theme', theme);
   }
   document.querySelectorAll('.theme-btn').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.theme === theme);
@@ -44,7 +42,7 @@ export function applyTheme(theme) {
 // ============================================================
 
 const syncEnabled = shouldSyncTheme();
-const cookieTheme = syncEnabled ? getThemeCookie() : null;
+const cookieTheme = syncEnabled ? getCookie('theme') : null;
 const localTheme = localStorage.getItem('theme');
 const savedTheme = cookieTheme || localTheme || 'purple';
 
@@ -88,11 +86,13 @@ if (langSwitchBtn) {
 if (syncThemeCheckbox) {
   syncThemeCheckbox.checked = syncEnabled;
   syncThemeCheckbox.addEventListener('change', () => {
-    setSyncFlag(syncThemeCheckbox.checked);
-    if (syncThemeCheckbox.checked) {
-      setThemeCookie(localStorage.getItem('theme') || 'purple');
+    const enabled = syncThemeCheckbox.checked;
+    localStorage.setItem('syncTheme', enabled);
+    setCookie('syncTheme', enabled);
+    if (enabled) {
+      setCookie('theme', localStorage.getItem('theme') || 'purple');
     } else {
-      deleteThemeCookie();
+      deleteCookie('theme');
     }
   });
 }
