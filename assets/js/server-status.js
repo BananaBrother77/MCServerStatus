@@ -649,6 +649,7 @@ function closeOverlay(target) {
 
   if (target === overlayEls.playerInfo) {
     playerInfoEls.playerInfoSearchInput.value = '';
+    playerInfoEls.playerInfoError.textContent = '';
     disposeSkinViewer();
   }
 }
