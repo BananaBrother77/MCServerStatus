@@ -1,14 +1,13 @@
 import { SkinViewer, WalkingAnimation } from 'skinview3d';
 
-const skinContainer = document.getElementById('skinContainer');
-
 let viewer;
 
-export async function renderSkin(skinUrl, capeUrl) {
+export async function renderSkin(canvas, skinUrl, capeUrl) {
+  if (!canvas) return;
   if (viewer) viewer.dispose();
 
   viewer = new SkinViewer({
-    canvas: skinContainer,
+    canvas,
     width: 200,
     height: 300,
     skin: skinUrl,

@@ -424,7 +424,7 @@ async function displayPlayerInfo(playerName, playerUUID, capeUrl) {
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
 
-  await renderSkin(`https://minotar.net/skin/${playerName}.png`, capeUrl);
+  await renderSkin(document.getElementById('skinContainer'), `https://minotar.net/skin/${playerName}.png`, capeUrl);
 }
 
 playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {

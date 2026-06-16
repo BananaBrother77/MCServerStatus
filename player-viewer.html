@@ -5,100 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="MCToolkit - Your Minecraft Hub. Check server status, browse Modrinth content, and more."
+      content="Look up any Minecraft player - view their skin in 3D, UUID, cape, and more. MCToolkit by BananaBrother77."
     />
-    <meta property="og:title" content="MCToolkit | BananaBrother77" />
+    <meta
+      property="og:title"
+      content="Player Viewer - MCToolkit | BananaBrother77"
+    />
     <meta
       property="og:description"
-      content="Your Minecraft Hub - server status, content browser, and more."
+      content="Look up any Minecraft player - view their skin in 3D, UUID, cape, and more."
     />
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://mctoolkit.bananabrother77.online/"
+      content="https://mctoolkit.bananabrother77.online/player-viewer"
     />
     <meta
       property="og:image"
       content="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
     />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="MCToolkit | BananaBrother77" />
+    <meta
+      name="twitter:title"
+      content="Player Viewer - MCToolkit | BananaBrother77"
+    />
     <meta
       name="twitter:description"
-      content="Your Minecraft Hub - server status, content browser, and more."
+      content="Look up any Minecraft player - view their skin in 3D, UUID, cape, and more."
     />
     <meta
       name="twitter:image"
       content="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
     />
-    <link rel="canonical" href="https://mctoolkit.bananabrother77.online/" />
+    <link
+      rel="canonical"
+      href="https://mctoolkit.bananabrother77.online/player-viewer"
+    />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <title>MCToolkit | BananaBrother77</title>
+    <title>Player Viewer - MCToolkit | BananaBrother77</title>
     <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/landing.css" />
   </head>
 
-  <body class="">
+  <body>
+    <!-- ============================================================
+         SIDEBAR TOGGLE BUTTON
+         ============================================================ -->
     <div class="serverListWrapper">
+      <a href="index.html" class="menu-btn" data-i18n-title="back_home" title="Back to Home">
+        <i data-lucide="home" width="35" height="35"></i>
+      </a>
+      <div class="menu-btn" id="pvSidebarToggle">
+        <i data-lucide="users" width="35" height="35"></i>
+      </div>
+      <div class="menu-btn" id="pvShareBtn">
+        <i data-lucide="square-arrow-up-right" width="35" height="35"></i>
+      </div>
       <div class="menu-btn" id="settingsBtn">
         <i data-lucide="settings" width="35" height="35"></i>
       </div>
     </div>
 
     <!-- ============================================================
-         HERO
+         SIDEBAR
          ============================================================ -->
-    <main class="landing-wrapper">
-      <section class="landing-hero reveal">
-        <h1>MCToolkit</h1>
-        <p>
-          <span class="sub-dot">//</span>
-          <span data-i18n="hero_subtitle">Your Minecraft Hub</span>
-          <span class="sub-dot">//</span>
-        </p>
-        <div class="tagline-accent">
-          <a href="server-status.html">Server Status</a> &middot;
-          <a href="player-viewer.html">Player Viewer</a> &middot;
-          <span>More</span>
-        </div>
-      </section>
+    <aside id="pvSidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h3 data-i18n="pv_sidebar_title">Player Lookup</h3>
+        <button id="closePvSidebar">&times;</button>
+      </div>
 
-      <!-- ============================================================
-           TOOL CARDS
-           ============================================================ -->
-      <section class="tool-grid">
-        <div class="reveal">
-          <a href="server-status.html" class="tool-card" id="serverStatusCard">
-            <i data-lucide="server" width="40" height="40"></i>
-            <h2 data-i18n="tool_server_status">Server Status</h2>
-            <p data-i18n="tool_server_status_desc">
-              Check the live status of any Minecraft server - online players,
-              version, MOTD, and more.
-            </p>
-          </a>
-        </div>
+      <div class="input-group">
+        <input
+          type="text"
+          id="pvSearchInput"
+          class="form-input"
+          placeholder="Search player..."
+          data-i18n-placeholder="pv_search_placeholder"
+        />
+        <button class="input-btn" id="pvSearchBtn">
+          <i data-lucide="search" width="20" height="20"></i>
+        </button>
+      </div>
 
-        <div class="reveal">
-          <a href="player-viewer.html" class="tool-card" id="playerViewerCard">
-            <i data-lucide="user" width="40" height="40"></i>
-            <h2 data-i18n="tool_player_viewer">Player Viewer</h2>
-            <p data-i18n="tool_player_viewer_desc">
-              Look up any Minecraft player - view their skin in 3D, UUID, cape, and more.
-            </p>
-          </a>
-        </div>
+      <ul id="pvPlayerList" class="pv-player-list"></ul>
 
-        <div class="reveal">
-          <div class="tool-card" id="comingSoonCard">
-            <i data-lucide="sparkles" width="40" height="40"></i>
-            <h2 data-i18n="tool_soon">More Coming Soon</h2>
-            <p data-i18n="tool_soon_desc">
-              New tools are in the works. Stay tuned for updates and improvements!
-            </p>
-            <span class="card-coming-badge" data-i18n="soon">Soon</span>
+      <div class="pv-sidebar-footer">
+        <button id="pvClearRecent" class="pv-clear-btn" data-i18n="pv_clear_recent">Clear Recent</button>
+        <button id="pvClearFavs" class="pv-clear-btn" data-i18n="pv_clear_favs">Clear Favourites</button>
+      </div>
+    </aside>
+
+    <div id="pvSidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
+    <main class="app-wrapper">
+      <div class="pv-main">
+          <!-- Player info card -->
+          <div id="pvPlayerCard" class="pv-player-card pv-card">
+            <div class="pv-skin-section">
+              <canvas id="pvSkinContainer"></canvas>
+              <div class="pv-skin-actions">
+                <button class="pv-skin-btn" id="pvDownloadSkinBtn" title="Download Skin" data-i18n-title="pv_download_skin">
+                  <i data-lucide="download"></i>
+                </button>
+                <button class="pv-skin-btn" id="pvAnimationBtn" title="Toggle Animation" data-i18n-title="pv_toggle_animation">
+                  <i data-lucide="pause"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="pv-info">
+              <div class="pv-info-field">
+                <span class="pv-info-label" data-i18n="pv_name_label">Player Name</span>
+                <div>
+                  <span class="pv-info-value" id="pvNameText">BananaBrother77</span>
+                  <button class="pv-copy-btn" id="pvCopyNameBtn">
+                    <i data-lucide="copy"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="pv-info-field">
+                <span class="pv-info-label" data-i18n="pv_uuid_label">UUID</span>
+                <div>
+                  <span class="pv-info-value-sm" id="pvUUIDText">61bd7ef7...</span>
+                  <button class="pv-copy-btn" id="pvCopyUUIDBtn">
+                    <i data-lucide="copy"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="pv-actions">
+                <a id="pvNameMCLink" href="https://namemc.com/" target="_blank" class="btn-primary">
+                  <i data-lucide="external-link"></i> <span data-i18n="pv_namemc">NameMC</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
     </main>
 
     <!-- ============================================================
@@ -220,7 +266,8 @@
     <script type="module" src="/assets/js/translations.js"></script>
     <script type="module" src="/assets/js/theme.js"></script>
     <script type="module" src="/assets/js/meow.js"></script>
-    <script type="module" src="/assets/js/icons.js"></script>
+    <script type="module" src="/assets/js/player-viewer.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
+    <script type="module" src="/assets/js/icons.js"></script>
   </body>
 </html>

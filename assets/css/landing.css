@@ -142,6 +142,16 @@
   max-width: 220px;
 }
 
+.landing-hero .tagline-accent a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.landing-hero .tagline-accent a:hover {
+  color: var(--text-muted-bright);
+}
+
 .tool-card .card-coming-badge {
   display: inline-block;
   margin-top: 4px;
