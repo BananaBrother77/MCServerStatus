@@ -81,7 +81,7 @@ function renderSidebarList() {
     mainBtn.className = 'pv-item pv-player-btn';
 
     const img = document.createElement('img');
-    img.src = `https://minotar.net/avatar/${player.name}/32`;
+    img.src = `https://mc-heads.net/avatar/${player.name}/32`;
     img.alt = player.name;
     img.className = 'pv-list-head';
     img.loading = 'lazy';
@@ -176,7 +176,7 @@ async function displayPlayerInfo(playerName, uuid, capeUrl) {
 
   await renderSkin(
     els.skinContainer,
-    `https://minotar.net/skin/${playerName}.png`,
+    `https://mc-heads.net/skin/${playerName}`,
     capeUrl,
   );
 

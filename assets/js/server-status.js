@@ -369,7 +369,7 @@ function getOnlinePlayers() {
       tag.classList.add('player-tag');
 
       const img = document.createElement('img');
-      img.src = `https://minotar.net/avatar/${identifier}/32`;
+      img.src = `https://mc-heads.net/avatar/${identifier}/32`;
       img.alt = player.name_raw;
       img.classList.add('player-head-icon');
 
@@ -424,7 +424,7 @@ async function displayPlayerInfo(playerName, playerUUID, capeUrl) {
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
 
-  await renderSkin(document.getElementById('skinContainer'), `https://minotar.net/skin/${playerName}.png`, capeUrl);
+  await renderSkin(document.getElementById('skinContainer'), `https://mc-heads.net/skin/${playerName}`, capeUrl);
 }
 
 playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {

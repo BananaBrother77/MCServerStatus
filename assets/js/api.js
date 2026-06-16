@@ -32,7 +32,7 @@ export async function fetchPlayerSkin(playerName) {
   const ctrl = new AbortController();
   const id = setTimeout(() => ctrl.abort(), 8000);
   try {
-    const res = await fetch(`https://minotar.net/skin/${playerName}`, { signal: ctrl.signal });
+    const res = await fetch(`https://mc-heads.net/skin/${playerName}`, { signal: ctrl.signal });
     if (!res.ok) throw new Error('Skin API failed');
     const blob = await res.blob();
     return URL.createObjectURL(blob);
