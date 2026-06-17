@@ -17,6 +17,8 @@ const els = {
 
   searchInput: document.getElementById('pvSearchInput'),
   searchBtn: document.getElementById('pvSearchBtn'),
+  mainSearch: document.getElementById('pvMainSearch'),
+  mainSearchBtn: document.getElementById('pvMainSearchBtn'),
 
   playerList: document.getElementById('pvPlayerList'),
   clearRecent: document.getElementById('pvClearRecent'),
@@ -46,6 +48,7 @@ function init() {
   const urlPlayer = new URLSearchParams(window.location.search).get('player');
   const playerName = urlPlayer || 'BananaBrother77';
   els.searchInput.value = playerName;
+  els.mainSearch.value = playerName;
   searchPlayer(playerName);
 }
 
@@ -224,13 +227,37 @@ function closeSidebar() {
 
 els.searchBtn.addEventListener('click', () => {
   const name = els.searchInput.value.trim();
-  if (name) searchPlayer(name);
+  if (name) {
+    els.mainSearch.value = name;
+    searchPlayer(name);
+  }
 });
 
 els.searchInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     const name = els.searchInput.value.trim();
-    if (name) searchPlayer(name);
+    if (name) {
+      els.mainSearch.value = name;
+      searchPlayer(name);
+    }
+  }
+});
+
+els.mainSearchBtn.addEventListener('click', () => {
+  const name = els.mainSearch.value.trim();
+  if (name) {
+    els.searchInput.value = name;
+    searchPlayer(name);
+  }
+});
+
+els.mainSearch.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const name = els.mainSearch.value.trim();
+    if (name) {
+      els.searchInput.value = name;
+      searchPlayer(name);
+    }
   }
 });
 
@@ -330,19 +357,13 @@ document.addEventListener('keydown', (e) => {
       closeSidebar();
       break;
 
-    case 'Enter':
-      if (e.target === els.searchInput) {
-        const name = els.searchInput.value.trim();
-        if (name) searchPlayer(name);
-      }
-      break;
-
     case 's':
       if (e.metaKey || e.ctrlKey) {
         e.preventDefault();
         shareLink();
         break;
       }
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') break;
       els.sidebar.classList.toggle('active');
       els.overlay.classList.toggle('active');
       break;
