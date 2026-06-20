@@ -40,9 +40,12 @@
 
   <body class="">
     <div class="serverListWrapper">
-      <div class="menu-btn" id="settingsBtn">
+      <button class="menu-btn" id="toolNavBtn" type="button" aria-label="Tools" title="Tools">
+        <i data-lucide="compass" width="35" height="35"></i>
+      </button>
+      <button class="menu-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings">
         <i data-lucide="settings" width="35" height="35"></i>
-      </div>
+      </button>
     </div>
 
     <!-- ============================================================
@@ -182,7 +185,7 @@
       <div class="modal">
         <div class="modal-header">
           <h2 class="modal-title" data-i18n="settings_title">Settings</h2>
-          <button class="modal-close" id="closeModalBtn">&times;</button>
+          <button class="modal-close" id="closeModalBtn" aria-label="Close settings">&times;</button>
         </div>
         <div class="modal-body">
           <div class="settings-section">
@@ -220,6 +223,7 @@
     <script type="module" src="/assets/js/translations.js"></script>
     <script type="module" src="/assets/js/theme.js"></script>
     <script type="module" src="/assets/js/meow.js"></script>
+    <script type="module" src="/assets/js/tool-nav.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
   </body>

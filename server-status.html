@@ -51,18 +51,21 @@
          SIDEBAR TOGGLE BUTTON
          ============================================================ -->
     <div class="serverListWrapper">
-      <a href="index.html" class="menu-btn" data-i18n-title="back_home" title="Back to Home">
+      <a href="index.html" class="menu-btn" data-i18n-title="back_home" aria-label="Back to Home" title="Back to Home">
         <i data-lucide="home" width="35" height="35"></i>
       </a>
-      <div class="menu-btn" id="serverListBtn">
+      <button class="menu-btn" id="toolNavBtn" type="button" aria-label="Tools" title="Tools">
+        <i data-lucide="compass" width="35" height="35"></i>
+      </button>
+      <button class="menu-btn" id="serverListBtn" type="button" aria-label="Saved Servers" title="Saved Servers">
         <i data-lucide="server" width="35" height="35"></i>
-      </div>
-      <div class="menu-btn" id="shareServerBtn">
+      </button>
+      <button class="menu-btn" id="shareServerBtn" type="button" aria-label="Share Server" title="Share Server">
         <i data-lucide="square-arrow-up-right" width="35" height="35"></i>
-      </div>
-      <div class="menu-btn" id="settingsBtn">
+      </button>
+      <button class="menu-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings">
         <i data-lucide="settings" width="35" height="35"></i>
-      </div>
+      </button>
     </div>
 
     <!-- ============================================================
@@ -71,7 +74,7 @@
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <h3 data-i18n="sidebar_title">Servers</h3>
-        <button id="closeServerListBtn">&times;</button>
+        <button id="closeServerListBtn" aria-label="Close server list">&times;</button>
       </div>
       <ul class="sidebar-links"></ul>
 
@@ -365,7 +368,7 @@
             placeholder="Enter player name..."
             id="playerInfoSearchInput"
           />
-          <button class="input-btn" id="playerInfoSearchBtn">
+          <button class="input-btn" id="playerInfoSearchBtn" aria-label="Search player">
             <i data-lucide="search"></i>
           </button>
         </div>
@@ -376,7 +379,7 @@
               <canvas id="skinContainer"></canvas>
             </div>
             <div class="img-btn-container">
-              <button id="downloadSkinBtn" class="download-skin-btn">
+              <button id="downloadSkinBtn" class="download-skin-btn" aria-label="Download skin">
                 <i data-lucide="download"></i>
               </button>
               <button id="animationBtn" class="animation-btn">
@@ -391,7 +394,7 @@
                 <span class="player-info-text" id="playerInfoNameText"
                   >BananaBrother77</span
                 >
-                <button class="copy-inline-btn" id="copyNameBtn">
+                <button class="copy-inline-btn" id="copyNameBtn" aria-label="Copy player name">
                   <i data-lucide="copy"></i>
                 </button>
               </h3>
@@ -400,7 +403,7 @@
                 <span class="player-info-text" id="playerInfoUUIDText"
                   >61bd7ef7...</span
                 >
-                <button class="copy-inline-btn" id="copyUUIDBtn">
+                <button class="copy-inline-btn" id="copyUUIDBtn" aria-label="Copy UUID">
                   <i data-lucide="copy"></i>
                 </button>
               </div>
@@ -502,7 +505,7 @@
       <div class="modal">
         <div class="modal-header">
           <h2 class="modal-title" data-i18n="settings_title">Settings</h2>
-          <button class="modal-close" id="closeModalBtn">&times;</button>
+          <button class="modal-close" id="closeModalBtn" aria-label="Close settings">&times;</button>
         </div>
         <div class="modal-body">
           <div class="settings-section">
@@ -556,6 +559,7 @@
     <script type="module" src="/assets/js/translations.js"></script>
     <script type="module" src="/assets/js/theme.js"></script>
     <script type="module" src="/assets/js/meow.js"></script>
+    <script type="module" src="/assets/js/tool-nav.js"></script>
     <script type="module" src="/assets/js/server-status.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>

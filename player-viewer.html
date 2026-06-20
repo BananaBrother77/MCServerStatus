@@ -51,18 +51,51 @@
          SIDEBAR TOGGLE BUTTON
          ============================================================ -->
     <div class="serverListWrapper">
-      <a href="index.html" class="menu-btn" data-i18n-title="back_home" title="Back to Home">
+      <a
+        href="index.html"
+        class="menu-btn"
+        data-i18n-title="back_home"
+        aria-label="Back to Home"
+        title="Back to Home"
+      >
         <i data-lucide="home" width="35" height="35"></i>
       </a>
-      <div class="menu-btn" id="pvSidebarToggle">
+      <button
+        class="menu-btn"
+        id="toolNavBtn"
+        type="button"
+        aria-label="Tools"
+        title="Tools"
+      >
+        <i data-lucide="compass" width="35" height="35"></i>
+      </button>
+      <button
+        class="menu-btn"
+        id="pvSidebarToggle"
+        type="button"
+        aria-label="Recent Players"
+        title="Recent Players"
+      >
         <i data-lucide="users" width="35" height="35"></i>
-      </div>
-      <div class="menu-btn" id="pvShareBtn">
+      </button>
+      <button
+        class="menu-btn"
+        id="pvShareBtn"
+        type="button"
+        aria-label="Share Player"
+        title="Share Player"
+      >
         <i data-lucide="square-arrow-up-right" width="35" height="35"></i>
-      </div>
-      <div class="menu-btn" id="settingsBtn">
+      </button>
+      <button
+        class="menu-btn"
+        id="settingsBtn"
+        type="button"
+        aria-label="Settings"
+        title="Settings"
+      >
         <i data-lucide="settings" width="35" height="35"></i>
-      </div>
+      </button>
     </div>
 
     <!-- ============================================================
@@ -71,7 +104,9 @@
     <aside id="pvSidebar" class="sidebar">
       <div class="sidebar-header">
         <h3 data-i18n="pv_sidebar_title">Player Lookup</h3>
-        <button id="closePvSidebar">&times;</button>
+        <button id="closePvSidebar" aria-label="Close player lookup">
+          &times;
+        </button>
       </div>
 
       <div class="input-group">
@@ -82,7 +117,7 @@
           placeholder="Search player..."
           data-i18n-placeholder="pv_search_placeholder"
         />
-        <button class="input-btn" id="pvSearchBtn">
+        <button class="input-btn" id="pvSearchBtn" aria-label="Search player">
           <i data-lucide="search" width="20" height="20"></i>
         </button>
       </div>
@@ -90,8 +125,16 @@
       <ul id="pvPlayerList" class="pv-player-list"></ul>
 
       <div class="pv-sidebar-footer">
-        <button id="pvClearRecent" class="pv-clear-btn" data-i18n="pv_clear_recent">Clear Recent</button>
-        <button id="pvClearFavs" class="pv-clear-btn" data-i18n="pv_clear_favs">Clear Favourites</button>
+        <button
+          id="pvClearRecent"
+          class="pv-clear-btn"
+          data-i18n="pv_clear_recent"
+        >
+          Clear Recent
+        </button>
+        <button id="pvClearFavs" class="pv-clear-btn" data-i18n="pv_clear_favs">
+          Clear Favourites
+        </button>
       </div>
     </aside>
 
@@ -102,61 +145,97 @@
          ============================================================ -->
     <main class="app-wrapper">
       <div class="pv-main">
-          <div class="input-group pv-main-search" id="pvMainSearchGroup">
-            <input
-              type="text"
-              id="pvMainSearch"
-              class="form-input"
-              placeholder="Search player..."
-            />
-            <button class="input-btn" id="pvMainSearchBtn">
-              <i data-lucide="search" width="20" height="20"></i>
-            </button>
+        <div class="input-group pv-main-search" id="pvMainSearchGroup">
+          <input
+            type="text"
+            id="pvMainSearch"
+            class="form-input"
+            placeholder="Search player..."
+          />
+          <button
+            class="input-btn"
+            id="pvMainSearchBtn"
+            aria-label="Search player"
+          >
+            <i data-lucide="search" width="20" height="20"></i>
+          </button>
+        </div>
+
+        <!-- Player info card -->
+        <div id="pvPlayerCard" class="pv-player-card pv-card">
+          <div class="pv-skin-section">
+            <canvas id="pvSkinContainer"></canvas>
+            <div class="pv-skin-actions">
+              <button
+                class="pv-skin-btn"
+                id="pvDownloadSkinBtn"
+                title="Download Skin"
+                aria-label="Download skin"
+                data-i18n-title="pv_download_skin"
+              >
+                <i data-lucide="download"></i>
+              </button>
+              <button
+                class="pv-skin-btn"
+                id="pvAnimationBtn"
+                title="Toggle Animation"
+                aria-label="Toggle animation"
+                data-i18n-title="pv_toggle_animation"
+              >
+                <i data-lucide="pause"></i>
+              </button>
+            </div>
           </div>
 
-          <!-- Player info card -->
-          <div id="pvPlayerCard" class="pv-player-card pv-card">
-            <div class="pv-skin-section">
-              <canvas id="pvSkinContainer"></canvas>
-              <div class="pv-skin-actions">
-                <button class="pv-skin-btn" id="pvDownloadSkinBtn" title="Download Skin" data-i18n-title="pv_download_skin">
-                  <i data-lucide="download"></i>
-                </button>
-                <button class="pv-skin-btn" id="pvAnimationBtn" title="Toggle Animation" data-i18n-title="pv_toggle_animation">
-                  <i data-lucide="pause"></i>
+          <div class="pv-info">
+            <div class="pv-info-field">
+              <span class="pv-info-label" data-i18n="pv_name_label"
+                >Player Name</span
+              >
+              <div>
+                <span class="pv-info-value" id="pvNameText"
+                  >BananaBrother77</span
+                >
+                <button
+                  class="pv-copy-btn"
+                  id="pvCopyNameBtn"
+                  aria-label="Copy player name"
+                >
+                  <i data-lucide="copy"></i>
                 </button>
               </div>
             </div>
 
-            <div class="pv-info">
-              <div class="pv-info-field">
-                <span class="pv-info-label" data-i18n="pv_name_label">Player Name</span>
-                <div>
-                  <span class="pv-info-value" id="pvNameText">BananaBrother77</span>
-                  <button class="pv-copy-btn" id="pvCopyNameBtn">
-                    <i data-lucide="copy"></i>
-                  </button>
-                </div>
+            <div class="pv-info-field">
+              <span class="pv-info-label" data-i18n="pv_uuid_label">UUID</span>
+              <div>
+                <span class="pv-info-value-sm" id="pvUUIDText"
+                  >61bd7ef7...</span
+                >
+                <button
+                  class="pv-copy-btn"
+                  id="pvCopyUUIDBtn"
+                  aria-label="Copy UUID"
+                >
+                  <i data-lucide="copy"></i>
+                </button>
               </div>
+            </div>
 
-              <div class="pv-info-field">
-                <span class="pv-info-label" data-i18n="pv_uuid_label">UUID</span>
-                <div>
-                  <span class="pv-info-value-sm" id="pvUUIDText">61bd7ef7...</span>
-                  <button class="pv-copy-btn" id="pvCopyUUIDBtn">
-                    <i data-lucide="copy"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div class="pv-actions">
-                <a id="pvNameMCLink" href="https://namemc.com/" target="_blank" class="btn-primary">
-                  <i data-lucide="external-link"></i> <span data-i18n="pv_namemc">NameMC</span>
-                </a>
-              </div>
+            <div class="pv-actions">
+              <a
+                id="pvNameMCLink"
+                href="https://namemc.com/"
+                target="_blank"
+                class="btn-primary"
+              >
+                <i data-lucide="external-link"></i>
+                <span data-i18n="pv_namemc">NameMC</span>
+              </a>
             </div>
           </div>
         </div>
+      </div>
     </main>
 
     <!-- ============================================================
@@ -240,21 +319,61 @@
       <div class="modal">
         <div class="modal-header">
           <h2 class="modal-title" data-i18n="settings_title">Settings</h2>
-          <button class="modal-close" id="closeModalBtn">&times;</button>
+          <button
+            class="modal-close"
+            id="closeModalBtn"
+            aria-label="Close settings"
+          >
+            &times;
+          </button>
         </div>
         <div class="modal-body">
           <div class="settings-section">
-            <h3 class="settings-section-title" data-i18n="settings_theme">Theme</h3>
+            <h3 class="settings-section-title" data-i18n="settings_theme">
+              Theme
+            </h3>
             <div class="theme-grid">
-              <button class="theme-btn theme-btn--default active" data-theme="purple" data-i18n="theme_purple">Purple</button>
-              <button class="theme-btn theme-btn--green" data-theme="green" data-i18n="theme_green">Green</button>
-              <button class="theme-btn theme-btn--red" data-theme="red" data-i18n="theme_red">Red</button>
-              <button class="theme-btn theme-btn--yellow" data-theme="yellow" data-i18n="theme_yellow">Yellow</button>
-              <button class="theme-btn theme-btn--blue" data-theme="blue" data-i18n="theme_blue">Blue</button>
+              <button
+                class="theme-btn theme-btn--default active"
+                data-theme="purple"
+                data-i18n="theme_purple"
+              >
+                Purple
+              </button>
+              <button
+                class="theme-btn theme-btn--green"
+                data-theme="green"
+                data-i18n="theme_green"
+              >
+                Green
+              </button>
+              <button
+                class="theme-btn theme-btn--red"
+                data-theme="red"
+                data-i18n="theme_red"
+              >
+                Red
+              </button>
+              <button
+                class="theme-btn theme-btn--yellow"
+                data-theme="yellow"
+                data-i18n="theme_yellow"
+              >
+                Yellow
+              </button>
+              <button
+                class="theme-btn theme-btn--blue"
+                data-theme="blue"
+                data-i18n="theme_blue"
+              >
+                Blue
+              </button>
             </div>
           </div>
           <div class="settings-section">
-            <h3 class="settings-section-title" data-i18n="settings_lang">Language</h3>
+            <h3 class="settings-section-title" data-i18n="settings_lang">
+              Language
+            </h3>
             <button class="lang-btn" id="langSwitchBtn">
               <span class="lang-name" data-i18n="lang_name">English</span>
             </button>
@@ -262,10 +381,17 @@
               <input type="checkbox" id="syncThemeCheckbox" />
               <span class="checkmark"></span>
               <span class="sync-label">
-                <span data-i18n="settings_sync_theme">Sync theme across sites</span>
+                <span data-i18n="settings_sync_theme"
+                  >Sync theme across sites</span
+                >
                 <span class="hint-icon" tabindex="0">
                   <i data-lucide="help-circle" width="16" height="16"></i>
-                  <span class="hint-tooltip" data-i18n="settings_sync_theme_hint">When enabled, your theme preference is shared across all BananaBrother77 websites via a cookie.</span>
+                  <span
+                    class="hint-tooltip"
+                    data-i18n="settings_sync_theme_hint"
+                    >When enabled, your theme preference is shared across all
+                    BananaBrother77 websites via a cookie.</span
+                  >
                 </span>
               </span>
             </label>
@@ -278,6 +404,7 @@
     <script type="module" src="/assets/js/translations.js"></script>
     <script type="module" src="/assets/js/theme.js"></script>
     <script type="module" src="/assets/js/meow.js"></script>
+    <script type="module" src="/assets/js/tool-nav.js"></script>
     <script type="module" src="/assets/js/player-viewer.js"></script>
     <script type="module" src="/assets/js/reveal.js"></script>
     <script type="module" src="/assets/js/icons.js"></script>
