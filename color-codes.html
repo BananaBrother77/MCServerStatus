@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Browse Minecraft colour codes and create formatted text for chat, signs, and more. MCToolkit by BananaBrother77."
+    />
+    <meta
+      property="og:title"
+      content="Colour Codes - MCToolkit | BananaBrother77"
+    />
+    <meta
+      property="og:description"
+      content="Browse Minecraft colour codes and create formatted text for chat, signs, and more."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://mctoolkit.bananabrother77.online/color-codes"
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Colour Codes - MCToolkit | BananaBrother77"
+    />
+    <meta
+      name="twitter:description"
+      content="Browse Minecraft colour codes and create formatted text for chat, signs, and more."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg"
+    />
+    <link
+      rel="canonical"
+      href="https://mctoolkit.bananabrother77.online/color-codes"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <title>Colour Codes - MCToolkit | BananaBrother77</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/color-codes.css" />
+  </head>
+
+  <body>
+    <div class="serverListWrapper">
+      <a
+        href="index.html"
+        class="menu-btn"
+        data-i18n-title="back_home"
+        aria-label="Back to Home"
+        title="Back to Home"
+      >
+        <i data-lucide="home" width="35" height="35"></i>
+      </a>
+      <button
+        class="menu-btn"
+        id="toolNavBtn"
+        type="button"
+        aria-label="Tools"
+        title="Tools"
+      >
+        <i data-lucide="compass" width="35" height="35"></i>
+      </button>
+      <button
+        class="menu-btn"
+        id="copyBtn"
+        type="button"
+        aria-label="Copy Formatted Text"
+        title="Copy Formatted Text"
+      >
+        <i data-lucide="copy" width="35" height="35"></i>
+      </button>
+      <button
+        class="menu-btn"
+        id="settingsBtn"
+        type="button"
+        aria-label="Settings"
+        title="Settings"
+      >
+        <i data-lucide="settings" width="35" height="35"></i>
+      </button>
+    </div>
+
+    <main class="app-wrapper">
+      <section class="hero reveal">
+        <h1>Colour Codes</h1>
+        <p>
+          Browse Minecraft colour and formatting codes, then write formatted
+          text below.
+        </p>
+      </section>
+
+      <section class="codes reveal">
+        <div class="colours">
+          <h3>Colours</h3>
+          <div class="grid" id="colourGrid"></div>
+        </div>
+        <div class="formats">
+          <h3>Formats</h3>
+          <div class="grid" id="formatGrid"></div>
+        </div>
+      </section>
+
+      <section class="editor reveal">
+        <div class="input-area">
+          <h3>Text</h3>
+          <textarea
+            id="codeInput"
+            class="textarea"
+            placeholder="Type your text with colour codes... e.g. &aHello &cWorld"
+            rows="4"
+          ></textarea>
+          <div class="help">
+            Use <code>&amp;</code> instead of <code>&sect;</code> (e.g.
+            <code>&amp;a</code> for green)
+          </div>
+        </div>
+        <div class="preview-area">
+          <h3>Preview</h3>
+          <div id="codePreview" class="preview"></div>
+        </div>
+      </section>
+    </main>
+
+    <%- include('footer.html') %>
+    <%- include('settings-modal.html') %>
+    <%- include('scripts.html') %>
+    <script type="module" src="/assets/js/color-codes.js"></script>
+  </body>
+</html>

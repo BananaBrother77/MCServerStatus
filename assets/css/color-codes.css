@@ -1,0 +1,211 @@
+.hero {
+  width: 100%;
+  padding: 30px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px var(--shadow-md);
+}
+
+.hero h1 {
+  background: linear-gradient(147deg, var(--grad-text-start) 0%, var(--grad-text-end) 82%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  font-weight: 500;
+  margin: 0;
+}
+
+.codes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 24px 30px;
+  box-shadow: 0 10px 30px var(--shadow-md);
+}
+
+.codes h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin: 0 0 12px;
+  opacity: 0.7;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: var(--input-bg);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  font-family: monospace;
+  user-select: none;
+}
+
+.swatch:hover {
+  transform: translateY(-2px);
+  border-color: var(--text-muted);
+}
+
+.swatch.swatch--format {
+  cursor: pointer;
+}
+
+.swatch-preview {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--panel-border);
+  flex-shrink: 0;
+}
+
+.swatch-code {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.editor {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.input-area,
+.preview-area {
+  flex: 1;
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 10px 30px var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.input-area h3,
+.preview-area h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin: 0 0 12px;
+  opacity: 0.7;
+}
+
+.textarea {
+  width: 100%;
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 12px 15px;
+  color: var(--text-main);
+  font-family: monospace;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 100px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.textarea:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px var(--accent-focus-ring);
+}
+
+.textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.help {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  opacity: 0.6;
+}
+
+.help code {
+  background: var(--input-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+}
+
+.preview {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 15px;
+  font-family: monospace;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  word-break: break-all;
+  min-height: 100px;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 768px) {
+  .editor {
+    flex-direction: column;
+  }
+
+  .hero {
+    padding: 24px 16px;
+  }
+
+  .codes {
+    padding: 16px 16px;
+  }
+
+  .input-area,
+  .preview-area {
+    padding: 16px;
+  }
+}

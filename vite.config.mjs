@@ -1,19 +1,33 @@
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import { render } from 'ejs';
 import { cloudflare } from '@cloudflare/vite-plugin';
 
+const partialsDir = resolve(import.meta.dirname, 'partials');
+
 export default defineConfig({
-  plugins: [cloudflare()],
-  server: {
-    host: '0.0.0.0',
-  },
+  plugins: [
+    {
+      name: 'html-includes',
+      transformIndexHtml: {
+        order: 'pre',
+        handler: (html) => render(html, {}, { views: [partialsDir] }),
+      },
+    },
+    cloudflare(),
+  ],
   build: {
     rollupOptions: {
       input: {
-        main: 'index.html',
-        'server-status': 'server-status.html',
-        'player-viewer': 'player-viewer.html',
-        '404': '404.html',
+        index: resolve(import.meta.dirname, 'index.html'),
+        'color-codes': resolve(import.meta.dirname, 'color-codes.html'),
+        'server-status': resolve(import.meta.dirname, 'server-status.html'),
+        'player-viewer': resolve(import.meta.dirname, 'player-viewer.html'),
+        '404': resolve(import.meta.dirname, '404.html'),
       },
     },
+  },
+  server: {
+    host: '0.0.0.0',
   },
 });

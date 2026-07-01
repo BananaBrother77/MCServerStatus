@@ -5,6 +5,7 @@ const toolCategories = [
     tools: [
       { name: 'Server Status', href: 'server-status.html' },
       { name: 'Player Lookup', href: 'player-viewer.html' },
+      { name: 'Colour Codes', href: 'color-codes.html' },
     ],
   },
 ];
