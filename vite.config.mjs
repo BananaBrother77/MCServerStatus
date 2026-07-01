@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import { render } from 'ejs';
+import ejs from 'ejs';
 import { cloudflare } from '@cloudflare/vite-plugin';
 
 const partialsDir = resolve(import.meta.dirname, 'partials');
@@ -11,7 +11,7 @@ export default defineConfig({
       name: 'html-includes',
       transformIndexHtml: {
         order: 'pre',
-        handler: (html) => render(html, {}, { views: [partialsDir] }),
+        handler: (html) => ejs.render(html, {}, { views: [partialsDir] }),
       },
     },
     cloudflare(),
