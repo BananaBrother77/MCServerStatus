@@ -33,9 +33,9 @@ function checkFormInputs() {
   let allFilled = true;
 
   const textVal = els.text?.value.trim() || '';
-  if (!textVal || textVal.length < 100) allFilled = false;
+  if (!textVal || textVal.length < 10) allFilled = false;
 
-  if (charHint) charHint.textContent = textVal.length + '/100';
+  if (charHint) charHint.textContent = textVal.length + '/10';
 
   if (answers.category === null) allFilled = false;
   if (answers.rating === null) allFilled = false;
@@ -61,7 +61,7 @@ function resetForm() {
 
   if (els.text) els.text.value = '';
   if (els.contact) els.contact.value = '';
-  if (charHint) charHint.textContent = '0/100';
+  if (charHint) charHint.textContent = '0/10';
 
   if (window.turnstile && turnstileRendered) turnstile.reset();
 
