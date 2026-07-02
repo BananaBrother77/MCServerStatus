@@ -1718,6 +1718,26 @@ body {
   color: var(--text-muted);
 }
 
+.footer-feedback-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.footer-feedback-btn:hover {
+  color: var(--text-muted-bright);
+}
+
+.footer-divider {
+  color: var(--text-muted);
+  opacity: 0.3;
+}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */

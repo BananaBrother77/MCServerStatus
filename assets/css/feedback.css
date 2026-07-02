@@ -1,0 +1,273 @@
+/* ============================================================
+   FEEDBACK MODAL
+   ============================================================ */
+
+.feedback-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  z-index: 9998;
+}
+
+.feedback-modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.feedback-modal .modal {
+  background: var(--bg-purple-light);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 20px 60px var(--shadow-xl);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.feedback-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   FORM GROUP
+   ============================================================ */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.label-optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   CATEGORY GRID
+   ============================================================ */
+
+.feedback-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feedback-category {
+  flex: 1 1 calc(33.333% - 6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 8px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 0;
+}
+
+.feedback-category i {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  transition: color 0.15s ease;
+}
+
+.feedback-category:hover {
+  border-color: var(--text-muted);
+  background: var(--hover-bg);
+}
+
+.feedback-category.selected {
+  border-color: var(--accent-purple);
+  background: var(--accent-focus-ring);
+  color: var(--text-muted-bright);
+}
+
+.feedback-category.selected i {
+  color: var(--accent-purple);
+}
+
+/* ============================================================
+   STAR RATING
+   ============================================================ */
+
+.star-rating {
+  display: flex;
+  gap: 6px;
+}
+
+.star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+}
+
+.star i {
+  width: 24px;
+  height: 24px;
+  transition: color 0.15s ease, fill 0.15s ease;
+}
+
+.star svg path {
+  fill: none;
+  transition: fill 0.15s ease;
+}
+
+.star:hover {
+  color: var(--text-muted-bright);
+}
+
+.star.filled {
+  color: var(--text-muted-bright);
+  fill: var(--text-muted-bright);
+}
+
+.star.filled svg path {
+  fill: currentColor;
+}
+
+/* ============================================================
+   TEXTAREA
+   ============================================================ */
+
+.feedback-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.char-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   SUBMIT BUTTON
+   ============================================================ */
+
+.feedback-submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.feedback-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================================
+   SUCCESS STATE
+   ============================================================ */
+
+.feedback-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 12px;
+}
+
+.feedback-success.show {
+  display: flex;
+}
+
+.success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-focus-ring);
+  border: 2px solid var(--accent-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.success-icon i {
+  width: 28px;
+  height: 28px;
+  color: var(--accent-purple);
+}
+
+.success-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(147deg, var(--grad-text-start) 0%, var(--grad-text-end) 82%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.success-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+/* ============================================================
+   TURNSTILE WRAPPER
+   ============================================================ */
+
+#turnstile-feedback {
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+.feedback-modal .modal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.feedback-modal .modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.feedback-modal .modal::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
