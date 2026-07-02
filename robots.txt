@@ -1,0 +1,6 @@
+Sitemap: https://mctoolkit.bananabrother77.online/sitemap.xml
+
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /404.html
