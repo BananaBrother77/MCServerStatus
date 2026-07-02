@@ -138,7 +138,9 @@
 .star i {
   width: 24px;
   height: 24px;
-  transition: color 0.15s ease, fill 0.15s ease;
+  transition:
+    color 0.15s ease,
+    fill 0.15s ease;
 }
 
 .star svg path {
@@ -230,7 +232,11 @@
 .success-title {
   font-size: 1.3rem;
   font-weight: 800;
-  background: linear-gradient(147deg, var(--grad-text-start) 0%, var(--grad-text-end) 82%);
+  background: linear-gradient(
+    147deg,
+    var(--grad-text-start) 0%,
+    var(--grad-text-end) 82%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
