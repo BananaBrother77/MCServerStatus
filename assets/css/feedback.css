@@ -216,7 +216,7 @@
   height: 56px;
   border-radius: 50%;
   background: var(--accent-focus-ring);
-  border: 2px solid var(--accent-purple);
+  border: 1px solid var(--accent-purple);
   display: flex;
   align-items: center;
   justify-content: center;

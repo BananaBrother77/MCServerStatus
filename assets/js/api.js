@@ -17,7 +17,9 @@ export async function fetchServerData(serverIP) {
 }
 
 export async function fetchBedrockServerData(serverIP) {
-  return fetchWithTimeout(`https://api.mcstatus.io/v2/status/bedrock/${serverIP}`);
+  return fetchWithTimeout(
+    `https://api.mcstatus.io/v2/status/bedrock/${serverIP}`,
+  );
 }
 
 export async function fetchNodeData() {
@@ -25,14 +27,33 @@ export async function fetchNodeData() {
 }
 
 export async function fetchPlayerUUID(playerName) {
-  return fetchWithTimeout(`https://playerdb.co/api/player/minecraft/${playerName}`);
+  return fetchWithTimeout(
+    `https://playerdb.co/api/player/minecraft/${playerName}`,
+  );
+}
+
+export function getSkinModel(player) {
+  try {
+    const prop = player.properties?.find((p) => p.name === 'textures');
+
+    if (!prop) return 'default';
+    const decoded = JSON.parse(atob(prop.value));
+    
+    return decoded.textures?.SKIN?.metadata?.model === 'slim'
+      ? 'slim'
+      : 'default';
+  } catch {
+    return 'default';
+  }
 }
 
 export async function fetchPlayerSkin(playerName) {
   const ctrl = new AbortController();
   const id = setTimeout(() => ctrl.abort(), 8000);
   try {
-    const res = await fetch(`https://mc-heads.net/skin/${playerName}`, { signal: ctrl.signal });
+    const res = await fetch(`https://mc-heads.net/skin/${playerName}`, {
+      signal: ctrl.signal,
+    });
     if (!res.ok) throw new Error('Skin API failed');
     const blob = await res.blob();
     return URL.createObjectURL(blob);

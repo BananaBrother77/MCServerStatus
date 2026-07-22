@@ -88,7 +88,7 @@
       <ul class="sidebar-links"></ul>
 
       <div class="sidebar-footer">
-        <button id="addServerBtn" class="btn-primary" data-i18n="btn_add_server">Add Server</button>
+        <button id="addServerBtn" class="btn-primary"><i data-lucide="plus"></i> <span data-i18n="btn_add_server">Add Server</span></button>
       </div>
     </aside>
 
@@ -115,27 +115,27 @@
           </div>
         </div>
 
-        <div class="stats-row">
+        <div class="stats-row" id="serverStatsRow">
           <div class="status-card reveal">
             <i data-lucide="users"></i>
             <span class="card-label" data-i18n="label_online">Online</span>
             <span id="playersOnline" class="card-value">0</span>
             <div class="divider"></div>
-            <span id="playersMax" class="card-value">0</span>
+            <span id="playersMax" class="card-value">--</span>
           </div>
 
           <div class="status-card reveal">
             <i data-lucide="info"></i>
             <span class="card-label" data-i18n="label_version">Version</span>
             <div class="divider"></div>
-            <span id="serverVersion" class="card-value">1.20.1</span>
+            <span id="serverVersion" class="card-value">--</span>
           </div>
 
           <div class="status-card motd-card reveal">
             <i data-lucide="message-square"></i>
             <span class="card-label" data-i18n="label_message">Message</span>
             <div class="divider"></div>
-            <span id="motdText" class="card-value">Nothing to see here</span>
+            <span id="motdText" class="card-value">--</span>
           </div>
         </div>
       </section>

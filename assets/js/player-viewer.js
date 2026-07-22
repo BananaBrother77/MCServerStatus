@@ -1,4 +1,4 @@
-import { fetchPlayerUUID, fetchPlayerSkin } from './api.js';
+import { fetchPlayerUUID, fetchPlayerSkin, getSkinModel } from './api.js';
 import {
   renderSkin,
   disposeSkinViewer,
@@ -141,6 +141,7 @@ async function searchPlayer(playerName) {
     const player = uuidData.data.player;
     const uuid = player.id;
     const capeUrl = player.cape_texture || null;
+    const skinModel = getSkinModel(player);
 
     const recentEntry = recentPlayers.find(
       (entry) => entry.name.toLowerCase() === playerName.toLowerCase(),
@@ -150,7 +151,7 @@ async function searchPlayer(playerName) {
       saveRecent();
     }
 
-    displayPlayerInfo(playerName, uuid, capeUrl);
+    displayPlayerInfo(playerName, uuid, capeUrl, skinModel);
 
     const url = new URL(window.location);
     url.searchParams.set('player', playerName);
@@ -171,7 +172,7 @@ function showError() {
   els.uuidText.textContent = 'Try a different name';
 }
 
-async function displayPlayerInfo(playerName, uuid, capeUrl) {
+async function displayPlayerInfo(playerName, uuid, capeUrl, skinModel) {
 
   els.nameText.textContent = playerName;
   els.uuidText.textContent = uuid;
@@ -181,6 +182,7 @@ async function displayPlayerInfo(playerName, uuid, capeUrl) {
     els.skinContainer,
     `https://mc-heads.net/skin/${playerName}`,
     capeUrl,
+    skinModel,
   );
 
   updateIcons();

@@ -2,7 +2,7 @@ import { SkinViewer, WalkingAnimation } from 'skinview3d';
 
 let viewer;
 
-export async function renderSkin(canvas, skinUrl, capeUrl) {
+export async function renderSkin(canvas, skinUrl, capeUrl, skinModel) {
   if (!canvas) return;
   if (viewer) viewer.dispose();
 
@@ -11,6 +11,7 @@ export async function renderSkin(canvas, skinUrl, capeUrl) {
     width: 200,
     height: 300,
     skin: skinUrl,
+    model: skinModel || 'default',
   });
 
   if (capeUrl) {

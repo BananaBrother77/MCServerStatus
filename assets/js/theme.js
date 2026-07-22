@@ -22,8 +22,8 @@ function shouldSyncTheme() {
 }
 
 export function applyTheme(theme) {
-  document.documentElement.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue');
-  document.body.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue');
+  document.documentElement.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue', 'theme-pink');
+  document.body.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue', 'theme-pink');
   if (theme !== 'purple') {
     document.documentElement.classList.add(`theme-${theme}`);
     document.body.classList.add(`theme-${theme}`);

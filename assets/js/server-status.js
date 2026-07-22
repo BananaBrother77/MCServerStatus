@@ -4,6 +4,7 @@ import {
   fetchNodeData,
   fetchPlayerUUID,
   fetchPlayerSkin,
+  getSkinModel,
 } from './api.js';
 import { copyToClipboard, updateIcons } from './meow.js';
 import {
@@ -56,8 +57,6 @@ let serverData;
 let nodeData;
 let statusTimeout;
 
-const serverCache = { data: null };
-
 updateUrl({ server: serverIP, name: serverName, bedrock: isBedrock });
 
 // ============================================================
@@ -74,6 +73,11 @@ const serverEls = {
   ip: document.getElementById('serverIpValue'),
   version: document.getElementById('serverVersion'),
   motd: document.getElementById('motdText'),
+};
+
+serverEls.icon.onerror = function () {
+  this.src = 'assets/img/mcshServerLogo.png';
+  this.onerror = null;
 };
 
 const nodeEls = {
@@ -223,10 +227,6 @@ function loadServerList() {
 async function getServerStatus() {
   serverEls.name.textContent = serverName;
 
-  if (serverCache.data) {
-    serverData = serverCache.data;
-    displayServerStatus();
-  }
   serverEls.dot.className = 'status-dot checking';
   nodeEls.dot.className = 'status-dot checking';
 
@@ -251,23 +251,19 @@ async function getServerStatus() {
     serverData =
       finalResult.status === 'fulfilled'
         ? finalResult.value
-        : (serverCache.data ?? { online: false });
+        : { online: false };
 
     nodeData =
       nodeResult.status === 'fulfilled' ? nodeResult.value : { online: false };
 
     buildNodeDropdown();
 
-    if (finalResult.status === 'fulfilled') {
-      serverCache.data = serverData;
-    }
-
     displayServerStatus();
     displayNodeStatus(getSavedNode());
     saveServerInfo();
   } catch (error) {
     console.error('Critical Fetch Error:', error);
-    serverData = serverCache.data ?? { online: false };
+    serverData = { online: false };
     displayServerStatus();
   }
 }
@@ -318,8 +314,9 @@ function displayServerStatus() {
 
 function updateServerIcon() {
   serverEls.icon.src =
-    serverData.icon ||
-    'https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg';
+    serverData.online && serverData.icon
+      ? serverData.icon
+      : 'https://raw.githubusercontent.com/BananaBrother77/global-assets/refs/heads/main/profile.jpeg';
 }
 
 function updateOnlineStatus() {
@@ -418,13 +415,13 @@ playerLookupBtn.addEventListener('click', () => {
   playerInfoEls.playerInfoSearchBtn.click();
 });
 
-async function displayPlayerInfo(playerName, playerUUID, capeUrl) {
+async function displayPlayerInfo(playerName, playerUUID, capeUrl, skinModel) {
   playerInfoEls.nameMCBtn.href = `https://namemc.com/profile/${playerName}`;
 
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
 
-  await renderSkin(document.getElementById('skinContainer'), `https://mc-heads.net/skin/${playerName}`, capeUrl);
+  await renderSkin(document.getElementById('skinContainer'), `https://mc-heads.net/skin/${playerName}`, capeUrl, skinModel);
 }
 
 playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
@@ -438,8 +435,9 @@ playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
     const playerData = uuidData.data.player;
     const uuid = playerData.id;
     const capeUrl = playerData.cape_texture || null;
+    const skinModel = getSkinModel(playerData);
 
-    await displayPlayerInfo(playerName, uuid, capeUrl);
+    await displayPlayerInfo(playerName, uuid, capeUrl, skinModel);
   } catch (error) {
     console.error('Error fetching player data:', error);
     playerInfoEls.playerInfoError.textContent = 'Player not found.';
