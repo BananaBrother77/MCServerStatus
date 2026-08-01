@@ -1,15 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B33EM55J3N"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-B33EM55J3N');
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
@@ -50,10 +41,22 @@
 
   <body class="">
     <div class="serverListWrapper">
-      <button class="menu-btn" id="toolNavBtn" type="button" aria-label="Tools" title="Tools">
+      <button
+        class="menu-btn"
+        id="toolNavBtn"
+        type="button"
+        aria-label="Tools"
+        title="Tools"
+      >
         <i data-lucide="compass" width="35" height="35"></i>
       </button>
-      <button class="menu-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings">
+      <button
+        class="menu-btn"
+        id="settingsBtn"
+        type="button"
+        aria-label="Settings"
+        title="Settings"
+      >
         <i data-lucide="settings" width="35" height="35"></i>
       </button>
     </div>
@@ -97,7 +100,8 @@
             <i data-lucide="user" width="40" height="40"></i>
             <h2 data-i18n="tool_player_viewer">Player Viewer</h2>
             <p data-i18n="tool_player_viewer_desc">
-              Look up any Minecraft player - view their skin in 3D, UUID, cape, and more.
+              Look up any Minecraft player - view their skin in 3D, UUID, cape,
+              and more.
             </p>
           </a>
         </div>
@@ -107,7 +111,8 @@
             <i data-lucide="palette" width="40" height="40"></i>
             <h2 data-i18n="tool_color_codes">Colour Codes</h2>
             <p data-i18n="tool_color_codes_desc">
-              Browse Minecraft colour codes and create formatted text for chat, signs, and more.
+              Browse Minecraft colour codes and create formatted text for chat,
+              signs, and more.
             </p>
           </a>
         </div>
@@ -117,7 +122,8 @@
             <i data-lucide="sparkles" width="40" height="40"></i>
             <h2 data-i18n="tool_soon">More Coming Soon</h2>
             <p data-i18n="tool_soon_desc">
-              New tools are in the works. Stay tuned for updates and improvements!
+              New tools are in the works. Stay tuned for updates and
+              improvements!
             </p>
             <span class="card-coming-badge" data-i18n="soon">Soon</span>
           </div>
@@ -125,9 +131,7 @@
       </section>
     </main>
 
-    <%- include('footer.html') %>
-    <%- include('settings-modal.html') %>
-    <%- include('feedback-modal.html') %>
-    <%- include('scripts.html') %>
+    <%- include('footer.html') %> <%- include('settings-modal.html') %> <%-
+    include('scripts.html') %>
   </body>
 </html>

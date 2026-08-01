@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Minecraft server status, Modrinth browser, and more tools.",
   "scripts": {
-    "dev": "wrangler pages dev -- vite",
+    "dev": "wrangler pages dev --port 8789 -- vite",
     "build": "vite build",
     "preview": "npm run build && wrangler pages dev dist",
     "deploy": "npm run build && wrangler pages deploy dist"

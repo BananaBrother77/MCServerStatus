@@ -230,42 +230,49 @@ async function getServerStatus() {
   serverEls.dot.className = 'status-dot checking';
   nodeEls.dot.className = 'status-dot checking';
 
-  try {
-    const [serverResult, nodeResult] = await Promise.allSettled([
-      isBedrock ? fetchBedrockServerData(serverIP) : fetchServerData(serverIP),
-      fetchNodeData(),
-    ]);
+  // Fire both requests — each renders as soon as it resolves
+  const serverPromise = isBedrock
+    ? fetchBedrockServerData(serverIP)
+    : fetchServerData(serverIP);
 
-    let finalResult = serverResult;
+  const nodePromise = fetchNodeData();
 
-    if (serverResult.status === 'rejected') {
-      await new Promise((r) => setTimeout(r, 3000));
-      const [retryResult] = await Promise.allSettled([
-        isBedrock
+  // Handle server status
+  serverPromise
+    .then((data) => {
+      serverData = data;
+      displayServerStatus();
+      saveServerInfo();
+    })
+    .catch(() => {
+      serverData = { online: false };
+      displayServerStatus();
+      saveServerInfo();
+
+      setTimeout(() => {
+        const retry = isBedrock
           ? fetchBedrockServerData(serverIP)
-          : fetchServerData(serverIP),
-      ]);
-      finalResult = retryResult;
-    }
+          : fetchServerData(serverIP);
+        retry
+          .then((data) => {
+            serverData = data;
+            displayServerStatus();
+          })
+          .catch(() => {});
+      }, 3000);
+    });
 
-    serverData =
-      finalResult.status === 'fulfilled'
-        ? finalResult.value
-        : { online: false };
-
-    nodeData =
-      nodeResult.status === 'fulfilled' ? nodeResult.value : { online: false };
-
-    buildNodeDropdown();
-
-    displayServerStatus();
-    displayNodeStatus(getSavedNode());
-    saveServerInfo();
-  } catch (error) {
-    console.error('Critical Fetch Error:', error);
-    serverData = { online: false };
-    displayServerStatus();
-  }
+  // Handle node status
+  nodePromise
+    .then((data) => {
+      nodeData = data;
+      buildNodeDropdown();
+      displayNodeStatus(getSavedNode());
+    })
+    .catch(() => {
+      nodeData = { online: false };
+      displayNodeStatus(getSavedNode());
+    });
 }
 
 function saveServerInfo() {
@@ -421,7 +428,12 @@ async function displayPlayerInfo(playerName, playerUUID, capeUrl, skinModel) {
   playerInfoEls.name.textContent = playerName;
   playerInfoEls.uuid.textContent = playerUUID;
 
-  await renderSkin(document.getElementById('skinContainer'), `https://mc-heads.net/skin/${playerName}`, capeUrl, skinModel);
+  await renderSkin(
+    document.getElementById('skinContainer'),
+    `https://mc-heads.net/skin/${playerName}`,
+    capeUrl,
+    skinModel,
+  );
 }
 
 playerInfoEls.playerInfoSearchBtn.addEventListener('click', async () => {
@@ -941,7 +953,9 @@ document.addEventListener('keydown', (e) => {
         break;
       }
       if (noOverlayOpen()) {
-        if (document.getElementById('settingsModal')?.classList.contains('show')) {
+        if (
+          document.getElementById('settingsModal')?.classList.contains('show')
+        ) {
           document.getElementById('settingsModal')?.classList.remove('show');
         } else {
           openServerList();

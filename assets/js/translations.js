@@ -45,7 +45,8 @@ const translations = {
     settings_theme: 'Theme',
     settings_lang: 'Language',
     settings_sync_theme: 'Sync theme across sites',
-    settings_sync_theme_hint: 'When enabled, your theme preference is shared across all BananaBrother77 websites via a cookie.',
+    settings_sync_theme_hint:
+      'When enabled, your theme preference is shared across all BananaBrother77 websites via a cookie.',
     theme_purple: 'Purple',
     theme_green: 'Green',
     theme_red: 'Red',
@@ -73,13 +74,19 @@ const translations = {
       'New tools are in the works. Stay tuned for updates and improvements!',
     badge_soon: 'Soon',
     e404_heading: '- Page Not Found',
-    '404_subtitle': 'Where are you trying to go? What are you looking for? I, of course, don\'t know that, but I know that you won\'t find it here.',
+    '404_subtitle':
+      "Where are you trying to go? What are you looking for? I, of course, don't know that, but I know that you won't find it here.",
     '404_btn_home': 'Go Home',
-    '404_btn_reload': 'Reload (Won\'t help)',
-    '404_protip': 'Pro Tip: I don\'t know, what did you expect?',
+    '404_btn_reload': "Reload (Won't help)",
+    '404_protip': "Pro Tip: I don't know, what did you expect?",
     lang_name: 'English',
     lang_flag: '\ud83c\uddfa\ud83c\uddf8',
     language_switch_target: 'German',
+    cookie_title: 'Privacy Notice',
+    cookie_text:
+      'This site uses Google Analytics for anonymous traffic measurement.',
+    cookie_accept: 'Accept',
+    cookie_decline: 'Decline',
   },
   de: {
     sidebar_title: 'Server',
@@ -127,7 +134,8 @@ const translations = {
     settings_theme: 'Erscheinungsbild',
     settings_lang: 'Sprache',
     settings_sync_theme: 'Theme seitenübergreifend synchronisieren',
-    settings_sync_theme_hint: 'Wenn aktiviert, wird deine Theme-Auswahl auf allen BananaBrother77-Webseiten per Cookie geteilt.',
+    settings_sync_theme_hint:
+      'Wenn aktiviert, wird deine Theme-Auswahl auf allen BananaBrother77-Webseiten per Cookie geteilt.',
     theme_purple: 'Lila',
     theme_green: 'Gr\u00fcn',
     theme_red: 'Rot',
@@ -155,13 +163,19 @@ const translations = {
       'Neue Tools sind in Arbeit. Bleib dran f\u00fcr Updates und Verbesserungen!',
     badge_soon: 'Bald',
     e404_heading: '- Seite nicht gefunden',
-    '404_subtitle': 'Wo willst du hin? Was suchst du? Ich wei\u00df es nat\u00fcrlich nicht, aber ich wei\u00df, dass du es hier nicht finden wirst.',
+    '404_subtitle':
+      'Wo willst du hin? Was suchst du? Ich wei\u00df es nat\u00fcrlich nicht, aber ich wei\u00df, dass du es hier nicht finden wirst.',
     '404_btn_home': 'Zur Startseite',
     '404_btn_reload': 'Neu laden (Hilft nicht)',
     '404_protip': 'Pro-Tipp: Keine Ahnung. Was hast du erwartet?',
     lang_name: 'Deutsch',
     lang_flag: '\ud83c\udde9\ud83c\uddea',
     language_switch_target: 'English',
+    cookie_title: 'Datenschutzhinweis',
+    cookie_text:
+      'Diese Seite nutzt Google Analytics für anonyme Verkehrsmessung.',
+    cookie_accept: 'Akzeptieren',
+    cookie_decline: 'Ablehnen',
   },
 };
 
@@ -183,7 +197,10 @@ export function applyTranslations() {
     const children = el.childNodes;
     let hasElementChild = false;
     for (const child of children) {
-      if (child.nodeType === 1) { hasElementChild = true; break; }
+      if (child.nodeType === 1) {
+        hasElementChild = true;
+        break;
+      }
     }
 
     if (hasElementChild) {

@@ -1,15 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B33EM55J3N"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-B33EM55J3N');
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
@@ -60,19 +51,49 @@
          SIDEBAR TOGGLE BUTTON
          ============================================================ -->
     <div class="serverListWrapper">
-      <a href="index.html" class="menu-btn" data-i18n-title="back_home" aria-label="Back to Home" title="Back to Home">
+      <a
+        href="index.html"
+        class="menu-btn"
+        data-i18n-title="back_home"
+        aria-label="Back to Home"
+        title="Back to Home"
+      >
         <i data-lucide="home" width="35" height="35"></i>
       </a>
-      <button class="menu-btn" id="toolNavBtn" type="button" aria-label="Tools" title="Tools">
+      <button
+        class="menu-btn"
+        id="toolNavBtn"
+        type="button"
+        aria-label="Tools"
+        title="Tools"
+      >
         <i data-lucide="compass" width="35" height="35"></i>
       </button>
-      <button class="menu-btn" id="serverListBtn" type="button" aria-label="Saved Servers" title="Saved Servers">
+      <button
+        class="menu-btn"
+        id="serverListBtn"
+        type="button"
+        aria-label="Saved Servers"
+        title="Saved Servers"
+      >
         <i data-lucide="server" width="35" height="35"></i>
       </button>
-      <button class="menu-btn" id="shareServerBtn" type="button" aria-label="Share Server" title="Share Server">
+      <button
+        class="menu-btn"
+        id="shareServerBtn"
+        type="button"
+        aria-label="Share Server"
+        title="Share Server"
+      >
         <i data-lucide="square-arrow-up-right" width="35" height="35"></i>
       </button>
-      <button class="menu-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings">
+      <button
+        class="menu-btn"
+        id="settingsBtn"
+        type="button"
+        aria-label="Settings"
+        title="Settings"
+      >
         <i data-lucide="settings" width="35" height="35"></i>
       </button>
     </div>
@@ -83,12 +104,17 @@
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <h3 data-i18n="sidebar_title">Servers</h3>
-        <button id="closeServerListBtn" aria-label="Close server list">&times;</button>
+        <button id="closeServerListBtn" aria-label="Close server list">
+          &times;
+        </button>
       </div>
       <ul class="sidebar-links"></ul>
 
       <div class="sidebar-footer">
-        <button id="addServerBtn" class="btn-primary"><i data-lucide="plus"></i> <span data-i18n="btn_add_server">Add Server</span></button>
+        <button id="addServerBtn" class="btn-primary">
+          <i data-lucide="plus"></i>
+          <span data-i18n="btn_add_server">Add Server</span>
+        </button>
       </div>
     </aside>
 
@@ -145,11 +171,17 @@
         <section class="server-ip-section reveal">
           <div class="actions">
             <div>
-              <span class="card-label" data-i18n="label_server_ip">Server IP:</span>
+              <span class="card-label" data-i18n="label_server_ip"
+                >Server IP:</span
+              >
               <span id="serverIpValue" class="card-value"></span>
               <div class="divider"></div>
               <div class="buttons">
-                <button id="copyIpBtn" class="btn-primary" data-i18n="btn_copy_ip">
+                <button
+                  id="copyIpBtn"
+                  class="btn-primary"
+                  data-i18n="btn_copy_ip"
+                >
                   <i data-lucide="copy"></i> Copy IP
                 </button>
                 <button id="editBtn" class="btn-primary" data-i18n="btn_edit">
@@ -171,12 +203,18 @@
 
         <section class="online-players-section serverStatus reveal">
           <div class="serverInfo">
-            <span class="card-label" data-i18n="label_online_players">Online Players</span>
+            <span class="card-label" data-i18n="label_online_players"
+              >Online Players</span
+            >
             <div class="divider"></div>
             <div id="playerHeadsContainer" class="stats-row player-grid">
               <!-- Player avatars injected by script.js -->
             </div>
-            <button id="playerLookupBtn" class="btn-primary" data-i18n="btn_player_lookup">
+            <button
+              id="playerLookupBtn"
+              class="btn-primary"
+              data-i18n="btn_player_lookup"
+            >
               <i data-lucide="search"></i> Player Lookup
             </button>
           </div>
@@ -187,11 +225,15 @@
       <section id="nodeStatusSection" class="serverStatus nodeStatus reveal">
         <div class="container">
           <div class="server-info">
-            <span class="card-label" data-i18n="mcsh_node_status">MCServerHost Node Status</span>
+            <span class="card-label" data-i18n="mcsh_node_status"
+              >MCServerHost Node Status</span
+            >
             <h1 id="nodeName">Ares</h1>
             <p>
               <span class="status-dot" id="nodeStatusDot"></span>
-              <span id="nodeStatusState" data-i18n="status_checking">Checking...</span>
+              <span id="nodeStatusState" data-i18n="status_checking"
+                >Checking...</span
+              >
             </p>
           </div>
         </div>
@@ -217,13 +259,17 @@
           </div>
           <div class="status-card reveal">
             <i data-lucide="memory-stick"></i>
-            <span class="card-label" data-i18n="label_memory">Memory Usage</span>
+            <span class="card-label" data-i18n="label_memory"
+              >Memory Usage</span
+            >
             <div class="divider"></div>
             <span id="nodeMemory" class="card-value">--</span>
           </div>
           <div class="status-card reveal">
             <i data-lucide="hard-drive"></i>
-            <span class="card-label" data-i18n="label_storage">Storage Usage</span>
+            <span class="card-label" data-i18n="label_storage"
+              >Storage Usage</span
+            >
             <div class="divider"></div>
             <span id="nodeStorage" class="card-value">--</span>
           </div>
@@ -233,11 +279,14 @@
           <a
             href="https://maximerix.dev/mcsh/status/"
             target="_blank"
-            class="btn-primary" data-i18n="btn_all_nodes"
+            class="btn-primary"
+            data-i18n="btn_all_nodes"
           >
-            All Nodes
+            <i data-lucide="external-link"></i> All Nodes
           </a>
-          <button id="changeNodeBtn" class="btn-primary" data-i18n="btn_change">Change</button>
+          <button id="changeNodeBtn" class="btn-primary" data-i18n="btn_change">
+            <i data-lucide="refresh-cw"></i> Change
+          </button>
         </div>
       </section>
     </main>
@@ -251,7 +300,9 @@
       <div id="editOverlay">
         <div>
           <h2 class="edit-title" data-i18n="edit_title">Edit Server</h2>
-          <p class="edit-desc" data-i18n="edit_desc">Choose what server status you want to see</p>
+          <p class="edit-desc" data-i18n="edit_desc">
+            Choose what server status you want to see
+          </p>
         </div>
         <div class="divider"></div>
         <div class="edit-content">
@@ -278,8 +329,12 @@
           </label>
           <p class="error" id="errorText"></p>
           <div class="modal-actions">
-            <button class="btn" id="applyEditBtn" data-i18n="btn_apply">Apply</button>
-            <button class="btn" id="cancelEditBtn" data-i18n="btn_cancel">Cancel</button>
+            <button class="btn" id="applyEditBtn" data-i18n="btn_apply">
+              Apply
+            </button>
+            <button class="btn" id="cancelEditBtn" data-i18n="btn_cancel">
+              Cancel
+            </button>
           </div>
         </div>
       </div>
@@ -290,7 +345,9 @@
       <div id="addServerOverlay">
         <div>
           <h2 class="edit-title" data-i18n="add_title">Add Server</h2>
-          <p class="edit-desc" data-i18n="edit_desc">Choose what server status you want to see</p>
+          <p class="edit-desc" data-i18n="edit_desc">
+            Choose what server status you want to see
+          </p>
         </div>
         <div class="divider"></div>
         <div class="edit-content">
@@ -327,8 +384,12 @@
           </label>
           <p class="error" id="addServerErrorText"></p>
           <div class="modal-actions">
-            <button class="btn" id="applyAddServerBtn" data-i18n="btn_apply">Apply</button>
-            <button class="btn" id="cancelAddServerBtn" data-i18n="btn_cancel">Cancel</button>
+            <button class="btn" id="applyAddServerBtn" data-i18n="btn_apply">
+              Apply
+            </button>
+            <button class="btn" id="cancelAddServerBtn" data-i18n="btn_cancel">
+              Cancel
+            </button>
           </div>
         </div>
       </div>
@@ -339,13 +400,17 @@
       <div id="changeNodeOverlay">
         <div>
           <h2 class="edit-title" data-i18n="node_title">Change Node</h2>
-          <p class="edit-desc" data-i18n="node_desc">Choose which node status you want to see</p>
+          <p class="edit-desc" data-i18n="node_desc">
+            Choose which node status you want to see
+          </p>
         </div>
         <div class="divider"></div>
         <div class="edit-content">
           <div class="node-select-container">
             <button id="selectBtn" class="select-button">
-              <span id="selectedOptionText" data-i18n="node_placeholder">Choose node...</span>
+              <span id="selectedOptionText" data-i18n="node_placeholder"
+                >Choose node...</span
+              >
               <i data-lucide="chevron-down"></i>
             </button>
             <ul id="selectOptions" class="select-options">
@@ -354,8 +419,12 @@
             <div class="select-backdrop" id="selectBackdrop"></div>
           </div>
           <div class="modal-actions">
-            <button class="btn" id="applyNodeChangeBtn" data-i18n="btn_apply">Apply</button>
-            <button class="btn" id="cancelNodeChangeBtn" data-i18n="btn_cancel">Cancel</button>
+            <button class="btn" id="applyNodeChangeBtn" data-i18n="btn_apply">
+              Apply
+            </button>
+            <button class="btn" id="cancelNodeChangeBtn" data-i18n="btn_cancel">
+              Cancel
+            </button>
           </div>
         </div>
       </div>
@@ -366,7 +435,9 @@
       <div id="playerInfoOverlay">
         <div>
           <h2 class="edit-title" data-i18n="player_title">Player Info</h2>
-          <p class="edit-desc" data-i18n="player_desc">Information about the player</p>
+          <p class="edit-desc" data-i18n="player_desc">
+            Information about the player
+          </p>
         </div>
         <div class="divider"></div>
         <div class="input-group">
@@ -377,7 +448,11 @@
             placeholder="Enter player name..."
             id="playerInfoSearchInput"
           />
-          <button class="input-btn" id="playerInfoSearchBtn" aria-label="Search player">
+          <button
+            class="input-btn"
+            id="playerInfoSearchBtn"
+            aria-label="Search player"
+          >
             <i data-lucide="search"></i>
           </button>
         </div>
@@ -388,7 +463,11 @@
               <canvas id="skinContainer"></canvas>
             </div>
             <div class="img-btn-container">
-              <button id="downloadSkinBtn" class="download-skin-btn" aria-label="Download skin">
+              <button
+                id="downloadSkinBtn"
+                class="download-skin-btn"
+                aria-label="Download skin"
+              >
                 <i data-lucide="download"></i>
               </button>
               <button id="animationBtn" class="animation-btn">
@@ -403,7 +482,11 @@
                 <span class="player-info-text" id="playerInfoNameText"
                   >BananaBrother77</span
                 >
-                <button class="copy-inline-btn" id="copyNameBtn" aria-label="Copy player name">
+                <button
+                  class="copy-inline-btn"
+                  id="copyNameBtn"
+                  aria-label="Copy player name"
+                >
                   <i data-lucide="copy"></i>
                 </button>
               </h3>
@@ -412,7 +495,11 @@
                 <span class="player-info-text" id="playerInfoUUIDText"
                   >61bd7ef7...</span
                 >
-                <button class="copy-inline-btn" id="copyUUIDBtn" aria-label="Copy UUID">
+                <button
+                  class="copy-inline-btn"
+                  id="copyUUIDBtn"
+                  aria-label="Copy UUID"
+                >
                   <i data-lucide="copy"></i>
                 </button>
               </div>
@@ -424,18 +511,20 @@
                 target="_blank"
                 class="btn btn-primary"
               >
-                <i data-lucide="external-link"></i> <span data-i18n="btn_namemc">NameMC</span>
+                <i data-lucide="external-link"></i>
+                <span data-i18n="btn_namemc">NameMC</span>
               </a>
-              <button class="btn" id="closePlayerInfoBtn" data-i18n="btn_close">Close</button>
+              <button class="btn" id="closePlayerInfoBtn" data-i18n="btn_close">
+                Close
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <%- include('footer.html') %>
-    <%- include('settings-modal.html') %>
-    <%- include('scripts.html') %>
+    <%- include('footer.html') %> <%- include('settings-modal.html') %> <%-
+    include('scripts.html') %>
     <script type="module" src="/assets/js/server-status.js"></script>
   </body>
 </html>
