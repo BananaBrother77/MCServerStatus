@@ -4,6 +4,8 @@
 
   const elements = {
     banner: document.getElementById('cookieBanner'),
+    acceptBtn: document.getElementById('acceptCookiesBtn'),
+    declineBtn: document.getElementById('declineCookiesBtn'),
   };
 
   const consent = localStorage.getItem(KEY);
@@ -18,18 +20,24 @@
     if (elements.banner) elements.banner.classList.add('show');
   }
 
-  window.acceptCookies = function () {
+  function acceptCookies() {
     localStorage.setItem(KEY, 'accepted');
 
     hideBanner();
     loadGA();
-  };
+  }
 
-  window.declineCookies = function () {
+  function declineCookies() {
     localStorage.setItem(KEY, 'declined');
 
     hideBanner();
-  };
+  }
+
+  elements.acceptBtn.addEventListener('click', acceptCookies);
+  elements.declineBtn.addEventListener('click', declineCookies);
+
+  window.acceptCookies = acceptCookies;
+  window.declineCookies = declineCookies;
 
   function hideBanner() {
     if (elements.banner) elements.banner.classList.remove('show');

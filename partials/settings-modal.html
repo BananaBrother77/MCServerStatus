@@ -2,25 +2,81 @@
   <div class="modal">
     <div class="modal-header">
       <h2 class="modal-title" data-i18n="settings_title">Settings</h2>
-      <button class="modal-close" id="closeModalBtn" aria-label="Close settings">&times;</button>
+      <button
+        class="modal-close"
+        id="closeModalBtn"
+        aria-label="Close settings"
+      >
+        &times;
+      </button>
     </div>
     <div class="modal-body">
       <div class="settings-section">
         <h3 class="settings-section-title" data-i18n="settings_theme">Theme</h3>
         <div class="theme-grid">
-          <button class="theme-btn theme-btn--default active" data-theme="purple" data-i18n="theme_purple">Purple</button>
-          <button class="theme-btn theme-btn--green" data-theme="green" data-i18n="theme_green">Green</button>
-          <button class="theme-btn theme-btn--red" data-theme="red" data-i18n="theme_red">Red</button>
-          <button class="theme-btn theme-btn--yellow" data-theme="yellow" data-i18n="theme_yellow">Yellow</button>
-          <button class="theme-btn theme-btn--blue" data-theme="blue" data-i18n="theme_blue">Blue</button>
-          <button class="theme-btn theme-btn--pink" data-theme="pink" data-i18n="theme_pink">Pink</button>
+          <button
+            class="theme-btn theme-btn--default active"
+            data-theme="purple"
+            data-i18n="theme_purple"
+          >
+            Purple
+          </button>
+          <button
+            class="theme-btn theme-btn--green"
+            data-theme="green"
+            data-i18n="theme_green"
+          >
+            Green
+          </button>
+          <button
+            class="theme-btn theme-btn--red"
+            data-theme="red"
+            data-i18n="theme_red"
+          >
+            Red
+          </button>
+          <button
+            class="theme-btn theme-btn--yellow"
+            data-theme="yellow"
+            data-i18n="theme_yellow"
+          >
+            Yellow
+          </button>
+          <button
+            class="theme-btn theme-btn--blue"
+            data-theme="blue"
+            data-i18n="theme_blue"
+          >
+            Blue
+          </button>
+          <button
+            class="theme-btn theme-btn--pink"
+            data-theme="pink"
+            data-i18n="theme_pink"
+          >
+            Pink
+          </button>
         </div>
       </div>
       <div class="settings-section">
-        <h3 class="settings-section-title" data-i18n="settings_lang">Language</h3>
+        <h3 class="settings-section-title" data-i18n="settings_lang">
+          Language
+        </h3>
         <button class="lang-btn" id="langSwitchBtn">
+          <i data-lucide="globe" width="20" height="20"></i>
           <span class="lang-name" data-i18n="lang_name">English</span>
         </button>
+      </div>
+      <div class="settings-section">
+        <h3 class="settings-section-title" data-i18n="settings_privacy_title">
+          Privacy
+        </h3>
+        <button class="lang-btn" id="privacyToggleBtn">
+          <i data-lucide="shield" width="20" height="20"></i>
+          <span class="lang-name" data-i18n="privacy_off">Analytics: Off</span>
+        </button>
+      </div>
+      <div class="settings-section">
         <label class="custom-checkbox sync-checkbox">
           <input type="checkbox" id="syncThemeCheckbox" />
           <span class="checkmark"></span>
@@ -28,7 +84,10 @@
             <span data-i18n="settings_sync_theme">Sync theme across sites</span>
             <span class="hint-icon" tabindex="0">
               <i data-lucide="help-circle" width="16" height="16"></i>
-              <span class="hint-tooltip" data-i18n="settings_sync_theme_hint">When enabled, your theme preference is shared across all BananaBrother77 websites via a cookie.</span>
+              <span class="hint-tooltip" data-i18n="settings_sync_theme_hint"
+                >When enabled, your theme preference is shared across all
+                BananaBrother77 websites via a cookie.</span
+              >
             </span>
           </span>
         </label>

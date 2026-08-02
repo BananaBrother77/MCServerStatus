@@ -44,6 +44,9 @@ const translations = {
     settings_title: 'Settings',
     settings_theme: 'Theme',
     settings_lang: 'Language',
+    settings_privacy_title: 'Privacy',
+    privacy_on: 'Analytics: On',
+    privacy_off: 'Analytics: Off',
     settings_sync_theme: 'Sync theme across sites',
     settings_sync_theme_hint:
       'When enabled, your theme preference is shared across all BananaBrother77 websites via a cookie.',
@@ -57,6 +60,8 @@ const translations = {
     footer_and: 'and',
     footer_code: 'code',
     footer_rights: 'All rights reserved.',
+    footer_terms: 'Terms',
+    footer_privacy: 'Privacy',
     website_title: 'Website',
     discord_title: 'Discord',
     github_title: 'GitHub',
@@ -133,6 +138,9 @@ const translations = {
     settings_title: 'Einstellungen',
     settings_theme: 'Erscheinungsbild',
     settings_lang: 'Sprache',
+    settings_privacy_title: 'Datenschutz',
+    privacy_on: 'Analytics: An',
+    privacy_off: 'Analytics: Aus',
     settings_sync_theme: 'Theme seitenübergreifend synchronisieren',
     settings_sync_theme_hint:
       'Wenn aktiviert, wird deine Theme-Auswahl auf allen BananaBrother77-Webseiten per Cookie geteilt.',
@@ -146,6 +154,8 @@ const translations = {
     footer_and: 'und',
     footer_code: 'Code',
     footer_rights: 'Alle Rechte vorbehalten.',
+    footer_terms: 'AGB',
+    footer_privacy: 'Datenschutz',
     website_title: 'Webseite',
     discord_title: 'Discord',
     github_title: 'GitHub',
@@ -235,6 +245,9 @@ export function toggleLanguage() {
   localStorage.setItem('language', currentLang);
   document.documentElement.lang = currentLang;
   applyTranslations();
+  document.dispatchEvent(
+    new CustomEvent('langchange', { detail: currentLang }),
+  );
 }
 
 applyTranslations();

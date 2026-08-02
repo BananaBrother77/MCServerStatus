@@ -309,7 +309,9 @@
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 }
 
 .cookie-decline:hover {
@@ -2399,7 +2401,7 @@ body {
 
 .hint-icon:hover,
 .hint-icon:focus {
-  color: var(--text-main);
+  color: var(--text-muted-bright);
 }
 
 .hint-tooltip {
@@ -2407,7 +2409,7 @@ body {
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: var(--panel-bg);
+  background: var(--bg-purple-light);
   color: var(--text-main);
   border: 1px solid var(--panel-border);
   border-radius: 8px;

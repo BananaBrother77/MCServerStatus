@@ -1,4 +1,4 @@
-import { toggleLanguage } from './translations.js';
+import { toggleLanguage, getTranslation } from './translations.js';
 
 const COOKIE_DOMAIN = '.bananabrother77.online';
 
@@ -22,16 +22,31 @@ function shouldSyncTheme() {
 }
 
 export function applyTheme(theme) {
-  document.documentElement.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue', 'theme-pink');
-  document.body.classList.remove('theme-green', 'theme-red', 'theme-yellow', 'theme-blue', 'theme-pink');
+  document.documentElement.classList.remove(
+    'theme-green',
+    'theme-red',
+    'theme-yellow',
+    'theme-blue',
+    'theme-pink',
+  );
+  document.body.classList.remove(
+    'theme-green',
+    'theme-red',
+    'theme-yellow',
+    'theme-blue',
+    'theme-pink',
+  );
+
   if (theme !== 'purple') {
     document.documentElement.classList.add(`theme-${theme}`);
     document.body.classList.add(`theme-${theme}`);
   }
+
   localStorage.setItem('theme', theme);
   if (shouldSyncTheme()) {
     setCookie('theme', theme);
   }
+
   document.querySelectorAll('.theme-btn').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.theme === theme);
   });
@@ -62,17 +77,22 @@ const closeModalBtn = document.getElementById('closeModalBtn');
 const themeBtns = document.querySelectorAll('.theme-btn');
 const langSwitchBtn = document.getElementById('langSwitchBtn');
 const syncThemeCheckbox = document.getElementById('syncThemeCheckbox');
+const privacyToggleBtn = document.getElementById('privacyToggleBtn');
 
 // ============================================================
 // SETTINGS MODAL
 // ============================================================
 
 if (settingsBtn && settingsModal) {
-  settingsBtn.addEventListener('click', () => settingsModal.classList.add('show'));
+  settingsBtn.addEventListener('click', () =>
+    settingsModal.classList.add('show'),
+  );
 }
 
 if (closeModalBtn && settingsModal) {
-  closeModalBtn.addEventListener('click', () => settingsModal.classList.remove('show'));
+  closeModalBtn.addEventListener('click', () =>
+    settingsModal.classList.remove('show'),
+  );
 }
 
 themeBtns.forEach((btn) => {
@@ -96,3 +116,39 @@ if (syncThemeCheckbox) {
     }
   });
 }
+
+// ============================================================
+// PRIVACY TOGGLE
+// ============================================================
+
+const CONSENT_KEY = 'cookie-consent';
+
+function isAnalyticsEnabled() {
+  return localStorage.getItem(CONSENT_KEY) === 'accepted';
+}
+
+function updatePrivacyLabel() {
+  if (!privacyToggleBtn) return;
+
+  const key = isAnalyticsEnabled() ? 'privacy_on' : 'privacy_off';
+  const label = privacyToggleBtn.querySelector('.lang-name');
+
+  if (!label) return;
+
+  label.setAttribute('data-i18n', key);
+  label.textContent = getTranslation(key);
+}
+
+if (privacyToggleBtn) {
+  privacyToggleBtn.addEventListener('click', () => {
+    if (isAnalyticsEnabled()) {
+      if (typeof window.declineCookies === 'function') window.declineCookies();
+    } else if (typeof window.acceptCookies === 'function') {
+      window.acceptCookies();
+    }
+    
+    updatePrivacyLabel();
+  });
+}
+
+updatePrivacyLabel();
