@@ -703,13 +703,21 @@ function applyServerChanges() {
     return;
   }
 
-  const foundServer = servers.find(
+  let foundServer = servers.find(
     (server) =>
       server.ip === serverEls.ip.textContent.trim() ||
       server.name === serverEls.name.textContent.trim(),
   );
 
-  if (!foundServer) return;
+  if (!foundServer) {
+    foundServer = {
+      ip: serverIP,
+      name: serverName,
+      isBedrock: isBedrock,
+    };
+    
+    servers.push(foundServer);
+  }
 
   foundServer.ip = newIP;
   foundServer.name = newName;

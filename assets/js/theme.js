@@ -1,4 +1,4 @@
-import { toggleLanguage, getTranslation } from './translations.js';
+import { toggleLanguage } from './translations.js';
 
 const COOKIE_DOMAIN = '.bananabrother77.online';
 
@@ -76,7 +76,7 @@ const settingsModal = document.getElementById('settingsModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
 const themeBtns = document.querySelectorAll('.theme-btn');
 const langSwitchBtn = document.getElementById('langSwitchBtn');
-const syncThemeCheckbox = document.getElementById('syncThemeCheckbox');
+const syncThemeSwitch = document.getElementById('syncThemeSwitch');
 const privacyToggleBtn = document.getElementById('privacyToggleBtn');
 
 // ============================================================
@@ -103,10 +103,16 @@ if (langSwitchBtn) {
   langSwitchBtn.addEventListener('click', toggleLanguage);
 }
 
-if (syncThemeCheckbox) {
-  syncThemeCheckbox.checked = syncEnabled;
-  syncThemeCheckbox.addEventListener('change', () => {
-    const enabled = syncThemeCheckbox.checked;
+function setSwitchState(btn, on) {
+  if (!btn) return;
+  btn.classList.toggle('is-on', on);
+  btn.setAttribute('aria-checked', String(on));
+}
+
+if (syncThemeSwitch) {
+  setSwitchState(syncThemeSwitch, syncEnabled);
+  syncThemeSwitch.addEventListener('click', () => {
+    const enabled = !syncThemeSwitch.classList.contains('is-on');
     localStorage.setItem('syncTheme', enabled);
     setCookie('syncTheme', enabled);
     if (enabled) {
@@ -114,6 +120,7 @@ if (syncThemeCheckbox) {
     } else {
       deleteCookie('theme');
     }
+    setSwitchState(syncThemeSwitch, enabled);
   });
 }
 
@@ -127,17 +134,7 @@ function isAnalyticsEnabled() {
   return localStorage.getItem(CONSENT_KEY) === 'accepted';
 }
 
-function updatePrivacyLabel() {
-  if (!privacyToggleBtn) return;
-
-  const key = isAnalyticsEnabled() ? 'privacy_on' : 'privacy_off';
-  const label = privacyToggleBtn.querySelector('.lang-name');
-
-  if (!label) return;
-
-  label.setAttribute('data-i18n', key);
-  label.textContent = getTranslation(key);
-}
+setSwitchState(privacyToggleBtn, isAnalyticsEnabled());
 
 if (privacyToggleBtn) {
   privacyToggleBtn.addEventListener('click', () => {
@@ -146,9 +143,7 @@ if (privacyToggleBtn) {
     } else if (typeof window.acceptCookies === 'function') {
       window.acceptCookies();
     }
-    
-    updatePrivacyLabel();
+
+    setSwitchState(privacyToggleBtn, isAnalyticsEnabled());
   });
 }
-
-updatePrivacyLabel();
